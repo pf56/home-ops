@@ -104,6 +104,19 @@
     '';
   };
 
+  sops = {
+    defaultSopsFile = ../../secrets/${config.networking.hostName}.yaml;
+    
+    age = {
+      keyFile = "/var/lib/sops-nix/key.txt";
+      generateKey = true;
+    };
+
+    secrets = {
+      example_key = {};
+    };
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

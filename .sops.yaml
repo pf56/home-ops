@@ -1,0 +1,11 @@
+keys:
+  - &pfriedrich age1jxmmkdzm0gas4z03q6mnzcv5exs7wlxjxrp8qzh0eujzqk8wvvyqk3qcjy
+  - &e595 age1yudlqm69y6jl6vy45fvl8u0kfzp9f7fzrmh5n98muxlj5j6weutq9ckk2e
+creation_rules:
+  - path_regex: secrets/e595\.yaml$
+    key_groups:
+      - age:
+        - *pfriedrich
+        - *e595
+
+
