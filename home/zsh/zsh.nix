@@ -13,7 +13,8 @@
       bindkey -M menuselect '^[[Z' reverse-menu-complete
 
       # search through history
-      bindkey "''${key[Up]}" up-line-or-search
+      bindkey $terminfo[kcuu1] history-beginning-search-backward
+      bindkey $terminfo[kcud1] history-beginning-search-forward
 
       # ctrl+left/right
       bindkey $terminfo[kLFT5] backward-word
