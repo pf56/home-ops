@@ -8,5 +8,6 @@
     unzip
   ];
 
+  programs.fzf.enable = true;
   programs.lsd.enable = true;
 }
