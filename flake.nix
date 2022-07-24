@@ -5,7 +5,7 @@
     nixpkgs.url = github:NixOS/nixpkgs/nixos-22.05;
     sops-nix.url = github:Mic92/sops-nix;
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = github:nix-community/home-manager;
+    home-manager.url = github:nix-community/home-manager?ref=release-22.05;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
