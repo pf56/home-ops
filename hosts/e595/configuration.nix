@@ -96,6 +96,37 @@
   # accidentally delete configuration.nix.
   # system.copySystemConfiguration = true;
 
+  services.borgbackup.jobs.home-e595 = {
+    repo = "j5g1w103@j5g1w103.repo.borgbase.com:repo";
+
+    paths = [
+      "/home"
+      "/var/lib"
+    ];
+
+    exclude = [
+      "/home/*/.cache"
+      "/home/*/.config/discord"
+      "/var/lib/systemd"
+    ];
+
+    prune.keep = {
+      within = "1d";
+      daily = 7;
+      weekly = 4;
+      monthly = 6;
+    };
+
+    encryption = {
+      mode = "repokey-blake2";
+      passCommand = "cat ${config.sops.secrets.borg_passphrase.path}";
+    };
+
+    environment.BORG_RSH = "ssh -i /home/pfriedrich/.ssh/id_ed25519_borg";
+    compression = "auto,zstd";
+    startAt = "daily";
+  };
+
   nixpkgs.config.allowUnfree = true;
   nix = {
     package = pkgs.nixFlakes;
@@ -113,7 +144,7 @@
     };
 
     secrets = {
-      example_key = {};
+      borg_passphrase = { };
     };
   };
 
