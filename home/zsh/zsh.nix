@@ -31,6 +31,16 @@
           sha256 = "1g3pij5qn2j7v7jjac2a63lxd97mcsgw6xq6k5p7835q9fjiid98";
         };
       }
+
+      {
+        name = "forgit";
+        src = pkgs.fetchFromGitHub {
+          owner = "wfxr";
+          repo = "forgit";
+          rev = "bd8fce74a662fd6ed90d942a797531ffd0492ae8";
+          sha256 = "1kkq0xs87vrwanxqwypfh8mkjvjplv8s9igcxvygznhhgrnnh2pl";
+        };
+      }
     ];
   };
 
