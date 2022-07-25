@@ -19,6 +19,8 @@
       # ctrl+left/right
       bindkey $terminfo[kLFT5] backward-word
       bindkey $terminfo[kRIT5] forward-word
+
+      eval "$(direnv hook zsh)"
     '';
 
     plugins = [

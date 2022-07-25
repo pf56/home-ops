@@ -21,6 +21,7 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     bcompare
+    direnv
     discord
     firefox
     (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
