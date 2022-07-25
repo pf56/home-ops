@@ -70,6 +70,7 @@
   # enable scanner/printer
   hardware.sane.enable = true;
   services.printing.enable = true;
+  services.printing.drivers = [ pkgs.brgenml1lpr pkgs.brgenml1cupswrapper ];
 
   xdg.portal = {
     enable = true;
