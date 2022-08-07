@@ -36,7 +36,7 @@
   users.users.pfriedrich = {
     isNormalUser = true;
     home = "/home/pfriedrich";
-    extraGroups = [ "wheel" "networkmanager" "scanner" "lp" ];
+    extraGroups = [ "wheel" "networkmanager" "scanner" "lp" "libvirtd" ];
     shell = pkgs.zsh;
   };
 
@@ -79,6 +79,8 @@
   hardware.sane.enable = true;
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.brgenml1lpr pkgs.brgenml1cupswrapper ];
+
+  virtualisation.libvirtd.enable = true;
 
   xdg.portal = {
     enable = true;
