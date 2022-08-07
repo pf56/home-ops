@@ -22,7 +22,15 @@
   networking.hostId = "5b9c70a7";
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Berlin";
-  hardware.opengl.enable = true;
+
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
+
 
   # users
   users.users.pfriedrich = {
