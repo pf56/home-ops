@@ -101,7 +101,12 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall = {
+    enable = true;
+    trustedInterfaces = [ "tailscale0" ];
+    allowedUDPPorts = [ config.services.tailscale.port ];
+  };
+
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
@@ -138,6 +143,8 @@
     compression = "auto,zstd";
     startAt = "daily";
   };
+
+  services.tailscale.enable = true;
 
   nixpkgs.config.allowUnfree = true;
   nix = {
