@@ -7,6 +7,7 @@
     mutableExtensionsDir = false;
     extensions = with pkgs.vscode-extensions; [
       bbenoist.nix
+      eamodio.gitlens
     ];
   };
 }
