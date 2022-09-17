@@ -9,7 +9,29 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, sops-nix, home-manager, ... }: {
+  outputs = { self, nixpkgs, sops-nix, home-manager, ... }:
+  let
+    machines = {
+      pftest = {
+        host = "10.0.60.103";
+      };
+    };
+    
+    colmenaMachine = {hostName, host}: 
+      {name, nodes, pkgs, ... }: {
+        deployment = {
+          targetHost = host;
+          targetUser = "pfriedrich";
+          buildOnTarget = true;
+        };
+
+        imports = [./hosts/${hostName}/configuration.nix];
+      };
+    
+
+    colmenaMachines = nixpkgs.lib.mapAttrs (name: value: colmenaMachine {hostName = name; host = value.host;}) machines;
+
+  in {
     nixosConfigurations.e595 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -23,5 +45,15 @@
         }
       ];
     };
+   
+
+    colmena = {
+      meta = {
+        nixpkgs = import nixpkgs {
+          system = "x86_64-linux";
+          overlays = [];
+        };
+      };
+    } // colmenaMachines;
   };
 }
