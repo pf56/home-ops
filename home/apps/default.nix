@@ -4,6 +4,7 @@
   imports = [
     ./alacritty.nix
     ./vim.nix
+    ./vscode.nix
     ./wofi.nix
   ];
 }
