@@ -13,23 +13,24 @@
   let
     machines = {
       pftest = {
-        host = "10.0.60.103";
+        deployment ={
+          targetHost = "10.0.60.103";
+        };
       };
     };
     
-    colmenaMachine = {hostName, host}: 
-      {name, nodes, pkgs, ... }: {
+    colmenaMachine = config: 
+      {name, nodes, pkgs, ... }: nixpkgs.lib.recursiveUpdate {
         deployment = {
-          targetHost = host;
           targetUser = "pfriedrich";
           buildOnTarget = true;
         };
 
-        imports = [./hosts/${hostName}/configuration.nix];
-      };
+        imports = [./hosts/${name}/configuration.nix];
+      } config;
     
 
-    colmenaMachines = nixpkgs.lib.mapAttrs (name: value: colmenaMachine {hostName = name; host = value.host;}) machines;
+    colmenaMachines = nixpkgs.lib.mapAttrs (name: value: colmenaMachine value) machines;
 
   in {
     nixosConfigurations.e595 = nixpkgs.lib.nixosSystem {
