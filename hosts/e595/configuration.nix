@@ -106,6 +106,7 @@
     trustedInterfaces = [ "tailscale0" ];
     allowedUDPPorts = [ config.services.tailscale.port ];
 #    allowedTCPPortRanges = [ { from = 8000; to = 8999; } ];  # packer http server
+    checkReversePath = "loose";  # for tailscale
   };
 
 
