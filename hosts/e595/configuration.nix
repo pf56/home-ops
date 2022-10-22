@@ -75,6 +75,8 @@
   services.dbus.enable = true;
   services.dbus.packages = with pkgs; [ gcr dconf ];
 
+  services.pcscd.enable = true;
+
   # enable scanner/printer
   hardware.sane.enable = true;
   services.printing.enable = true;

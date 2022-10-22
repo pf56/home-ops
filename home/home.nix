@@ -28,6 +28,7 @@
     (pass.withExtensions (ext: with ext; [pass-otp]))
     terminator
     thunderbird
+    yubikey-manager
   ];
 
   # configure git
@@ -37,7 +38,7 @@
     userEmail = "mail" + "@" + "paulfriedrich.me";
     signing = {
       key = "mail" + "@" + "paulfriedrich.me";
-      signByDefault = false;
+      signByDefault = true;
     };
     extraConfig = {
       init = {
@@ -55,6 +56,7 @@
     enable = true;
     pinentryFlavor = "curses";
     enableSshSupport = true;
+    sshKeys = [ "FF5C5944BE60F5DCC3B249F761DDD41AF24A1E8B" ];
   };
 
   # This value determines the Home Manager release that your
