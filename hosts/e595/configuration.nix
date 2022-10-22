@@ -151,6 +151,9 @@
   nixpkgs.config.allowUnfree = true;
   nix = {
     package = pkgs.nixFlakes;
+    settings = {
+        secret-key-files = /home/pfriedrich/.keys/priv-key.pem;
+    };
     extraOptions = ''
       experimental-features = nix-command flakes
     '';

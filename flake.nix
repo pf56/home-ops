@@ -17,13 +17,19 @@
           targetHost = "10.0.60.103";
         };
       };
+
+      tailscale01 = {
+        deployment = {
+          targetHost  = "10.0.60.6";
+        };
+      };
     };
     
     colmenaMachine = config: 
       {name, nodes, pkgs, ... }: nixpkgs.lib.recursiveUpdate {
         deployment = {
           targetUser = "pfriedrich";
-          buildOnTarget = true;
+          buildOnTarget = false;
         };
 
         imports = [./hosts/${name}/configuration.nix];
@@ -44,6 +50,14 @@
           home-manager.useUserPackages = true;
           home-manager.users.pfriedrich = import ./home/home.nix;
         }
+      ];
+    };
+
+    nixosConfigurations.tailscale01 = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./hosts/tailscale01/configuration.nix
+        sops-nix.nixosModules.sops
       ];
     };
    
