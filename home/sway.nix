@@ -39,16 +39,20 @@ let
 in
 {
   home.packages = with pkgs; [
-    grim slurp i3pystatus wl-clipboard mako
+    grim slurp i3pystatus wl-clipboard mako i3status
     glib gsettings-desktop-schemas gnome3.adwaita-icon-theme
     configure-gtk
+
+    (python310Packages.py3status.overrideAttrs (oldAttrs: {
+      propagatedBuildInputs = with python3Packages;[ pytz tzlocal ] ++ oldAttrs.propagatedBuildInputs;
+    }))
   ];
 
   home.sessionVariables = {
     XDG_DATA_DIRS = "${gsettings_schemadir}:$XDG_DATA_DIRS";
   };
 
-  xdg.configFile."sway/i3py.py".source = ./i3py.py;
+  xdg.configFile."i3status/config".source = ./py3status.conf;
 
   wayland.windowManager.sway = {
     enable = true;
@@ -101,7 +105,7 @@ in
             }));
       in [{
           position = "top";
-          statusCommand = "i3pystatus -c ~/.config/sway/i3py.py";
+          statusCommand = "py3status";
           workspaceNumbers = false;
           fonts = config.wayland.windowManager.sway.config.fonts;
           colors = {
