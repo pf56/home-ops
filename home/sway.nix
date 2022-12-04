@@ -221,6 +221,7 @@ in
       bindswitch --reload --locked lid:on output eDP-1 disable \n 
       bindswitch --reload --locked lid:off output eDP-1 enable \n
       exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP \n
+      exec yubikey-touch-detector
     '';
 
     extraSessionCommands = ''

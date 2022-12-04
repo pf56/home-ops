@@ -32,6 +32,7 @@
     terminator
     thunderbird
     yubikey-manager
+    yubikey-touch-detector
   ];
 
   # configure git
