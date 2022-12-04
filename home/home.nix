@@ -25,6 +25,9 @@
     discord
     firefox
     (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
     (pass.withExtensions (ext: with ext; [pass-otp]))
     terminator
     thunderbird
