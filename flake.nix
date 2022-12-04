@@ -2,10 +2,10 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-22.05;
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-22.11;
     sops-nix.url = github:Mic92/sops-nix;
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = github:nix-community/home-manager?ref=release-22.05;
+    home-manager.url = github:nix-community/home-manager?ref=release-22.11;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
