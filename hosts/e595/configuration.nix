@@ -88,7 +88,6 @@
     enable = true;
     wlr.enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    gtkUsePortal = true;
   };
 
   # Some programs need SUID wrappers, can be configured further or are
