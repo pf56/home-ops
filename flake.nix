@@ -7,9 +7,11 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = github:nix-community/home-manager?ref=release-22.11;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-generators.url = "github:nix-community/nixos-generators";
+    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, sops-nix, home-manager, ... }:
+  outputs = { self, nixpkgs, sops-nix, home-manager, nixos-generators, ... }:
   let
     machines = {
       pftest = {
@@ -59,6 +61,16 @@
         ./hosts/tailscale01/configuration.nix
         sops-nix.nixosModules.sops
       ];
+    };
+
+    packages.x86_64-linux = {
+      vmware = nixos-generators.nixosGenerate {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/base/vmware_image.nix
+        ];
+        format = "vmware";
+      };
     };
    
 

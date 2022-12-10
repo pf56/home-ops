@@ -3,34 +3,11 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./hardware-builder.nix
+    ../base/configuration.nix
+    ../../roles/vmware_guest.nix
   ];
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.fsIdentifier = "label";
-  boot.loader.grub.device = "/dev/sda";
-
   networking.hostName = "tailscale01";
-
-  # add users
-  users.users.pfriedrich = {
-    uid = 1000;
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3CkovLNkyQNHJIKGfOKDj0Jn6sE0O53qSUw4XOU3U4 pfriedrich@e595"
-    ];
-  };
-
-  security.sudo.wheelNeedsPassword = false;
-
-  # enable OpenSSH
-  services.openssh = {
-    enable = true;
-    passwordAuthentication = false;
-    permitRootLogin = "no";
-  };
 
   # setup tailscale
   services.tailscale.enable = true;
@@ -76,11 +53,5 @@
     };
   };
 
-  nix = {
-    settings = {
-        trusted-public-keys = [ "e595.internal.paulfriedrich.me:BRG0TzHjcB93cncYvpY6ZT4TmFAWPH13MEFRf08y/lc=" ];
-    };
-  };
-
-  system.stateVersion = "22.05";
+  system.stateVersion = "22.11";
 }
