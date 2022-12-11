@@ -63,6 +63,13 @@
       ];
     };
 
+    nixosConfigurations.nomadserver-01 = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./hosts/nomadserver-01/configuration.nix
+      ];
+    };
+
     packages.x86_64-linux = {
       vmware = nixos-generators.nixosGenerate {
         system = "x86_64-linux";
