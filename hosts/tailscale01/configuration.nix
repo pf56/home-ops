@@ -7,6 +7,10 @@
     ../../roles/vmware_guest.nix
   ];
 
+  # use systemd-boot/uefi
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   networking.hostName = "tailscale01";
 
   # setup tailscale

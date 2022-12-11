@@ -1,9 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  # use systemd-boot/uefi
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
   boot.growPartition = true;
 
   # add users
