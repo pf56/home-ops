@@ -71,6 +71,14 @@
         ];
         format = "vmware";
       };
+
+      virtualbox = nixos-generators.nixosGenerate {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/base/virtualbox_image.nix
+        ];
+        format = "virtualbox";
+      };
     };
    
 
