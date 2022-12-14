@@ -1,5 +1,5 @@
 { pkgs ? import <nixpkgs> {} }:
 
   pkgs.mkShell {
-    nativeBuildInputs = with pkgs; [ colmena ];
+    nativeBuildInputs = with pkgs; [ ];
   }

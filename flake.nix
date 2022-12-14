@@ -11,36 +11,7 @@
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, sops-nix, home-manager, nixos-generators, ... }:
-  let
-    machines = {
-      pftest = {
-        deployment ={
-          targetHost = "10.0.60.103";
-        };
-      };
-
-      tailscale01 = {
-        deployment = {
-          targetHost  = "10.0.60.6";
-        };
-      };
-    };
-    
-    colmenaMachine = config: 
-      {name, nodes, pkgs, ... }: nixpkgs.lib.recursiveUpdate {
-        deployment = {
-          targetUser = "pfriedrich";
-          buildOnTarget = false;
-        };
-
-        imports = [./hosts/${name}/configuration.nix];
-      } config;
-    
-
-    colmenaMachines = nixpkgs.lib.mapAttrs (name: value: colmenaMachine value) machines;
-
-  in {
+  outputs = { self, nixpkgs, sops-nix, home-manager, nixos-generators, ... }: {
     nixosConfigurations.e595 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -87,15 +58,5 @@
         format = "virtualbox";
       };
     };
-   
-
-    colmena = {
-      meta = {
-        nixpkgs = import nixpkgs {
-          system = "x86_64-linux";
-          overlays = [];
-        };
-      };
-    } // colmenaMachines;
   };
 }
