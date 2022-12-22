@@ -7,14 +7,18 @@
     ../../roles/vmware_guest.nix
   ];
 
-  # use systemd-boot/uefi
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  boot.loader.grub.device = "/dev/sda";
 
   networking.hostName = "tailscale01";
 
   # setup tailscale
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    package = pkgs.unstable.tailscale;
+  };
+
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
   networking.firewall = {
@@ -38,14 +42,14 @@
       sleep 2
 
       # check if we are already authenticated to tailscale
-      status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
+      status="$(${unstable.tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
       if [ $status = "Running" ]; then # if so, then do nothing
         exit 0
       fi
 
       # otherwise authenticate with tailscale
       authkey="$(cat ${config.sops.secrets.tailscale_auth_key.path})"
-      ${tailscale}/bin/tailscale up --advertise-routes=10.0.60.0/24 --authkey $authkey
+      ${unstable.tailscale}/bin/tailscale up --advertise-routes=10.0.60.0/24 --authkey $authkey
     '';
   };
 

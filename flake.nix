@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixos-22.11;
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     sops-nix.url = github:Mic92/sops-nix;
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = github:nix-community/home-manager?ref=release-22.11;
@@ -11,7 +12,19 @@
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, sops-nix, home-manager, nixos-generators, ... }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, sops-nix, home-manager, nixos-generators, ... }:
+  let
+    system = "x86_64-linux";
+    overlay-unstable = final: prev: {
+      unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+      # use this variant if unfree packages are needed:
+      # unstable = import nixpkgs-unstable {
+      #   inherit system;
+      #   config.allowUnfree = true;
+      # };
+    };
+  in
+  {
     nixosConfigurations.e595 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -29,6 +42,7 @@
     nixosConfigurations.tailscale01 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
+        ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
         ./hosts/tailscale01/configuration.nix
         sops-nix.nixosModules.sops
       ];

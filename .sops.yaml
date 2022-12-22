@@ -1,7 +1,7 @@
 keys:
   - &pfriedrich age1jxmmkdzm0gas4z03q6mnzcv5exs7wlxjxrp8qzh0eujzqk8wvvyqk3qcjy
   - &e595 age1yudlqm69y6jl6vy45fvl8u0kfzp9f7fzrmh5n98muxlj5j6weutq9ckk2e
-  - &tailscale01 age1lz5sf96yr380xzs23zxlwmn8a8x3vehhrdeatvdpzl4av2x4jy2su59yzl
+  - &tailscale01 age16w0xprw344h2f388jcdj4xydd8evjgrchz9uqmq552cf4v65fg3q44p67j
 creation_rules:
   - path_regex: secrets/e595\.yaml$
     key_groups:
