@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ../base/configuration.nix
     ../../roles/vmware_guest.nix
+    ../../roles/nomad_server.nix
   ];
 
   boot.loader.grub.enable = true;
