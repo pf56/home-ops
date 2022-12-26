@@ -25,22 +25,31 @@ let
     name = "configure-gtk";
     destination = "/bin/configure-gtk";
     executable = true;
-    text = let
-      schema = pkgs.gsettings-desktop-schemas;
-      datadir = "${schema}/share/gsettings-schemas/${schema.name}";
-    in ''
-      gnome_schema=org.gnome.desktop.interface
-      gsettings set $gnome_schema gtk-theme "Adwaita"
-      gsettings set $gnome_schema icon-theme "Adwaita"
-      gsettings set $gnome_schema cursor-theme "Adwaita"
+    text =
+      let
+        schema = pkgs.gsettings-desktop-schemas;
+        datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+      in
+      ''
+        gnome_schema=org.gnome.desktop.interface
+        gsettings set $gnome_schema gtk-theme "Adwaita"
+        gsettings set $gnome_schema icon-theme "Adwaita"
+        gsettings set $gnome_schema cursor-theme "Adwaita"
       '';
   };
 
 in
 {
   home.packages = with pkgs; [
-    grim slurp i3pystatus wl-clipboard mako i3status
-    glib gsettings-desktop-schemas gnome3.adwaita-icon-theme
+    grim
+    slurp
+    i3pystatus
+    wl-clipboard
+    mako
+    i3status
+    glib
+    gsettings-desktop-schemas
+    gnome3.adwaita-icon-theme
     configure-gtk
 
     (python310Packages.py3status.overrideAttrs (oldAttrs: {
@@ -73,7 +82,8 @@ in
       keybindings =
         let
           modifier = config.wayland.windowManager.sway.config.modifier;
-        in lib.mkOptionDefault {
+        in
+        lib.mkOptionDefault {
           "${modifier}+Alt+Left" = "move workspace to output left";
           "${modifier}+Alt+Right" = "move workspace to output right";
           "${modifier}+h" = "splith";
@@ -82,7 +92,7 @@ in
           "${modifier}+Shift+0" = "move container to workspace number 10";
           "${modifier}+Shift+r" = "restart";
           "${modifier}+F2" = "exec swaymsg 'output DP-5 toggle'";
-      };
+        };
 
       modes = {
         resize = {
@@ -95,15 +105,17 @@ in
         };
       };
 
-      bars = let
-        workspaceColor = border:
-          (background:
-            (text: {
-              border = border;
-              background = background;
-              text = text;
-            }));
-      in [{
+      bars =
+        let
+          workspaceColor = border:
+            (background:
+              (text: {
+                border = border;
+                background = background;
+                text = text;
+              }));
+        in
+        [{
           position = "top";
           statusCommand = "py3status";
           workspaceNumbers = false;
@@ -126,26 +138,28 @@ in
         "10" = [{ class = "^Thunderbird$"; }];
       };
 
-      colors = let
-        swayColor = border:
-          (background:
-            (text:
-              (indicator:
-                (childBorder: {
-                  border = border;
-                  background = background;
-                  text = text;
-                  indicator = indicator;
-                  childBorder = childBorder;
-                }))));
-      in {
-        background = base07;
-        focused = swayColor base05 base0D base00 base0D base0D;
-        focusedInactive = swayColor base01 base01 base05 base03 base01;
-        unfocused = swayColor base01 base00 base05 base01 base01;
-        urgent = swayColor base08 base08 base00 base08 base08;
-        placeholder = swayColor base00 base00 base05 base00 base00;
-      };
+      colors =
+        let
+          swayColor = border:
+            (background:
+              (text:
+                (indicator:
+                  (childBorder: {
+                    border = border;
+                    background = background;
+                    text = text;
+                    indicator = indicator;
+                    childBorder = childBorder;
+                  }))));
+        in
+        {
+          background = base07;
+          focused = swayColor base05 base0D base00 base0D base0D;
+          focusedInactive = swayColor base01 base01 base05 base03 base01;
+          unfocused = swayColor base01 base00 base05 base01 base01;
+          urgent = swayColor base08 base08 base00 base08 base08;
+          placeholder = swayColor base00 base00 base05 base00 base00;
+        };
 
       output = {
         # internal display
@@ -153,7 +167,7 @@ in
           resolution = "1920x1080";
           position = "0,180";
         };
-        
+
         # external displays
         HDMI-A-1 = {
           resolution = "2560x1440";
@@ -183,7 +197,7 @@ in
           pointer_accel = "-1";
         };
 
-       # internal touchpad
+        # internal touchpad
         "2:7:SynPS/2_Synaptics_TouchPad" = {
           accel_profile = "flat";
           pointer_accel = "0.2";

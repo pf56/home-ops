@@ -21,5 +21,5 @@
     extraOptionOverrides = {
       "Match" = "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\"";
     };
-  }; 
+  };
 }

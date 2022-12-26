@@ -13,7 +13,7 @@
   # use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelParams = [ "nohibernate" ];  # not supported on zfs
+  boot.kernelParams = [ "nohibernate" ]; # not supported on zfs
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.devNodes = "/dev/";
 
@@ -106,8 +106,8 @@
     enable = true;
     trustedInterfaces = [ "tailscale0" ];
     allowedUDPPorts = [ config.services.tailscale.port ];
-#    allowedTCPPortRanges = [ { from = 8000; to = 8999; } ];  # packer http server
-    checkReversePath = "loose";  # for tailscale
+    #    allowedTCPPortRanges = [ { from = 8000; to = 8999; } ];  # packer http server
+    checkReversePath = "loose"; # for tailscale
   };
 
 
@@ -153,7 +153,7 @@
   nix = {
     package = pkgs.nixFlakes;
     settings = {
-        secret-key-files = /home/pfriedrich/.keys/priv-key.pem;
+      secret-key-files = /home/pfriedrich/.keys/priv-key.pem;
     };
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -162,7 +162,7 @@
 
   sops = {
     defaultSopsFile = ../../secrets/${config.networking.hostName}.yaml;
-    
+
     age = {
       keyFile = "/var/lib/sops-nix/key.txt";
       generateKey = true;

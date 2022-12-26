@@ -8,14 +8,14 @@
     ./sway.nix
     ./utilities.nix
     ./zsh/zsh.nix
-#    nix-colors
+    #    nix-colors
   ];
 
   # Home Manager
   home.username = "pfriedrich";
   home.homeDirectory = "/home/pfriedrich";
 
-#  colorScheme = nix-colors.colorSchemes.nord;
+  #  colorScheme = nix-colors.colorSchemes.nord;
 
   # packages
   nixpkgs.config.allowUnfree = true;
@@ -28,7 +28,7 @@
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
-    (pass.withExtensions (ext: with ext; [pass-otp]))
+    (pass.withExtensions (ext: with ext; [ pass-otp ]))
     terminator
     thunderbird
     yubikey-manager

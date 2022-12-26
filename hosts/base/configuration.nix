@@ -30,7 +30,7 @@
   nix = {
     # trust packages built on a different machine
     settings = {
-        trusted-public-keys = [ "e595.internal.paulfriedrich.me:BRG0TzHjcB93cncYvpY6ZT4TmFAWPH13MEFRf08y/lc=" ];
+      trusted-public-keys = [ "e595.internal.paulfriedrich.me:BRG0TzHjcB93cncYvpY6ZT4TmFAWPH13MEFRf08y/lc=" ];
     };
   };
 }
