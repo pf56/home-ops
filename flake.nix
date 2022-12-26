@@ -23,37 +23,46 @@
       #   config.allowUnfree = true;
       # };
     };
-  in
-  {
-    nixosConfigurations.e595 = nixpkgs.lib.nixosSystem {
+
+    hosts = rec {
+      baseConfig = {
+        useHomeManager = false;
+      };
+
+      e595 = baseConfig // {
+        hostname = "e595";
+        useHomeManager = true;
+      };
+
+      tailscale01 = baseConfig // {
+        hostname = "tailscale01";
+      };
+
+      nomadserver01 = baseConfig // {
+        hostname = "nomadserver-01";
+      };
+    };
+
+    getHostConfig = (host: {
       system = "x86_64-linux";
       modules = [
-        ./hosts/e595/configuration.nix
+        ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+        ./hosts/${host.hostname}/configuration.nix
         sops-nix.nixosModules.sops
+      ] ++ nixpkgs.lib.optionals host.useHomeManager [
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.pfriedrich = import ./home/home.nix;
         }
-      ];
-    };
+       ];
+    });
 
-    nixosConfigurations.tailscale01 = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
-        ./hosts/tailscale01/configuration.nix
-        sops-nix.nixosModules.sops
-      ];
-    };
-
-    nixosConfigurations.nomadserver-01 = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./hosts/nomadserver-01/configuration.nix
-      ];
-    };
+    buildHost = (name: host: nixpkgs.lib.nixosSystem (getHostConfig host));
+  in
+  {
+    nixosConfigurations = nixpkgs.lib.mapAttrs buildHost hosts;
 
     packages.x86_64-linux = {
       vmware = nixos-generators.nixosGenerate {
