@@ -13,7 +13,7 @@
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
 
-  networking.hostName = "nomadserver01";
+  networking.hostName = "nomadserver02";
 
   services.nomad.settings = {
     datacenter = "FKB";
