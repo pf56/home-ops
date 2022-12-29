@@ -41,6 +41,18 @@
         nomadserver01 = baseConfig // {
           hostname = "nomadserver-01";
         };
+
+        consulserver01 = baseConfig // {
+          hostname = "consulserver01";
+        };
+
+        consulserver02 = baseConfig // {
+          hostname = "consulserver02";
+        };
+
+        consulserver03 = baseConfig // {
+          hostname = "consulserver03";
+        };
       };
 
       getHostConfig = (host: {
