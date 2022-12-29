@@ -39,7 +39,7 @@
         };
 
         nomadserver01 = baseConfig // {
-          hostname = "nomadserver-01";
+          hostname = "nomadserver01";
         };
 
         consulserver01 = baseConfig // {

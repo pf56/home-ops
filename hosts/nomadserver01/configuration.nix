@@ -12,7 +12,7 @@
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
 
-  networking.hostName = "nomadserver-01";
+  networking.hostName = "nomadserver01";
 
   system.stateVersion = "22.11";
 }
