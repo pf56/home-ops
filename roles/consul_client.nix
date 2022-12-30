@@ -38,7 +38,7 @@
 
   services.consul = {
     enable = true;
-    webUi = true;
+    webUi = false;
 
     extraConfig = {
       server = false;
