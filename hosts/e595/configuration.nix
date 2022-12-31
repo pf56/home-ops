@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lollypops, ... }:
 
 {
   imports =
@@ -35,6 +35,7 @@
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.pfriedrich = import ../../home/home.nix;
+  home-manager.extraSpecialArgs = { inherit lollypops;};
 
   # users
   users.users.pfriedrich = {

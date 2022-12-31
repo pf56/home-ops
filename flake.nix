@@ -14,7 +14,7 @@
     lollypops.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, sops-nix, home-manager, nixos-generators, lollypops, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, sops-nix, home-manager, nixos-generators, lollypops, ... }@attrs:
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -37,6 +37,7 @@
 
       getHostConfig = (hostConfig: {
         system = "x86_64-linux";
+        specialArgs = attrs;
         modules = [
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
           home-manager.nixosModules.home-manager

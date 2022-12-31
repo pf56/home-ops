@@ -1,4 +1,4 @@
-{ config, pkgs, nix-colors ? import <nix-colors>, ... }:
+{ config, pkgs, nix-colors ? import <nix-colors>, lollypops, ... }:
 
 {
   imports = [
@@ -9,6 +9,7 @@
     ./utilities.nix
     ./zsh/zsh.nix
     #    nix-colors
+    lollypops.hmModule
   ];
 
   # Home Manager
