@@ -4,7 +4,6 @@
   imports = [
     ./hardware-configuration.nix
     ../base/configuration.nix
-    ../../roles/vmware_guest.nix
   ];
 
   boot.loader.grub.enable = true;
@@ -12,6 +11,8 @@
   boot.loader.grub.device = "/dev/sda";
 
   networking.hostName = "tailscale01";
+
+  roles.vmwareguest.enable = true;
 
   # setup tailscale
   services.tailscale = {
