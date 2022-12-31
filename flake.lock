@@ -1,5 +1,20 @@
 {
   "nodes": {
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -19,6 +34,27 @@
         "owner": "nix-community",
         "ref": "release-22.11",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "lollypops": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1672425295,
+        "narHash": "sha256-h166c6CKGNaSTOHdl2jfvJVLuMMd8bKkDrH9mUF2Xxo=",
+        "owner": "pinpox",
+        "repo": "lollypops",
+        "rev": "d5706df3985ae7621245ddb4a628e57b227b39b3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "lollypops",
         "type": "github"
       }
     },
@@ -108,6 +144,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "lollypops": "lollypops",
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",

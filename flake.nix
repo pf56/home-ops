@@ -10,9 +10,11 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
+    lollypops.url = "github:pinpox/lollypops";
+    lollypops.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, sops-nix, home-manager, nixos-generators, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, sops-nix, home-manager, nixos-generators, lollypops, ... }:
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -39,6 +41,7 @@
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
+          lollypops.nixosModules.lollypops
           { imports = builtins.attrValues roles; }
           hostConfig
         ];
@@ -68,5 +71,8 @@
       };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      apps.x86_64-linux.default = lollypops.apps.x86_64-linux.default {
+        configFlake = self;
+      };
     };
 }
