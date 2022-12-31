@@ -24,6 +24,13 @@
         # };
       };
 
+      roles = builtins.listToAttrs (map
+        (x: {
+          name = x;
+          value = import (./roles + "/${x}");
+        })
+        (builtins.attrNames (builtins.readDir ./roles)));
+
       hosts = rec {
         baseConfig = {
           useHomeManager = false;
@@ -67,6 +74,7 @@
         system = "x86_64-linux";
         modules = [
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+          { imports = builtins.attrValues roles; }
           ./hosts/${host.hostname}/configuration.nix
           sops-nix.nixosModules.sops
         ] ++ nixpkgs.lib.optionals host.useHomeManager [

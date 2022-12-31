@@ -4,8 +4,6 @@
   imports = [
     ./hardware-configuration.nix
     ../base/configuration.nix
-    ../../roles/vmware_guest.nix
-    ../../roles/consul_server.nix
   ];
 
   boot.loader.grub.enable = true;
@@ -14,13 +12,21 @@
 
   networking.hostName = "consulserver01";
 
-  services.consul = {
-    extraConfig.datacenter = "FKB";
-    interface =
-      {
-        bind = "ens33";
-        advertise = "ens33";
-      };
+  roles.vmwareguest.enable = true;
+
+  roles.consul = {
+    enable = true;
+    datacenter = "FKB";
+    webUi = true;
+    interface = "ens33";
+
+    server = true;
+    bootstrapExpect = 3;
+    retryJoin = [
+      "consulserver01.internal.paulfriedrich.me"
+      "consulserver02.internal.paulfriedrich.me"
+      "consulserver03.internal.paulfriedrich.me"
+    ];
   };
 
   system.stateVersion = "22.11";

@@ -4,9 +4,6 @@
   imports = [
     ./hardware-configuration.nix
     ../base/configuration.nix
-    ../../roles/vmware_guest.nix
-    ../../roles/nomad_server.nix
-    ../../roles/consul_client.nix
   ];
 
   boot.loader.grub.enable = true;
@@ -15,17 +12,27 @@
 
   networking.hostName = "nomadserver02";
 
-  services.nomad.settings = {
+  roles.vmwareguest.enable = true;
+
+  roles.nomad = {
+    enable = true;
     datacenter = "FKB";
+    webUi = true;
+
+    server = true;
+    bootstrapExpect = 3;
   };
 
-  services.consul = {
-    extraConfig.datacenter = "FKB";
-    interface =
-      {
-        bind = "ens33";
-        advertise = "ens33";
-      };
+  roles.consul = {
+    enable = true;
+    datacenter = "FKB";
+    webUi = false;
+    interface = "ens33";
+    retryJoin = [
+      "consulserver01.internal.paulfriedrich.me"
+      "consulserver02.internal.paulfriedrich.me"
+      "consulserver03.internal.paulfriedrich.me"
+    ];
   };
 
   system.stateVersion = "22.11";
