@@ -31,6 +31,10 @@
     ];
   };
 
+  # setup home manager
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.pfriedrich = import ../../home/home.nix;
 
   # users
   users.users.pfriedrich = {

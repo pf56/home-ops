@@ -17,11 +17,6 @@
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
         unstable = nixpkgs-unstable.legacyPackages.${prev.system};
-        # use this variant if unfree packages are needed:
-        # unstable = import nixpkgs-unstable {
-        #   inherit system;
-        #   config.allowUnfree = true;
-        # };
       };
 
       roles = builtins.listToAttrs (map
@@ -31,63 +26,25 @@
         })
         (builtins.attrNames (builtins.readDir ./roles)));
 
-      hosts = rec {
-        baseConfig = {
-          useHomeManager = false;
-        };
+      hosts = builtins.listToAttrs (map
+        (x: {
+          name = x;
+          value = import (./hosts + "/${x}/configuration.nix");
+        })
+        (builtins.attrNames (builtins.readDir ./hosts)));
 
-        e595 = baseConfig // {
-          hostname = "e595";
-          useHomeManager = true;
-        };
-
-        tailscale01 = baseConfig // {
-          hostname = "tailscale01";
-        };
-
-        nomadserver01 = baseConfig // {
-          hostname = "nomadserver01";
-        };
-
-        nomadserver02 = baseConfig // {
-          hostname = "nomadserver02";
-        };
-
-        nomadserver03 = baseConfig // {
-          hostname = "nomadserver03";
-        };
-
-        consulserver01 = baseConfig // {
-          hostname = "consulserver01";
-        };
-
-        consulserver02 = baseConfig // {
-          hostname = "consulserver02";
-        };
-
-        consulserver03 = baseConfig // {
-          hostname = "consulserver03";
-        };
-      };
-
-      getHostConfig = (host: {
+      getHostConfig = (hostConfig: {
         system = "x86_64-linux";
         modules = [
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
-          { imports = builtins.attrValues roles; }
-          ./hosts/${host.hostname}/configuration.nix
-          sops-nix.nixosModules.sops
-        ] ++ nixpkgs.lib.optionals host.useHomeManager [
           home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.pfriedrich = import ./home/home.nix;
-          }
+          sops-nix.nixosModules.sops
+          { imports = builtins.attrValues roles; }
+          hostConfig
         ];
       });
 
-      buildHost = (name: host: nixpkgs.lib.nixosSystem (getHostConfig host));
+      buildHost = (name: hostConfig: nixpkgs.lib.nixosSystem (getHostConfig hostConfig));
     in
     {
       nixosConfigurations = nixpkgs.lib.mapAttrs buildHost hosts;
