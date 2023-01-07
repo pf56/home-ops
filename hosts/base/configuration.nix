@@ -27,6 +27,12 @@
     enable = true;
   };
 
+  lollypops.deployment = {
+    ssh.host = "${config.networking.hostName}.internal.paulfriedrich.me";
+    ssh.user = "pfriedrich";
+    sudo.enable = true;
+  };
+
   nix = {
     # trust packages built on a different machine
     settings = {
