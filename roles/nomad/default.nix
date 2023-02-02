@@ -38,6 +38,22 @@ in
           Whether to enable the web interface.
         '';
       };
+
+      docker = mkOption {
+        type = types.bool;
+        default = false;
+        description = mdDoc ''
+          Whether Docker should be enabled.
+        '';
+      };
+
+      supplementaryGroups = mkOption {
+        type = types.listOf types.str;
+        default = null;
+        description = mdDoc ''
+          Additional groups to add to the systemd unit.
+        '';
+      };
     };
   };
 
@@ -46,7 +62,8 @@ in
       {
         enable = true;
         package = pkgs.nomad_1_4;
-        enableDocker = false;
+        dropPrivileges = false;
+        enableDocker = cfg.docker;
 
         settings = {
           datacenter = cfg.datacenter;
@@ -59,7 +76,30 @@ in
           bootstrap_expect = cfg.bootstrapExpect;
         };
       })
+      (mkIf (!cfg.server) {
+        # client specific options
+        settings.client = {
+          enabled = true;
+          cni_path = "${pkgs.cni-plugins}/bin";
+        };
+      })
+      (mkIf (!cfg.server && cfg.docker) {
+        extraSettingsPaths = [ "/etc/nomad-docker.hcl" ];
+      })
     ];
+
+    environment.etc."/nomad-docker.hcl" = {
+      source = ./nomad-docker.hcl;
+    };
+
+    systemd.services.nomad =
+      let
+        supplementaryGroups = cfg.supplementaryGroups
+          ++ (lib.optionals (cfg.docker)) [ "docker" ];
+      in
+      mkIf (cfg.supplementaryGroups != null) {
+        serviceConfig.SupplementaryGroups = pkgs.lib.mkForce (pkgs.lib.concatStringsSep " " supplementaryGroups);
+      };
 
     networking.firewall = {
       enable = true;
@@ -69,6 +109,14 @@ in
       ] ++ (lib.optionals (cfg.webUi) [
         4646 # HTTP / web ui
       ]);
+
+      allowedTCPPortRanges = [
+        {
+          # sidecar proxies
+          from = 20000;
+          to = 32000;
+        }
+      ];
 
       allowedUDPPorts = [
         4648 # Serf WAN

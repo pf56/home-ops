@@ -2,6 +2,10 @@ keys:
   - &pfriedrich age1jxmmkdzm0gas4z03q6mnzcv5exs7wlxjxrp8qzh0eujzqk8wvvyqk3qcjy
   - &e595 age1yudlqm69y6jl6vy45fvl8u0kfzp9f7fzrmh5n98muxlj5j6weutq9ckk2e
   - &tailscale01 age16w0xprw344h2f388jcdj4xydd8evjgrchz9uqmq552cf4v65fg3q44p67j
+  - &nomadserver01 age15v6yvntsk9zfmlghkpuspncx2g6p065nqj8zejgau0dcq6ntxfus4pr0ta
+  - &nomadserver02 age1z4t8p382904qv0rhqj8clp6yzm772k33fc5danvcs25eatkrz50q66s8vp
+  - &nomadserver03 age1xct5l7uzzvw6jyse5xv4uegtmg3nzmtye60jcw6rmmp77fq2gvys2h58vq
+  - &nomadclient01 age1llsz23rl6hhjl9ls5ax29hrg7qzghfa6zvhayt70ls3zm5gjysrq3vsyng
   - &storage age1cft5ex8pc5hn75f4dyraad4qr25lcsnvtac3ss3nv29n5slxepqqqckkn9
 creation_rules:
   - path_regex: secrets/e595\.yaml$
@@ -14,6 +18,18 @@ creation_rules:
       - age:
         - *pfriedrich
         - *tailscale01
+  - path_regex: secrets/nomadserver\.yaml$
+    key_groups:
+      - age:
+        - *pfriedrich
+        - *nomadserver01
+        - *nomadserver02
+        - *nomadserver03
+  - path_regex: secrets/nomadclient\.yaml$
+    key_groups:
+      - age:
+        - *pfriedrich
+        - *nomadclient01
   - path_regex: secrets/storage\.yaml$
     key_groups:
       - age:
