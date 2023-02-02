@@ -35,7 +35,7 @@
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.pfriedrich = import ../../home/home.nix;
-  home-manager.extraSpecialArgs = { inherit lollypops;};
+  home-manager.extraSpecialArgs = { inherit lollypops; };
 
   # users
   users.users.pfriedrich = {
