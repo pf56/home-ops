@@ -69,6 +69,12 @@
     ];
   };
 
+  services.snapraid-aio-script = {
+    enable = true;
+    emailAddress = "status" + "@" + "mail.paulfriedrich.me";
+    fromEmailAddress = "status" + "@" + "mail.paulfriedrich.me";
+  };
+
   # samba users
   users.users.nomad = {
     uid = 1001;
@@ -154,41 +160,6 @@
       user = "mail" + "@" + "paulfriedrich.me";
       passwordeval = "cat ${config.sops.secrets.email_password.path}";
     };
-  };
-
-  systemd.services."systemd-email@" = {
-    description = "Sends a status email after %i completes.";
-    serviceConfig = {
-      Type = "oneshot";
-      DynamicUser = "yes";
-      Group = "systemd-journal";
-      SupplementaryGroups = config.users.groups.keys.name;
-    };
-
-    scriptArgs = "status" + "@" + "mail.paulfriedrich.me" + " %i";
-    script = ''
-      #!/bin/sh
-
-      ${pkgs.msmtp}/bin/sendmail -t <<ERRMAIL
-      To: $1
-      From: systemd <root@$HOSTNAME>
-      Subject: $2
-      Content-Transfer-Encoding: 8bit
-      Content-Type: text/plain; charset=UTF-8
-
-      $(systemctl status --full "$2")
-      ERRMAIL
-    '';
-  };
-
-  systemd.services."snapraid-sync".unitConfig = {
-    Wants = "systemd-email@snapraid-sync.service";
-    Before = "systemd-email@snapraid-sync.service";
-  };
-
-  systemd.services."snapraid-scrub".unitConfig = {
-    Wants = "systemd-email@snapraid-scrub.service";
-    Before = "systemd-email@snapraid-scrub.service";
   };
 
   sops.secrets = {

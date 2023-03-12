@@ -12,9 +12,14 @@
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
     lollypops.url = "github:pinpox/lollypops";
     lollypops.inputs.nixpkgs.follows = "nixpkgs";
+
+    snapraid-aio-script = {
+      url = "sourcehut:~pf56/snapraid-aio-script-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, sops-nix, home-manager, nixos-generators, lollypops, ... }@attrs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, sops-nix, home-manager, nixos-generators, lollypops, snapraid-aio-script, ... }@attrs:
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -43,6 +48,7 @@
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
           lollypops.nixosModules.lollypops
+          snapraid-aio-script.nixosModules.snapraid-aio-script
           { imports = builtins.attrValues roles; }
           hostConfig
         ];
