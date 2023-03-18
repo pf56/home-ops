@@ -26,6 +26,23 @@
         unstable = nixpkgs-unstable.legacyPackages.${prev.system};
       };
 
+      overlay-vscode-extensions = final: prev:
+        let
+          inherit (nixpkgs.legacyPackages.${system}.vscode-utils) buildVscodeMarketplaceExtension;
+        in
+        {
+          vscode-cust-extensions = {
+            hashicorp.hcl = buildVscodeMarketplaceExtension {
+              mktplcRef = {
+                name = "hcl";
+                publisher = "hashicorp";
+                version = "0.3.2";
+                sha256 = "731177927618dbd3ef4f7ae4452f121b1327f6fcede7ac30057a64d8fa8ed26a";
+              };
+            };
+          };
+        };
+
       roles = builtins.listToAttrs (map
         (x: {
           name = x;
@@ -44,7 +61,7 @@
         system = "x86_64-linux";
         specialArgs = attrs;
         modules = [
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-vscode-extensions ]; })
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
           lollypops.nixosModules.lollypops

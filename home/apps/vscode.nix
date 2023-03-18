@@ -8,6 +8,7 @@
     extensions = with pkgs.vscode-extensions; [
       bbenoist.nix
       eamodio.gitlens
+      pkgs.vscode-cust-extensions.hashicorp.hcl
     ];
   };
 }
