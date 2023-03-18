@@ -32,6 +32,7 @@
     (pass.withExtensions (ext: with ext; [ pass-otp ]))
     terminator
     thunderbird
+    trash-cli
     yubikey-manager
     yubikey-touch-detector
   ];
