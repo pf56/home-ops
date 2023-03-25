@@ -14,6 +14,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/2b0ec7c4-5e0f-47fb-a3e9-6b0370889653";
     fsType = "ext4";
+    options = [ "noatime" "discard" ];
   };
 
   # data disks
@@ -62,6 +63,7 @@
   fileSystems."/media/temp" = {
     device = "/dev/disk/by-uuid/018682eb-4733-4117-8a35-766fcacf3d6b";
     fsType = "ext4";
+    options = [ "noatime" "discard" ];
   };
 
   # mergerfs
@@ -73,7 +75,7 @@
       "allow_other"
       "use_ino"
       "minfreespace=20G"
-      "cache.files=partial"
+      "cache.files=off"
       "dropcacheonclose=true"
       "category.create=mfs"
     ];

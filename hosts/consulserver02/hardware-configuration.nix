@@ -15,6 +15,7 @@
     {
       device = "/dev/disk/by-uuid/d5b20fa0-4318-4b93-ae26-ce24e8da7b00";
       fsType = "ext4";
+      options = [ "noatime" "discard" ];
     };
 
   swapDevices = [ ];
