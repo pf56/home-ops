@@ -16,6 +16,7 @@
       device = "/dev/disk/by-uuid/2b0ec7c4-5e0f-47fb-a3e9-6b0370889653";
       fsType = "ext4";
       autoResize = true;
+      options = [ "noatime" "discard" ];
     };
 
   swapDevices = [ ];

@@ -110,16 +110,29 @@
     name = "iqn.2020-08.org.linux-iscsi.initiatorhost:nomadclient01";
     discoverPortal = "10.0.60.14";
     enableAutoLoginOut = true;
+
+    extraConfig = ''
+      node.session.auth.authmethod = CHAP
+      node.session.auth.chap_algs = SHA3-256,SHA256,SHA1,MD5
+    '';
+
+    extraConfigFile = "${config.lollypops.secrets.files.iscsi-credentials.path}";
+  };
+
+  lollypops.secrets.files = {
+    iscsi-credentials = {
+      cmd = "pass Network/nix/nomadclient/iscsi-credentials";
+    };
   };
 
   fileSystems."/mnt/tandoor" = {
-    device = "/dev/disk/by-uuid/c21d2827-36b1-4044-948a-36ffe009626c";
+    device = "/dev/disk/by-uuid/103e778c-b317-4821-b46a-d7cf3d2b7992";
     fsType = "ext4";
     options =
       let
         automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       in
-      [ "_netdev,${automount_opts}" ];
+      [ "_netdev,noatime,discard,${automount_opts}" ];
   };
 
   system.stateVersion = "22.11";
