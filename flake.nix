@@ -62,6 +62,11 @@
         specialArgs = attrs;
         modules = [
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-vscode-extensions ]; })
+          {
+            environment.etc."nix/inputs/nixpkgs".source = nixpkgs.outPath;
+            nix.nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
+            nix.registry.nixpkgs.flake = nixpkgs;
+          }
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
           lollypops.nixosModules.lollypops
