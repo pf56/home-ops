@@ -13,6 +13,7 @@
   # use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   boot.kernelParams = [ "nohibernate" ]; # not supported on zfs
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.devNodes = "/dev/";
