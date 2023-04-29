@@ -10,6 +10,14 @@
       ignoreSpace = true;
     };
 
+    shellAliases = {
+      ls = "lsd";
+      l = "ls -l";
+      la = "ls -a";
+      lla = "ls -la";
+      lt = "ls --tree";
+    };
+
     initExtra = ''
       # highlight the selected entry
       zstyle ':completion:*' menu select
