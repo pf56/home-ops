@@ -85,6 +85,7 @@
         vmware = nixos-generators.nixosGenerate {
           system = "x86_64-linux";
           modules = [
+            sops-nix.nixosModules.sops
             lollypops.nixosModules.lollypops
             ./hosts/base/vmware_image.nix
           ];
@@ -94,6 +95,7 @@
         virtualbox = nixos-generators.nixosGenerate {
           system = "x86_64-linux";
           modules = [
+            sops-nix.nixosModules.sops
             lollypops.nixosModules.lollypops
             ./hosts/base/virtualbox_image.nix
           ];
