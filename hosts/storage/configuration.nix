@@ -66,6 +66,7 @@
       ".AppleDB"
       "/vms/"
       "/downloads/"
+      "/luns/"
     ];
   };
 
@@ -124,6 +125,16 @@
 
       movies = {
         path = "/storage/movies";
+        browseable = "no";
+        writable = "yes";
+
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "valid users" = "nomad";
+      };
+
+      downloads = {
+        path = "/storage/downloads";
         browseable = "no";
         writable = "yes";
 

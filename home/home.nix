@@ -26,6 +26,7 @@
     discord
     firefox
     helix
+    k9s
     (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
     noto-fonts
     noto-fonts-cjk
