@@ -25,6 +25,7 @@
     direnv
     discord
     firefox
+    helix
     (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
     noto-fonts
     noto-fonts-cjk
