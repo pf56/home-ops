@@ -3,6 +3,7 @@
 {
   programs.zsh = {
     enable = true;
+    enableAutosuggestions = true;
 
     initExtra = ''
       # highlight the selected entry
@@ -27,16 +28,6 @@
     '';
 
     plugins = [
-      {
-        name = "zsh-autosuggestions";
-        src = pkgs.fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-autosugestions";
-          rev = "v0.7.0";
-          sha256 = "1g3pij5qn2j7v7jjac2a63lxd97mcsgw6xq6k5p7835q9fjiid98";
-        };
-      }
-
       {
         name = "forgit";
         src = pkgs.fetchFromGitHub {
