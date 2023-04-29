@@ -6,6 +6,10 @@
     enableAutosuggestions = true;
     enableSyntaxHighlighting = true;
 
+    history = {
+      ignoreSpace = true;
+    };
+
     initExtra = ''
       # highlight the selected entry
       zstyle ':completion:*' menu select
@@ -21,9 +25,6 @@
       # ctrl+left/right
       bindkey $terminfo[kLFT5] backward-word
       bindkey $terminfo[kRIT5] forward-word
-
-      # don't put commands into the history if the first character is a space
-      setopt HIST_IGNORE_SPACE
 
       eval "$(direnv hook zsh)"
     '';
