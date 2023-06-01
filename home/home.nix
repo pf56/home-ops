@@ -25,7 +25,6 @@
     direnv
     discord
     firefox
-    helix
     k9s
     (pass.withExtensions (ext: with ext; [ pass-otp ]))
     terminator
@@ -33,6 +32,11 @@
     trash-cli
     yubikey-manager
     yubikey-touch-detector
+
+    # helix + language servers
+    helix
+    nodePackages.yaml-language-server
+    omnisharp-roslyn
 
     # fonts
     (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
