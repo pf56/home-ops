@@ -27,16 +27,18 @@
     firefox
     helix
     k9s
-    (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
     (pass.withExtensions (ext: with ext; [ pass-otp ]))
     terminator
     thunderbird
     trash-cli
     yubikey-manager
     yubikey-touch-detector
+
+    # fonts
+    (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
   ];
 
   # configure git
