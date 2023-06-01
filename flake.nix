@@ -23,7 +23,7 @@
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
-        unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+        unstable = import nixpkgs-unstable { inherit system; inherit (final) config; };
       };
 
       overlay-vscode-extensions = final: prev:
