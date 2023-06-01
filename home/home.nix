@@ -25,6 +25,7 @@
     direnv
     discord
     firefox
+    jetbrains.rider
     k9s
     (pass.withExtensions (ext: with ext; [ pass-otp ]))
     terminator
