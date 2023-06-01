@@ -2,11 +2,11 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-22.11;
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-23.05;
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     sops-nix.url = github:Mic92/sops-nix;
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = github:nix-community/home-manager?ref=release-22.11;
+    home-manager.url = github:nix-community/home-manager/release-23.05;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
@@ -43,6 +43,16 @@
           };
         };
 
+      overlay-bcompare = final: prev: {
+        bcompare = prev.bcompare.overrideAttrs (finalAttrs: prevAttrs: {
+          version = "4.4.6-27483";
+          src = final.fetchurl {
+            url = "https://www.scootersoftware.com/files/bcompare-4.4.6.27483_amd64.deb";
+            sha256 = "0j83kqj9xvvffw70a6363m6swfld8d9b670yb4s9zwc9zh0zzryp";
+          };
+        });
+      };
+
       roles = builtins.listToAttrs (map
         (x: {
           name = x;
@@ -61,7 +71,7 @@
         system = "x86_64-linux";
         specialArgs = attrs;
         modules = [
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-vscode-extensions ]; })
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-vscode-extensions overlay-bcompare ]; })
           {
             environment.etc."nix/inputs/nixpkgs".source = nixpkgs.outPath;
             nix.nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
