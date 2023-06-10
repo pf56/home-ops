@@ -211,7 +211,7 @@ in
         "1133:16531:Logitech_PRO_X" = {
           accel_profile = "flat";
           pointer_accel = "0.2";
-          scroll_factor = "2.0";
+#          scroll_factor = "2.0";
         };
 
         # internal keyboard
