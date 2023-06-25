@@ -53,6 +53,7 @@
         });
       };
 
+      # load all roles from the ./roles directory
       roles = builtins.listToAttrs (map
         (x: {
           name = x;
@@ -60,6 +61,7 @@
         })
         (builtins.attrNames (builtins.readDir ./roles)));
 
+      # load all hosts and their configuration from the ./hosts directory
       hosts = builtins.listToAttrs (map
         (x: {
           name = x;
