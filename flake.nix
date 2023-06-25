@@ -69,15 +69,15 @@
         })
         (builtins.attrNames (builtins.readDir ./hosts)));
 
-      getHostConfig = (hostConfig: {
+      getHostConfig = (hostConfig: nixpkgsVersion: {
         system = "x86_64-linux";
         specialArgs = attrs;
         modules = [
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-vscode-extensions overlay-bcompare ]; })
           {
-            environment.etc."nix/inputs/nixpkgs".source = nixpkgs.outPath;
+            nixpkgs.overlays = [ overlay-unstable overlay-vscode-extensions overlay-bcompare ];
             nix.nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
-            nix.registry.nixpkgs.flake = nixpkgs;
+            nix.registry.nixpkgs.flake = nixpkgsVersion;
+            environment.etc."nix/inputs/nixpkgs".source = nixpkgsVersion.outPath;
           }
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
@@ -88,7 +88,23 @@
         ];
       });
 
-      buildHost = (name: hostConfig: nixpkgs.lib.nixosSystem (getHostConfig hostConfig));
+      # get the nixpkgs version to use for a specific host
+      getNixPkgsForHost = (hostName:
+        let
+          mapping = {
+            "e595" = nixpkgs-unstable;
+          };
+        in
+        if (builtins.hasAttr hostName mapping) then mapping."${hostName}" else nixpkgs);
+
+      # get the host configuration and build nixosSystem
+      buildHost = (name: hostConfig:
+        let
+          nixpkgsVersion = getNixPkgsForHost name;
+          systemConfig = (getHostConfig hostConfig) nixpkgsVersion;
+        in
+        nixpkgsVersion.lib.nixosSystem systemConfig
+      );
     in
     {
       nixosConfigurations = nixpkgs.lib.mapAttrs buildHost hosts;
