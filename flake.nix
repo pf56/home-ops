@@ -69,7 +69,7 @@
         })
         (builtins.attrNames (builtins.readDir ./hosts)));
 
-      getHostConfig = (hostConfig: nixpkgsVersion: {
+      getSystemConfig = (hostConfig: nixpkgsVersion: {
         system = "x86_64-linux";
         specialArgs = attrs;
         modules = [
@@ -101,7 +101,7 @@
       buildHost = (name: hostConfig:
         let
           nixpkgsVersion = getNixPkgsForHost name;
-          systemConfig = (getHostConfig hostConfig) nixpkgsVersion;
+          systemConfig = (getSystemConfig hostConfig) nixpkgsVersion;
         in
         nixpkgsVersion.lib.nixosSystem systemConfig
       );
