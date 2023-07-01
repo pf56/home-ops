@@ -48,7 +48,7 @@ in
       };
 
       supplementaryGroups = mkOption {
-        type = types.listOf types.str;
+        type = types.nullOr (types.listOf types.str);
         default = null;
         description = mdDoc ''
           Additional groups to add to the systemd unit.
