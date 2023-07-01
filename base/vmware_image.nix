@@ -3,7 +3,7 @@
 {
   imports = [
     ./configuration.nix
-    ../../roles/vmware_guest.nix
+    ../roles/vmwareguest
   ];
 
   networking.hostName = "";

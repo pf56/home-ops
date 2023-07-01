@@ -115,7 +115,7 @@
           modules = [
             sops-nix.nixosModules.sops
             lollypops.nixosModules.lollypops
-            ./hosts/base/vmware_image.nix
+            ./base/vmware_image.nix
           ];
           format = "vmware";
         };
@@ -125,7 +125,7 @@
           modules = [
             sops-nix.nixosModules.sops
             lollypops.nixosModules.lollypops
-            ./hosts/base/virtualbox_image.nix
+            ./base/virtualbox_image.nix
           ];
           format = "virtualbox";
         };
