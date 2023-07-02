@@ -15,8 +15,38 @@
 
   lollypops.deployment.ssh.host = lib.mkForce "10.0.60.17";
 
-  networking.firewall.allowedTCPPorts = [ 53 ];
+  networking.interfaces."lo" = {
+    name = "lo";
+    ipv4 = {
+      addresses = [
+        {
+          address = "172.16.60.100";
+          prefixLength = 32;
+        }
+      ];
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [ 53 179 ];
   networking.firewall.allowedUDPPorts = [ 53 ];
+
+  services.frr = {
+    bgp = {
+      enable = true;
+
+      config = ''
+        route-map ALLOW-ALL permit 100
+
+        router bgp 4200060017
+          neighbor 10.0.60.1 remote-as 4200060001
+          address-family ipv4 unicast
+            neighbor 10.0.60.1 activate
+            neighbor 10.0.60.1 route-map ALLOW-ALL out
+            network 172.16.60.100/32
+          exit-address-family
+      '';
+    };
+  };
 
   services.routedns = {
     enable = true;
