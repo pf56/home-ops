@@ -12,3 +12,4 @@ $ORIGIN 15.0.10.IN-ADDR.ARPA.
 					NS		ns01.internal.paulfriedrich.me. 
 
 3				IN	PTR		esxi.internal.paulfriedrich.me.
+4				IN	PTR		storage.internal.paulfriedrich.me.
