@@ -129,6 +129,16 @@
           ];
           format = "virtualbox";
         };
+
+        raw-efi = nixos-generators.nixosGenerate {
+          system = "x86_64-linux";
+          modules = [
+            sops-nix.nixosModules.sops
+            lollypops.nixosModules.lollypops
+            ./base/raw-efi_image.nix
+          ];
+          format = "raw-efi";
+        };
       };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
