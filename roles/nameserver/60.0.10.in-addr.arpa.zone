@@ -9,9 +9,11 @@ $ORIGIN 60.0.10.IN-ADDR.ARPA.
                         		86400           ; Min TTL
 								)
 
-					NS		ns01.internal.paulfriedrich.me. 
+					NS		ns01.internal.paulfriedrich.me.
+					NS		ns02.internal.paulfriedrich.me. 
 
 17				IN	PTR		ns01.internal.paulfriedrich.me.
+18				IN	PTR		ns02.internal.paulfriedrich.me.
 
 6				IN	PTR		tailscale01.internal.paulfriedrich.me.
 8				IN	PTR		git.internal.paulfriedrich.me.

@@ -9,7 +9,8 @@ $ORIGIN internal.paulfriedrich.me.
                         		86400           ; Min TTL
 								)
 
-					NS		ns01.internal.paulfriedrich.me. 
+					NS		ns01.internal.paulfriedrich.me.
+					NS		ns02.internal.paulfriedrich.me. 
 
 
 ; NS
