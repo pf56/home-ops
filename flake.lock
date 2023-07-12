@@ -44,11 +44,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1680167551,
-        "narHash": "sha256-WaNmRFHMwQXTpA3LLK+phDqVZtNMngChiFBN0QV6Fmg=",
+        "lastModified": 1689152190,
+        "narHash": "sha256-7pBmXpKMBztnS11r9Lrlq7ZdmMcYMZEgkoy4UIf4nPI=",
         "owner": "pinpox",
         "repo": "lollypops",
-        "rev": "f67230893a1bdd0d503c3d8c4f62ac55886735d5",
+        "rev": "ba0705508b215f4ba9cc2e6b7b9f956eefde13d3",
         "type": "github"
       },
       "original": {
