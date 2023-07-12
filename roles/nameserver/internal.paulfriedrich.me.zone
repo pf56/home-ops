@@ -15,7 +15,7 @@ $ORIGIN internal.paulfriedrich.me.
 
 ; NS
 ns01			IN	A		10.0.60.17
-
+ns02			IN	A		10.0.60.18
 
 ; MGMT
 esxi			IN	A		10.0.15.3
@@ -28,6 +28,8 @@ printer			IN	A		10.0.20.2
 
 ; SERVER
 ldap01			IN	A		10.0.60.2
+stepca			IN	A		10.0.60.4
+ca				IN	CNAME	stepca
 tailscale01		IN	A		10.0.60.6
 git				IN	A		10.0.60.8
 
