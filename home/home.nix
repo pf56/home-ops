@@ -1,4 +1,4 @@
-{ config, pkgs, nix-colors ? import <nix-colors>, lollypops, ... }:
+{ config, pkgs, nix-colors ? import <nix-colors>, lollypops, talhelper, ... }:
 
 {
   imports = [
@@ -44,6 +44,8 @@
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
+
+    talhelper.packages.${pkgs.system}.default
   ];
 
   # configure git

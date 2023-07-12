@@ -12,6 +12,8 @@
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
     lollypops.url = "github:pinpox/lollypops";
     lollypops.inputs.nixpkgs.follows = "nixpkgs";
+    talhelper.url = "github:budimanjojo/talhelper";
+    talhelper.inputs.nixpkgs.follows = "nixpkgs";
 
     snapraid-aio-script = {
       url = "sourcehut:~pf56/snapraid-aio-script-nix";
@@ -79,6 +81,7 @@
             nix.registry.nixpkgs.flake = nixpkgsVersion;
             environment.etc."nix/inputs/nixpkgs".source = nixpkgsVersion.outPath;
           }
+          { _module.args = attrs; }
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
           lollypops.nixosModules.lollypops
