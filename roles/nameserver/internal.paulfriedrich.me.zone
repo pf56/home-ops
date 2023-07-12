@@ -27,6 +27,7 @@ printer			IN	A		10.0.20.2
 
 
 ; SERVER
+ldap01			IN	A		10.0.60.2
 tailscale01		IN	A		10.0.60.6
 git				IN	A		10.0.60.8
 
