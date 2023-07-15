@@ -1,0 +1,4 @@
+- op: add
+  path: /machine/kubelet/extraArgs
+  value:
+    register-with-taints: node.cilium.io/agent-not-ready=true:NoExecute

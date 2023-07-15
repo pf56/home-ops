@@ -1,0 +1,113 @@
+clusterName: internal-paulfriedrich-me-prod
+talosVersion: v1.4.5
+kubernetesVersion: v1.27.2
+endpoint: https://kube.internal.paulfriedrich.me:6443
+nodes:
+  - hostname: taloscontrolplane01
+    ipAddress: 10.0.60.7
+    installDisk: /dev/vda
+    controlPlane: true
+    nameservers:
+      - 10.0.60.1
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 00:a0:98:24:ce:69
+        dhcp: false
+        addresses:
+          - 10.0.60.7/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.60.1
+        vip:
+          ip: 10.0.60.5
+  - hostname: taloscontrolplane02
+    ipAddress: 10.0.60.11
+    installDisk: /dev/vda
+    controlPlane: true
+    nameservers:
+      - 10.0.60.1
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 00:a0:98:4f:1c:57
+        dhcp: false
+        addresses:
+          - 10.0.60.11/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.60.1
+        vip:
+          ip: 10.0.60.5
+  - hostname: taloscontrolplane03
+    ipAddress: 10.0.60.12
+    installDisk: /dev/vda
+    controlPlane: true
+    nameservers:
+      - 10.0.60.1
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 00:a0:98:5f:a6:e7
+        dhcp: false
+        addresses:
+          - 10.0.60.12/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.60.1
+        vip:
+          ip: 10.0.60.5
+  - hostname: talosworker01
+    ipAddress: 10.0.60.9
+    installDisk: /dev/vda
+    controlPlane: false
+    nameservers:
+      - 10.0.60.1
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 00:a0:98:31:e5:ea
+        dhcp: false
+        addresses:
+          - 10.0.60.9/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.60.1
+
+  - hostname: talosworker02
+    ipAddress: 10.0.60.10
+    installDisk: /dev/vda
+    controlPlane: false
+    nameservers:
+      - 10.0.60.1
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 00:a0:98:16:48:10
+        dhcp: false
+        addresses:
+          - 10.0.60.10/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.60.1
+
+  - hostname: talosworker03
+    ipAddress: 10.0.60.13
+    installDisk: /dev/vda
+    controlPlane: false
+    nameservers:
+      - 10.0.60.1
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 00:a0:98:31:dd:4a
+        dhcp: false
+        addresses:
+          - 10.0.60.13/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.60.1
+
+controlPlane:
+  patches:
+    - "@./patches/install-cilium-controlplane.yaml"
+    - "@./patches/install-cilium.yaml"
+
+worker:
+  patches:
+    - "@./patches/install-cilium-worker.yaml"
+
