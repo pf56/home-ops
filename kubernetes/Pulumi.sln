@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello-world", "apps\hello-world\hello-world.csproj", "{8D4BC591-2157-4C84-952C-795AADF72864}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{795D0353-A5BD-4B8F-AC2A-C317EEB3ADF4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{2E9AB470-9C64-48F7-9A41-5BE3238E5F44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piraeus", "infrastructure\piraeus\Piraeus.csproj", "{C44D18CF-7034-4ACA-B56B-AF4C6174FF85}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{6D99D8F0-ED22-45A2-AE8C-9EC10E50C659}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pulumi.Crds", "common\crds\Pulumi.Crds.csproj", "{377C5367-7471-4A3E-921A-7E16EC2F6E2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rook", "infrastructure\rook\Rook.csproj", "{89EC519A-843F-43FA-B712-52FD0681F093}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D4BC591-2157-4C84-952C-795AADF72864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D4BC591-2157-4C84-952C-795AADF72864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D4BC591-2157-4C84-952C-795AADF72864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D4BC591-2157-4C84-952C-795AADF72864}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C44D18CF-7034-4ACA-B56B-AF4C6174FF85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C44D18CF-7034-4ACA-B56B-AF4C6174FF85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C44D18CF-7034-4ACA-B56B-AF4C6174FF85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C44D18CF-7034-4ACA-B56B-AF4C6174FF85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{377C5367-7471-4A3E-921A-7E16EC2F6E2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{377C5367-7471-4A3E-921A-7E16EC2F6E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{377C5367-7471-4A3E-921A-7E16EC2F6E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{377C5367-7471-4A3E-921A-7E16EC2F6E2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89EC519A-843F-43FA-B712-52FD0681F093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89EC519A-843F-43FA-B712-52FD0681F093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89EC519A-843F-43FA-B712-52FD0681F093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89EC519A-843F-43FA-B712-52FD0681F093}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8D4BC591-2157-4C84-952C-795AADF72864} = {2E9AB470-9C64-48F7-9A41-5BE3238E5F44}
+		{C44D18CF-7034-4ACA-B56B-AF4C6174FF85} = {795D0353-A5BD-4B8F-AC2A-C317EEB3ADF4}
+		{377C5367-7471-4A3E-921A-7E16EC2F6E2C} = {6D99D8F0-ED22-45A2-AE8C-9EC10E50C659}
+		{89EC519A-843F-43FA-B712-52FD0681F093} = {795D0353-A5BD-4B8F-AC2A-C317EEB3ADF4}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,3 @@
+[submodule "kubernetes/infrastructure/piraeus/piraeus-operator"]
+	path = kubernetes/infrastructure/piraeus/piraeus-operator
+	url = https://github.com/piraeusdatastore/piraeus-operator
