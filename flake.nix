@@ -59,17 +59,17 @@
       roles = builtins.listToAttrs (map
         (x: {
           name = x;
-          value = import (./roles + "/${x}");
+          value = import (./nix/roles + "/${x}");
         })
-        (builtins.attrNames (builtins.readDir ./roles)));
+        (builtins.attrNames (builtins.readDir ./nix/roles)));
 
       # load all hosts and their configuration from the ./hosts directory
       hosts = builtins.listToAttrs (map
         (x: {
           name = x;
-          value = import (./hosts + "/${x}/configuration.nix");
+          value = import (./nix/hosts + "/${x}/configuration.nix");
         })
-        (builtins.attrNames (builtins.readDir ./hosts)));
+        (builtins.attrNames (builtins.readDir ./nix/hosts)));
 
       getSystemConfig = (hostConfig: nixpkgsVersion: {
         system = "x86_64-linux";
@@ -118,7 +118,7 @@
           modules = [
             sops-nix.nixosModules.sops
             lollypops.nixosModules.lollypops
-            ./base/vmware_image.nix
+            ./nix/base/vmware_image.nix
           ];
           format = "vmware";
         };
@@ -128,7 +128,7 @@
           modules = [
             sops-nix.nixosModules.sops
             lollypops.nixosModules.lollypops
-            ./base/virtualbox_image.nix
+            ./nix/base/virtualbox_image.nix
           ];
           format = "virtualbox";
         };
@@ -138,7 +138,7 @@
           modules = [
             sops-nix.nixosModules.sops
             lollypops.nixosModules.lollypops
-            ./base/raw-efi_image.nix
+            ./nix/base/raw-efi_image.nix
           ];
           format = "raw-efi";
         };
