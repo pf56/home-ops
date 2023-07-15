@@ -1,41 +1,48 @@
 $TTL 1d
 $ORIGIN internal.paulfriedrich.me.
 
-@       		IN	SOA		ns01.internal.paulfriedrich.me.		hostmaster.mail.paulfriedrich.me.	(
-                        		2023070201		; serial number YYMMDDNN
-                        		28800           ; Refresh
-                        		7200            ; Retry
-                        		864000          ; Expire
-                        		86400           ; Min TTL
-								)
+@						IN	SOA		ns01.internal.paulfriedrich.me.	hostmaster.mail.paulfriedrich.me.	(
+										2023070201		; serial number YYMMDDNN
+										28800			; Refresh
+										7200			; Retry
+										864000			; Expire
+										86400			; Min TTL
+									)
 
-					NS		ns01.internal.paulfriedrich.me.
-					NS		ns02.internal.paulfriedrich.me. 
+							NS		ns01.internal.paulfriedrich.me.
+							NS		ns02.internal.paulfriedrich.me. 
 
 
 ; NS
-ns01			IN	A		10.0.60.17
-ns02			IN	A		10.0.60.18
+ns01					IN	A		10.0.60.17
+ns02					IN	A		10.0.60.18
 
 ; MGMT
-esxi			IN	A		10.0.15.3
-storage			IN	A		10.0.15.4
+esxi					IN	A		10.0.15.3
+storage					IN	A		10.0.15.4
 
 
 ; OFFICE
-printer			IN	A		10.0.20.2
+printer					IN	A		10.0.20.2
 
 
 ; SERVER
-ldap01			IN	A		10.0.60.2
-stepca			IN	A		10.0.60.4
-ca				IN	CNAME	stepca
-tailscale01		IN	A		10.0.60.6
-git				IN	A		10.0.60.8
+ldap01					IN	A		10.0.60.2
+stepca					IN	A		10.0.60.4
+ca						IN	CNAME	stepca
+kube					IN	A		10.0.60.5
+tailscale01				IN	A		10.0.60.6
+taloscontrolplane01		IN	A		10.0.60.7
+git						IN	A		10.0.60.8
+talosworker01			IN	A		10.0.60.9
+talosworker02			IN	A		10.0.60.10
+taloscontrolplane02		IN	A		10.0.60.11
+taloscontrolplane03		IN	A		10.0.60.12
+talosworker03			IN	A		10.0.60.13
 
-k3s-server-01	IN	A		10.0.60.16
-jellyfin		IN	CNAME	k3s-server-01
-radarr			IN	CNAME	k3s-server-01
-sonarr			IN	CNAME	k3s-server-01
-sabnzbd			IN	CNAME	k3s-server-01
-paperless		IN	CNAME	k3s-server-01
+k3s-server-01			IN	A		10.0.60.16
+jellyfin				IN	CNAME	k3s-server-01
+radarr					IN	CNAME	k3s-server-01
+sonarr					IN	CNAME	k3s-server-01
+sabnzbd					IN	CNAME	k3s-server-01
+paperless				IN	CNAME	k3s-server-01

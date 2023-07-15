@@ -18,8 +18,15 @@ $ORIGIN 60.0.10.IN-ADDR.ARPA.
 2				IN	PTR		ldap01.internal.paulfriedrich.me.
 4				IN	PTR		stepca.internal.paulfriedrich.me.
 				IN	PTR		ca.internal.paulfriedrich.me.
+5				IN	PTR		kube.internal.paulfriedrich.me.
 6				IN	PTR		tailscale01.internal.paulfriedrich.me.
+7				IN	PTR		taloscontrolplane01.internal.paulfriedrich.me.
 8				IN	PTR		git.internal.paulfriedrich.me.
+9				IN	PTR		talosworker01.internal.paulfriedrich.me.
+10				IN	PTR		talosworker02.internal.paulfriedrich.me.
+11				IN	PTR		taloscontrolplane02.internal.paulfriedrich.me.
+12				IN	PTR		taloscontrolplane03.internal.paulfriedrich.me.
+13				IN	PTR		taloscontrolplane03.internal.paulfriedrich.me.
 
 16				IN	PTR		k3s-server-01.internal.paulfriedrich.me.
 16				IN	PTR		jellyfin.internal.paulfriedrich.me.
