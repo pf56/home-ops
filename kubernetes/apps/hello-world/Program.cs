@@ -47,6 +47,7 @@ return await Deployment.RunAsync(() =>
                 },
                 Spec = new PodSpecArgs
                 {
+                    RestartPolicy = "Always",
                     Containers =
                     {
                         new ContainerArgs
@@ -80,7 +81,7 @@ return await Deployment.RunAsync(() =>
                 },
                 Spec = new PersistentVolumeClaimSpecArgs
                 {
-                    StorageClassName = "ceph-block",
+                    StorageClassName = "freenas-api-iscsi-csi",
                     AccessModes = "ReadWriteOnce",
                     Resources = new ResourceRequirementsArgs
                     {

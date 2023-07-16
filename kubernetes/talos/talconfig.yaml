@@ -110,4 +110,4 @@ controlPlane:
 worker:
   patches:
     - "@./patches/install-cilium-worker.yaml"
-
+    - "@./patches/install-iscsi-tools.yaml"
