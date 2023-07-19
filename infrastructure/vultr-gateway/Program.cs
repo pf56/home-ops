@@ -42,6 +42,16 @@ return await Deployment.RunAsync(() =>
 		Notes = "Allow Wireguard"
 	});
 
+	FirewallRule firewallIcmpV6 = new("firewall-icmp-6", new FirewallRuleArgs
+	{
+		FirewallGroupId = firewall.Id,
+		Protocol = "icmp",
+		IpType = "v6",
+		Subnet = "::",
+		SubnetSize = 0,
+		Notes = "Allow ICMP6"
+	});
+
 	FirewallRule firewallWireguardV6 = new("firewall-wireguard-6", new FirewallRuleArgs
 	{
 		FirewallGroupId = firewall.Id,
