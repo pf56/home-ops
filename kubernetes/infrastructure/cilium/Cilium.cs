@@ -1,9 +1,16 @@
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using Microsoft.AspNetCore.Localization;
 using Pulumi;
+using Pulumi.Kubernetes.ApiExtensions;
 using Pulumi.Kubernetes.Core.V1;
 using Pulumi.Kubernetes.Helm.V3;
 using Pulumi.Kubernetes.Types.Inputs.Core.V1;
 using Pulumi.Kubernetes.Types.Inputs.Helm.V3;
 using Pulumi.Kubernetes.Types.Inputs.Meta.V1;
+using Pulumi.Kubernetes.Yaml;
+using CustomResource = Pulumi.Kubernetes.ApiExtensions.CustomResource;
 
 namespace Cilium;
 
@@ -84,7 +91,21 @@ public class Cilium : Stack
                 },
                 ["k8sServiceHost"] = "10.0.60.5",
                 ["k8sServicePort"] = "6443",
+                ["bgpControlPlane"] = new InputMap<object>
+                {
+                    ["enabled"] = true
+                }
             }
+        });
+
+        var bgpPeeringPolicy = new ConfigFile("bgp-peering-policy", new ConfigFileArgs
+        {
+            File = "./Manifests/CiliumBGPPeeringPolicy.yaml"
+        });
+
+        var bgpAddressPool = new ConfigFile("bgp-address-pool", new ConfigFileArgs
+        {
+            File = "./Manifests/CiliumLoadBalancerIPPool.yaml"
         });
     }
 }

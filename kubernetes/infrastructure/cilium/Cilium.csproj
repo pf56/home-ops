@@ -11,4 +11,10 @@
     <PackageReference Include="Pulumi.Kubernetes" Version="3.*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Manifests\CiliumBGPPeeringPolicy.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

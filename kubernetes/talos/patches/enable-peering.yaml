@@ -1,0 +1,4 @@
+- op: add
+  path: /machine/nodeLabels
+  value:
+    paulfriedrich.me/peering: "yes"
