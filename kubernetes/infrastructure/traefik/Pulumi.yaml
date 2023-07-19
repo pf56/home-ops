@@ -1,0 +1,3 @@
+name: traefik
+runtime: dotnet
+description: traefik ingress controller
