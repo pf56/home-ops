@@ -38,10 +38,10 @@
     fsType = "ext4";
   };
 
-  fileSystems."/media/disk5" = {
-    device = "/dev/disk/by-uuid/f315b681-ce0b-4ee8-b1d2-d5ae7f8e2022";
-    fsType = "ext4";
-  };
+#  fileSystems."/media/disk5" = {
+#    device = "/dev/disk/by-uuid/f315b681-ce0b-4ee8-b1d2-d5ae7f8e2022";
+#    fsType = "ext4";
+#  };
 
   fileSystems."/media/disk6" = {
     device = "/dev/disk/by-uuid/d8669dcf-10c1-4ca9-bffd-84b0800e72f7";
@@ -49,15 +49,15 @@
   };
 
   # parity disks
-  fileSystems."/media/diskp" = {
-    device = "/dev/disk/by-uuid/16ed4e44-67da-45dd-8fca-77d6e7f191fa";
-    fsType = "ext4";
-  };
+#  fileSystems."/media/diskp" = {
+#    device = "/dev/disk/by-uuid/16ed4e44-67da-45dd-8fca-77d6e7f191fa";
+#    fsType = "ext4";
+#  };
 
-  fileSystems."/media/diskp2" = {
-    device = "/dev/disk/by-uuid/64ab4cce-6d6e-4f53-b7ee-b69b026e4584";
-    fsType = "ext4";
-  };
+#  fileSystems."/media/diskp2" = {
+#    device = "/dev/disk/by-uuid/64ab4cce-6d6e-4f53-b7ee-b69b026e4584";
+#    fsType = "ext4";
+#  };
 
   # additional disks
   fileSystems."/media/temp" = {
@@ -68,7 +68,7 @@
 
   # mergerfs
   fileSystems."/storage" = {
-    device = "/media/disk[1-6]";
+    device = "/media/disk[1,2,3,4,6]";
     fsType = "fuse.mergerfs";
     noCheck = true;
     options = [

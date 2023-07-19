@@ -27,7 +27,7 @@
   ];
 
   snapraid = {
-    enable = true;
+    enable = false;
 
     parityFiles = [
       "/media/diskp/snapraid.parity"
@@ -70,7 +70,7 @@
   };
 
   services.snapraid-aio-script = {
-    enable = true;
+    enable = false;
     emailAddress = "status" + "@" + "mail.paulfriedrich.me";
     fromEmailAddress = "status" + "@" + "mail.paulfriedrich.me";
   };
