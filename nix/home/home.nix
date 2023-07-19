@@ -45,7 +45,11 @@
     noto-fonts-cjk
     noto-fonts-emoji
 
+    kubectl
+    talosctl
     talhelper.packages.${pkgs.system}.default
+    pulumi
+    dotnet-sdk
   ];
 
   # configure git
