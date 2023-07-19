@@ -42,7 +42,7 @@
   users.users.pfriedrich = {
     isNormalUser = true;
     home = "/home/pfriedrich";
-    extraGroups = [ "wheel" "networkmanager" "scanner" "lp" "libvirtd" ];
+    extraGroups = [ "wheel" "networkmanager" "scanner" "lp" "libvirtd" "wireshark" ];
     shell = pkgs.zsh;
   };
 
@@ -53,10 +53,12 @@
     pavucontrol
     pinentry-curses
     gnome.gedit
+    wireshark
   ];
 
   programs.dconf.enable = true;
   programs.zsh.enable = true;
+  programs.wireshark.enable = true;
 
   security.rtkit.enable = true;
   services.pipewire = {
