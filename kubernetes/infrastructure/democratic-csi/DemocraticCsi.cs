@@ -168,6 +168,35 @@ public class DemocraticCsi : Stack
 			}
 		});
 
+		Release nodeManual = new("node-manual", new ReleaseArgs
+		{
+			Chart = "democratic-csi",
+			Version = version,
+			Namespace = namespaceName,
+			RepositoryOpts = new RepositoryOptsArgs
+			{
+				Repo = repo
+			},
+			Values = new InputMap<object>
+			{
+				["csiDriver"] = new InputMap<object>
+				{
+					["name"] = "org.democratic-csi.node-manual"
+				},
+				["controller"] = new InputMap<object>
+				{
+					["enabled"] = false
+				},
+				["driver"] = new InputMap<object>
+				{
+					["config"] = new InputMap<object>
+					{
+						["driver"] = "node-manual"
+					}
+				}
+			}
+		});
+
 		Namespace namespaceSnapshot = new("namespace-snapshot", new NamespaceArgs
 		{
 			ApiVersion = "v1",
