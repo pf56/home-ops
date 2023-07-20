@@ -105,7 +105,17 @@ public class DemocraticCsi : Stack
 						}
 					}
 				},
-				["volumeSnapshotClasses"] = new InputList<object>(),
+				["volumeSnapshotClasses"] = new InputList<object>
+				{
+					(Input<object>)new InputMap<object>
+					{
+						["name"] = "freenas-api-iscsi-csi",
+						["parameters"] = new InputMap<object>
+						{
+							["detachedSnapshots"] = true
+						}
+					}
+				},
 				["driver"] = new InputMap<object>
 				{
 					["config"] = new InputMap<object>
@@ -155,6 +165,29 @@ public class DemocraticCsi : Stack
 						}
 					}
 				}
+			}
+		});
+
+		Namespace namespaceSnapshot = new("namespace-snapshot", new NamespaceArgs
+		{
+			ApiVersion = "v1",
+			Kind = "Namespace",
+			Metadata = new ObjectMetaArgs
+			{
+				Name = "snapshot-controller"
+			}
+		});
+
+		Output<string> namespaceSnapshotName = namespaceSnapshot.Metadata.Apply(x => x.Name);
+
+		Release snapshotController = new("snapshot-controller", new ReleaseArgs
+		{
+			Chart = "snapshot-controller",
+			Version = "0.2.4",
+			Namespace = namespaceSnapshotName,
+			RepositoryOpts = new RepositoryOptsArgs
+			{
+				Repo = repo
 			}
 		});
 	}
