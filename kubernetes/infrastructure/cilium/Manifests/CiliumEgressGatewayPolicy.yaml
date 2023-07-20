@@ -1,0 +1,16 @@
+apiVersion: cilium.io/v2
+kind: CiliumEgressGatewayPolicy
+metadata:
+  name: vpn-policy
+spec:
+  selectors:
+    - podSelector:
+        matchLabels:
+          io.kubernetes.pod.namespace: example-namespace
+  destinationCIDRs:
+    - "0.0.0.0/0"
+  egressGateway:
+    nodeSelector:
+      matchLabels:
+        kubernetes.io/hostname: talosworker03
+    egressIP: 10.0.60.13

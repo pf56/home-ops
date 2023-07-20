@@ -94,6 +94,14 @@ public class Cilium : Stack
                 ["bgpControlPlane"] = new InputMap<object>
                 {
                     ["enabled"] = true
+                },
+                ["egressGateway"] = new InputMap<object>
+                {
+                    ["enabled"] = true
+                },
+                ["bpf"] = new InputMap<object>
+                {
+                    ["masquerade"] = true
                 }
             }
         });
@@ -107,5 +115,10 @@ public class Cilium : Stack
         {
             File = "./Manifests/CiliumLoadBalancerIPPool.yaml"
         });
+
+        // var egressGateway = new ConfigFile("egress-gateway", new ConfigFileArgs
+        // {
+        //     File = "./Manifests/CiliumEgressGatewayPolicy.yaml"
+        // });
     }
 }
