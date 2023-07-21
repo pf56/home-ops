@@ -1,0 +1,10 @@
+<Project>
+    <PropertyGroup>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageVersion Include="Pulumi" Version="3.55.1" />
+        <PackageVersion Include="Pulumi.Kubernetes" Version="3.20.2" />
+        <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+    </ItemGroup>
+</Project>
