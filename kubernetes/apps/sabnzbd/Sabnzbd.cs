@@ -1,8 +1,8 @@
 using System.Linq;
+using Components;
 using Pulumi;
 using Pulumi.Kubernetes.Apps.V1;
 using Pulumi.Kubernetes.Core.V1;
-using Pulumi.Kubernetes.Networking.V1;
 using Pulumi.Kubernetes.Types.Inputs.Apps.V1;
 using Pulumi.Kubernetes.Types.Inputs.Core.V1;
 using Pulumi.Kubernetes.Types.Inputs.Meta.V1;
@@ -95,8 +95,6 @@ public class Sabnzbd : Stack
 
 		Service service = new("sabnzbd", new ServiceArgs
 		{
-			ApiVersion = "v1",
-			Kind = "Service",
 			Metadata = new ObjectMetaArgs
 			{
 				Namespace = namespaceName,
@@ -259,50 +257,44 @@ public class Sabnzbd : Stack
 			}
 		}, new CustomResourceOptions { DeleteBeforeReplace = true });
 
-		Ingress ingress = new("sabnzbd", new IngressArgs
+		DefaultIngress ingress = new("sabnzbd", new DefaultIngressArgs
 		{
-			Metadata = new ObjectMetaArgs
+			Namespace = namespaceName,
+			Labels = appLabels,
+			IngressRules = new InputList<IngressRuleArgs>
 			{
-				Namespace = namespaceName,
-				Labels = appLabels
-			},
-			Spec = new IngressSpecArgs
-			{
-				Rules = new[]
+				new IngressRuleArgs
 				{
-					new IngressRuleArgs
+					Host = "sabnzbd.internal.paulfriedrich.me",
+					Http = new HTTPIngressRuleValueArgs
 					{
-						Host = "sabnzbd.internal.paulfriedrich.me",
-						Http = new HTTPIngressRuleValueArgs
+						Paths = new[]
 						{
-							Paths = new[]
+							new HTTPIngressPathArgs
 							{
-								new HTTPIngressPathArgs
+								Backend = new IngressBackendArgs
 								{
-									Backend = new IngressBackendArgs
+									Service = new IngressServiceBackendArgs
 									{
-										Service = new IngressServiceBackendArgs
+										Name = service.Metadata.Apply(x => x.Name),
+										Port = new ServiceBackendPortArgs
 										{
-											Name = service.Metadata.Apply(x => x.Name),
-											Port = new ServiceBackendPortArgs
-											{
-												Name = service.Spec.Apply(x => x.Ports.First().Name)
-											}
+											Name = service.Spec.Apply(x => x.Ports.First().Name)
 										}
-									},
-									Path = "/",
-									PathType = "Prefix"
-								}
+									}
+								},
+								Path = "/",
+								PathType = "Prefix"
 							}
 						}
 					}
-				},
-				Tls = new IngressTLSArgs
+				}
+			},
+			Tls = new IngressTLSArgs
+			{
+				Hosts =
 				{
-					Hosts =
-					{
-						"sabnzbd.internal.paulfriedrich.me"
-					}
+					"sabnzbd.internal.paulfriedrich.me"
 				}
 			}
 		});
