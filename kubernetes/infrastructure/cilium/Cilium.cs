@@ -102,7 +102,8 @@ public class Cilium : Stack
                 ["bpf"] = new InputMap<object>
                 {
                     ["masquerade"] = true
-                }
+                },
+                ["MTU"] = 1360
             }
         });
 
