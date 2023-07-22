@@ -30,5 +30,4 @@ $ORIGIN 60.0.10.IN-ADDR.ARPA.
 
 16				IN	PTR		k3s-server-01.internal.paulfriedrich.me.
 16				IN	PTR		jellyfin.internal.paulfriedrich.me.
-16				IN	PTR		radarr.internal.paulfriedrich.me.
 16				IN	PTR		paperless.internal.paulfriedrich.me.
