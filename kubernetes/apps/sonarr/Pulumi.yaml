@@ -1,0 +1,3 @@
+name: sonarr
+runtime: dotnet
+description: sonarr
