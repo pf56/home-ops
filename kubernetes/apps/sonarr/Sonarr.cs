@@ -14,6 +14,10 @@ public class Sonarr : Stack
 {
 	public Sonarr()
 	{
+		Config config = new();
+		var resticRepo = config.Require("restic-repo");
+		var resticPassword = config.RequireSecret("restic-password");
+
 		string imageName = "linuxserver/sonarr";
 		string imageTag = "develop-version-4.0.0.575";
 
@@ -109,7 +113,11 @@ public class Sonarr : Stack
 				Metadata = new ObjectMetaArgs
 				{
 					Namespace = namespaceName,
-					Labels = appLabels
+					Labels = appLabels,
+					Annotations =
+					{
+						{ "k8up.io/backup", "false" }
+					}
 				},
 				Spec = new PersistentVolumeClaimSpecArgs
 				{
@@ -135,7 +143,11 @@ public class Sonarr : Stack
 				Metadata = new ObjectMetaArgs
 				{
 					Namespace = namespaceName,
-					Labels = appLabels
+					Labels = appLabels,
+					Annotations =
+					{
+						{ "k8up.io/backup", "false" }
+					}
 				},
 				Spec = new PersistentVolumeClaimSpecArgs
 				{
@@ -347,6 +359,27 @@ public class Sonarr : Stack
 					"sonarr.internal.paulfriedrich.me"
 				}
 			}
+		});
+
+		Secret resticCredentials = new("restic-credentials", new SecretArgs
+		{
+			Metadata = new ObjectMetaArgs
+			{
+				Namespace = namespaceName
+			},
+			StringData =
+			{
+				{ "password", resticPassword }
+			}
+		});
+
+		DefaultBackupSchedule backupSchedule = new("sonarr", new DefaultBackupScheduleArgs
+		{
+			Namespace = namespaceName,
+			Labels = appLabels,
+			RepoUrl = resticRepo,
+			RepoCredentialsName = resticCredentials.Metadata.Apply(x => x.Name),
+			RepoCredentialsKey = "password"
 		});
 	}
 }

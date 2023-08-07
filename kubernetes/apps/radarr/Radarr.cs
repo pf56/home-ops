@@ -14,6 +14,10 @@ public class Radarr : Stack
 {
 	public Radarr()
 	{
+		Config config = new();
+		var resticRepo = config.RequireSecret("restic-repo");
+		var resticPassword = config.RequireSecret("restic-password");
+
 		string imageName = "linuxserver/radarr";
 		string imageTag = "4.6.4.7568-ls180";
 
@@ -109,7 +113,11 @@ public class Radarr : Stack
 				Metadata = new ObjectMetaArgs
 				{
 					Namespace = namespaceName,
-					Labels = appLabels
+					Labels = appLabels,
+					Annotations =
+					{
+						{ "k8up.io/backup", "false" }
+					}
 				},
 				Spec = new PersistentVolumeClaimSpecArgs
 				{
@@ -135,7 +143,11 @@ public class Radarr : Stack
 				Metadata = new ObjectMetaArgs
 				{
 					Namespace = namespaceName,
-					Labels = appLabels
+					Labels = appLabels,
+					Annotations =
+					{
+						{ "k8up.io/backup", "false" }
+					}
 				},
 				Spec = new PersistentVolumeClaimSpecArgs
 				{
@@ -347,6 +359,27 @@ public class Radarr : Stack
 					"radarr.internal.paulfriedrich.me"
 				}
 			}
+		});
+
+		Secret resticCredentials = new("restic-credentials", new SecretArgs
+		{
+			Metadata = new ObjectMetaArgs
+			{
+				Namespace = namespaceName
+			},
+			StringData =
+			{
+				{ "password", resticPassword }
+			}
+		});
+
+		DefaultBackupSchedule backupSchedule = new("sonarr", new DefaultBackupScheduleArgs
+		{
+			Namespace = namespaceName,
+			Labels = appLabels,
+			RepoUrl = resticRepo,
+			RepoCredentialsName = resticCredentials.Metadata.Apply(x => x.Name),
+			RepoCredentialsKey = "password"
 		});
 	}
 }

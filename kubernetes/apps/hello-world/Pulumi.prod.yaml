@@ -1,0 +1,5 @@
+config:
+  hello-world:restic-password:
+    secure: AAABAC2B2gVkgMlG0oRHJfdNQ1L4JGHFyIHK/r7rQt5l1vCC6+JV65IhC50qfhmUieqBdZQbI+71hEgh/zPkqg==
+  hello-world:restic-repo:
+    secure: AAABAJhpL8DBXFcGrPy8j5h6kcysnzdysNU16gSNL8vudZ3GKsai4xJe05ZeXtQkDjtJkR85AFHRbHfvE1ltw9yxjPNRXf5tP3RqwGmmXL38qLVRZtEgQpZ1sHM=

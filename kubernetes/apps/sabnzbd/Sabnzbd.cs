@@ -14,6 +14,10 @@ public class Sabnzbd : Stack
 {
 	public Sabnzbd()
 	{
+		Config config = new();
+		var resticRepo = config.RequireSecret("restic-repo");
+		var resticPassword = config.RequireSecret("restic-password");
+
 		string imageName = "linuxserver/sabnzbd";
 		string imageTag = "4.0.3";
 
@@ -73,7 +77,11 @@ public class Sabnzbd : Stack
 				Metadata = new ObjectMetaArgs
 				{
 					Namespace = namespaceName,
-					Labels = appLabels
+					Labels = appLabels,
+					Annotations =
+					{
+						{ "k8up.io/backup", "false" }
+					}
 				},
 				Spec = new PersistentVolumeClaimSpecArgs
 				{
@@ -238,7 +246,11 @@ public class Sabnzbd : Stack
 						Metadata = new ObjectMetaArgs
 						{
 							Name = "tmp",
-							Namespace = namespaceName
+							Namespace = namespaceName,
+							Annotations =
+							{
+								{ "k8up.io/backup", "false" }
+							}
 						},
 						Spec = new PersistentVolumeClaimSpecArgs
 						{
@@ -297,6 +309,27 @@ public class Sabnzbd : Stack
 					"sabnzbd.internal.paulfriedrich.me"
 				}
 			}
+		});
+
+		Secret resticCredentials = new("restic-credentials", new SecretArgs
+		{
+			Metadata = new ObjectMetaArgs
+			{
+				Namespace = namespaceName
+			},
+			StringData =
+			{
+				{ "password", resticPassword }
+			}
+		});
+
+		DefaultBackupSchedule backupSchedule = new("sabnzbd", new DefaultBackupScheduleArgs
+		{
+			Namespace = namespaceName,
+			Labels = appLabels,
+			RepoUrl = resticRepo,
+			RepoCredentialsName = resticCredentials.Metadata.Apply(x => x.Name),
+			RepoCredentialsKey = "password"
 		});
 	}
 }

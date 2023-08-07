@@ -14,6 +14,10 @@ public class Jellyfin : Stack
 {
 	public Jellyfin()
 	{
+		Config config = new();
+		var resticRepo = config.RequireSecret("restic-repo");
+		var resticPassword = config.RequireSecret("restic-password");
+
 		string imageName = "jellyfin/jellyfin";
 		string imageTag = "10.8.10";
 
@@ -109,7 +113,11 @@ public class Jellyfin : Stack
 				Metadata = new ObjectMetaArgs
 				{
 					Namespace = namespaceName,
-					Labels = appLabels
+					Labels = appLabels,
+					Annotations =
+					{
+						{ "k8up.io/backup", "false" }
+					}
 				},
 				Spec = new PersistentVolumeClaimSpecArgs
 				{
@@ -135,7 +143,11 @@ public class Jellyfin : Stack
 				Metadata = new ObjectMetaArgs
 				{
 					Namespace = namespaceName,
-					Labels = appLabels
+					Labels = appLabels,
+					Annotations =
+					{
+						{ "k8up.io/backup", "false" }
+					}
 				},
 				Spec = new PersistentVolumeClaimSpecArgs
 				{
@@ -334,6 +346,27 @@ public class Jellyfin : Stack
 					"jellyfin.internal.paulfriedrich.me"
 				}
 			}
+		});
+
+		Secret resticCredentials = new("restic-credentials", new SecretArgs
+		{
+			Metadata = new ObjectMetaArgs
+			{
+				Namespace = namespaceName
+			},
+			StringData =
+			{
+				{ "password", resticPassword }
+			}
+		});
+
+		DefaultBackupSchedule backupSchedule = new("sabnzbd", new DefaultBackupScheduleArgs
+		{
+			Namespace = namespaceName,
+			Labels = appLabels,
+			RepoUrl = resticRepo,
+			RepoCredentialsName = resticCredentials.Metadata.Apply(x => x.Name),
+			RepoCredentialsKey = "password"
 		});
 	}
 }

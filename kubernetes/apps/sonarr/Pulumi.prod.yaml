@@ -1,0 +1,5 @@
+config:
+  sonarr:restic-password:
+    secure: AAABAIeM9aBVT5ZjVC97szHcMvTmd6G4WoGdCQNcKL3FXPN+xYHGZyR7pt6aKBiae+OzZtKekf5XnqQZY+zWcw==
+  sonarr:restic-repo:
+    secure: AAABAL+65P5vMEo06pStSXPI8upyGW3RZQjH3p/aWJI6VEQHT1g218CneG5VNajuuMG4QdYn6GhDqjWE1EB3N37L/5eDBOF4WZKa8X3IEkSKMGqdg2BJWWl5V1Q=

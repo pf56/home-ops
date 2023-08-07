@@ -1,0 +1,5 @@
+config:
+  sabnzbd:restic-password:
+    secure: AAABAGqyHD+glaRsQc6CnqXAqLy0vaMXbwjV8Ppo3M6V9rg8ctfhR5TrV+yqvFuXeYLIxwgSjsXYvTkved3X6w==
+  sabnzbd:restic-repo:
+    secure: AAABAN7PYP1bzrdFsZkinLPm7fvEnHkNS9TxPv/lRQyq8bfhlQzlAqvx0yglMwEbtru+ryZJO28m3cIKQX8DyeSd+H4tLGiMrOuFpMpLRN5Td9b337WHr6lLYHA=

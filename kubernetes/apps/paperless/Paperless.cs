@@ -15,6 +15,10 @@ public class Paperless : Stack
 {
 	public Paperless()
 	{
+		Config config = new();
+		var resticRepo = config.RequireSecret("restic-repo");
+		var resticPassword = config.RequireSecret("restic-password");
+
 		string imageName = "ghcr.io/paperless-ngx/paperless-ngx";
 		string imageTag = "1.16.5";
 
@@ -324,6 +328,27 @@ public class Paperless : Stack
 					}
 				}
 			}
+		});
+
+		Secret resticCredentials = new("restic-credentials", new SecretArgs
+		{
+			Metadata = new ObjectMetaArgs
+			{
+				Namespace = namespaceName
+			},
+			StringData =
+			{
+				{ "password", resticPassword }
+			}
+		});
+
+		DefaultBackupSchedule backupSchedule = new("paperless", new DefaultBackupScheduleArgs
+		{
+			Namespace = namespaceName,
+			Labels = appLabels,
+			RepoUrl = resticRepo,
+			RepoCredentialsName = resticCredentials.Metadata.Apply(x => x.Name),
+			RepoCredentialsKey = "password"
 		});
 	}
 }
