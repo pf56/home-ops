@@ -103,7 +103,18 @@ public class Cilium : Stack
                 {
                     ["masquerade"] = true
                 },
-                ["MTU"] = 1360
+                ["MTU"] = 1360,
+                ["hubble"] = new InputMap<object>
+                {
+                    ["relay"] = new InputMap<object>
+                    {
+                        ["enabled"] = true
+                    },
+                    ["ui"] = new InputMap<object>
+                    {
+                        ["enabled"] = true
+                    }
+                }
             }
         });
 
