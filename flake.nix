@@ -47,15 +47,6 @@
           };
         };
 
-      overlay-bcompare = final: prev: {
-        bcompare = prev.bcompare.overrideAttrs (finalAttrs: prevAttrs: {
-          version = "4.4.6-27483";
-          src = final.fetchurl {
-            url = "https://www.scootersoftware.com/files/bcompare-4.4.6.27483_amd64.deb";
-            sha256 = "0j83kqj9xvvffw70a6363m6swfld8d9b670yb4s9zwc9zh0zzryp";
-          };
-        });
-      };
 
       # load all roles from the ./roles directory
       roles = builtins.listToAttrs (map
@@ -78,7 +69,7 @@
         specialArgs = attrs;
         modules = [
           {
-            nixpkgs.overlays = [ overlay-unstable overlay-vscode-extensions overlay-bcompare ];
+            nixpkgs.overlays = [ overlay-unstable overlay-vscode-extensions ];
             nix.nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
             nix.registry.nixpkgs.flake = nixpkgsVersion;
             environment.etc."nix/inputs/nixpkgs".source = nixpkgsVersion.outPath;
