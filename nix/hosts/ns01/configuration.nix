@@ -11,7 +11,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "ns01";
-  roles.vmwareguest.enable = true;
+  #  roles.vmwareguest.enable = true;
 
   lollypops.deployment.ssh.host = lib.mkForce "10.0.60.17";
   lollypops.deployment.local-evaluation = true;

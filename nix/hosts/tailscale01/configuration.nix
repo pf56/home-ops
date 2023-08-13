@@ -11,7 +11,7 @@
 
   networking.hostName = "tailscale01";
 
-  roles.vmwareguest.enable = true;
+  #  roles.vmwareguest.enable = true;
 
   # setup tailscale
   services.tailscale = {
