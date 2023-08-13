@@ -17,91 +17,44 @@
     talhelper.url = "github:budimanjojo/talhelper";
     talhelper.inputs.nixpkgs.follows = "nixpkgs";
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     snapraid-aio-script = {
       url = "sourcehut:~pf56/snapraid-aio-script-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, sops-nix, home-manager, home-manager-unstable, nixos-generators, lollypops, snapraid-aio-script, ... }@attrs:
-    let
-      system = "x86_64-linux";
-      overlay-unstable = final: prev: {
-        unstable = import nixpkgs-unstable { inherit system; inherit (final) config; };
-      };
-
-      # load all roles from the ./roles directory
-      roles = builtins.listToAttrs (map
-        (x: {
-          name = x;
-          value = import (./nix/roles + "/${x}");
-        })
-        (builtins.attrNames (builtins.readDir ./nix/roles)));
-
-      # load all hosts and their configuration from the ./hosts directory
-      hosts = builtins.listToAttrs (map
-        (x: {
-          name = x;
-          value = import (./nix/hosts + "/${x}/configuration.nix");
-        })
-        (builtins.attrNames (builtins.readDir ./nix/hosts)));
-
-      getSystemConfig = (hostConfig: nixpkgsVersion: {
-        system = "x86_64-linux";
-        specialArgs = attrs;
-        modules = [
-          {
-            nixpkgs.overlays = [ overlay-unstable ];
-            nix.nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
-            nix.registry.nixpkgs.flake = nixpkgsVersion;
-            environment.etc."nix/inputs/nixpkgs".source = nixpkgsVersion.outPath;
-          }
-          { _module.args = attrs; }
-          (if nixpkgsVersion == nixpkgs then home-manager.nixosModules.home-manager else home-manager-unstable.nixosModules.home-manager)
-          sops-nix.nixosModules.sops
-          lollypops.nixosModules.lollypops
-          snapraid-aio-script.nixosModules.snapraid-aio-script
-          { imports = builtins.attrValues roles; }
-          hostConfig
+  outputs = inputs@{ self, flake-parts, nixpkgs, sops-nix, lollypops, nixos-generators, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; }
+      {
+        imports = [
+          ./nix/hosts/flake-module.nix
         ];
-      });
 
-      # get the nixpkgs version to use for a specific host
-      getNixPkgsForHost = (hostName:
-        let
-          mapping = {
-            "e595" = nixpkgs-unstable;
+        systems = [ "x86_64-linux" ];
+
+        perSystem = { config, self', inputs', pkgs, system, ... }: {
+          apps = {
+            default = self'.apps.lollypops;
+            lollypops = inputs'.lollypops.apps.default {
+              configFlake = self;
+            };
           };
-        in
-        if (builtins.hasAttr hostName mapping) then mapping."${hostName}" else nixpkgs);
 
-      # get the host configuration and build nixosSystem
-      buildHost = (name: hostConfig:
-        let
-          nixpkgsVersion = getNixPkgsForHost name;
-          systemConfig = (getSystemConfig hostConfig) nixpkgsVersion;
-        in
-        nixpkgsVersion.lib.nixosSystem systemConfig
-      );
-    in
-    {
-      nixosConfigurations = nixpkgs.lib.mapAttrs buildHost hosts;
+          packages = {
+            raw-efi = nixos-generators.nixosGenerate {
+              system = system;
+              modules = [
+                sops-nix.nixosModules.sops
+                lollypops.nixosModules.lollypops
+                ./nix/base/raw-efi_image.nix
+              ];
+              format = "raw-efi";
+            };
+          };
 
-      packages.x86_64-linux = {
-        raw-efi = nixos-generators.nixosGenerate {
-          system = "x86_64-linux";
-          modules = [
-            sops-nix.nixosModules.sops
-            lollypops.nixosModules.lollypops
-            ./nix/base/raw-efi_image.nix
-          ];
-          format = "raw-efi";
+          formatter = pkgs.nixpkgs-fmt;
         };
       };
-
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
-      apps.x86_64-linux.default = lollypops.apps.x86_64-linux.default {
-        configFlake = self;
-      };
-    };
 }
