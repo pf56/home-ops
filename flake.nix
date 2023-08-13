@@ -88,26 +88,6 @@
       nixosConfigurations = nixpkgs.lib.mapAttrs buildHost hosts;
 
       packages.x86_64-linux = {
-        vmware = nixos-generators.nixosGenerate {
-          system = "x86_64-linux";
-          modules = [
-            sops-nix.nixosModules.sops
-            lollypops.nixosModules.lollypops
-            ./nix/base/vmware_image.nix
-          ];
-          format = "vmware";
-        };
-
-        virtualbox = nixos-generators.nixosGenerate {
-          system = "x86_64-linux";
-          modules = [
-            sops-nix.nixosModules.sops
-            lollypops.nixosModules.lollypops
-            ./nix/base/virtualbox_image.nix
-          ];
-          format = "virtualbox";
-        };
-
         raw-efi = nixos-generators.nixosGenerate {
           system = "x86_64-linux";
           modules = [
