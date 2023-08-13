@@ -8,6 +8,8 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = github:nix-community/home-manager/release-23.05;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager-unstable.url = "github:nix-community/home-manager";
+    home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
     lollypops.url = "github:pinpox/lollypops";
@@ -21,7 +23,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, sops-nix, home-manager, nixos-generators, lollypops, snapraid-aio-script, ... }@attrs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, sops-nix, home-manager, home-manager-unstable, nixos-generators, lollypops, snapraid-aio-script, ... }@attrs:
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -82,7 +84,7 @@
             environment.etc."nix/inputs/nixpkgs".source = nixpkgsVersion.outPath;
           }
           { _module.args = attrs; }
-          home-manager.nixosModules.home-manager
+          (if nixpkgsVersion == nixpkgs then home-manager.nixosModules.home-manager else home-manager-unstable.nixosModules.home-manager)
           sops-nix.nixosModules.sops
           lollypops.nixosModules.lollypops
           snapraid-aio-script.nixosModules.snapraid-aio-script

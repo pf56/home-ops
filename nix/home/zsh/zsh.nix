@@ -4,7 +4,8 @@
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
-    enableSyntaxHighlighting = true;
+
+    syntaxHighlighting.enable = true;
 
     history = {
       ignoreSpace = true;
