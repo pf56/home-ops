@@ -30,24 +30,6 @@
         unstable = import nixpkgs-unstable { inherit system; inherit (final) config; };
       };
 
-      overlay-vscode-extensions = final: prev:
-        let
-          inherit (nixpkgs.legacyPackages.${system}.vscode-utils) buildVscodeMarketplaceExtension;
-        in
-        {
-          vscode-cust-extensions = {
-            hashicorp.hcl = buildVscodeMarketplaceExtension {
-              mktplcRef = {
-                name = "hcl";
-                publisher = "hashicorp";
-                version = "0.3.2";
-                sha256 = "731177927618dbd3ef4f7ae4452f121b1327f6fcede7ac30057a64d8fa8ed26a";
-              };
-            };
-          };
-        };
-
-
       # load all roles from the ./roles directory
       roles = builtins.listToAttrs (map
         (x: {
@@ -69,7 +51,7 @@
         specialArgs = attrs;
         modules = [
           {
-            nixpkgs.overlays = [ overlay-unstable overlay-vscode-extensions ];
+            nixpkgs.overlays = [ overlay-unstable ];
             nix.nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
             nix.registry.nixpkgs.flake = nixpkgsVersion;
             environment.etc."nix/inputs/nixpkgs".source = nixpkgsVersion.outPath;
