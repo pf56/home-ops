@@ -12,7 +12,6 @@
 
   networking.hostName = "ldap01";
 
-  lollypops.deployment.ssh.host = lib.mkForce "10.0.60.126";
   lollypops.deployment.local-evaluation = true;
 
   networking.firewall.allowedTCPPorts = [ 389 ];

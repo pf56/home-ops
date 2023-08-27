@@ -1,18 +1,8 @@
 { self, inputs, withSystem, ... }:
 let
-  inherit (inputs) nixpkgs;
-  inherit (inputs) nixpkgs-unstable;
-
-  inherit (inputs) home-manager;
-  inherit (inputs) home-manager-unstable;
-
-  inherit (inputs) sops-nix;
-  inherit (inputs) lollypops;
-  inherit (inputs) snapraid-aio-script;
-
   system = "x86_64-linux";
   overlay-unstable = final: prev: {
-    unstable = import nixpkgs-unstable { inherit system; inherit (final) config; };
+    unstable = import inputs.nixpkgs-unstable { inherit system; inherit (final) config; };
   };
 
   # load all roles from the ./roles directory
@@ -23,57 +13,67 @@ let
     })
     (builtins.attrNames (builtins.readDir ../roles)));
 
-  # load all hosts and their configuration from the ./hosts directory
-  hosts = builtins.listToAttrs (map
-    (x: {
-      name = x;
-      value = import (../hosts + "/${x}/configuration.nix");
-    })
-    (builtins.attrNames
-      (builtins.readDir
-        (builtins.filterSource
-          (path: type: type == "directory")
-          ../hosts))
-    ));
+  # the default modules used on every machine
+  defaultModules = inputs': [
+    { _module.args = inputs'; }
+    {
+      nixpkgs.overlays = [ overlay-unstable ];
+      nix.nixPath = [
+        "nixpkgs=${inputs'.nixpkgs}"
+      ];
 
-  getSystemConfig = (hostConfig: nixpkgsVersion: {
-    system = "x86_64-linux";
-    specialArgs = inputs;
-    modules = [
-      {
-        nixpkgs.overlays = [ overlay-unstable ];
-        nix.nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
-        nix.registry.nixpkgs.flake = nixpkgsVersion;
-        environment.etc."nix/inputs/nixpkgs".source = nixpkgsVersion.outPath;
-      }
-      { _module.args = inputs; }
-      (if nixpkgsVersion == nixpkgs then home-manager.nixosModules.home-manager else home-manager-unstable.nixosModules.home-manager)
-      sops-nix.nixosModules.sops
-      lollypops.nixosModules.lollypops
-      snapraid-aio-script.nixosModules.snapraid-aio-script
-      { imports = builtins.attrValues roles; }
-      hostConfig
-    ];
-  });
+      nix.registry.nixpkgs.flake = inputs'.nixpkgs;
+    }
+    inputs'.sops-nix.nixosModules.sops
+    inputs'.lollypops.nixosModules.lollypops
+    { imports = builtins.attrValues roles; }
+  ];
 
-  # get the nixpkgs version to use for a specific host
-  getNixPkgsForHost = (hostName:
+  # build the default system definition
+  buildDefaultSystem = inputOverrides: args:
     let
-      mapping = {
-        "e595" = nixpkgs-unstable;
-      };
-    in
-    if (builtins.hasAttr hostName mapping) then mapping."${hostName}" else nixpkgs);
+      # allow overriding of the inputs with different versions
+      inputs' = (inputs.nixpkgs.lib.recursiveUpdate inputs) inputOverrides;
 
-  # get the host configuration and build nixosSystem
-  buildHost = (name: hostConfig:
-    let
-      nixpkgsVersion = getNixPkgsForHost name;
-      systemConfig = (getSystemConfig hostConfig) nixpkgsVersion;
+      inherit (inputs') nixpkgs;
+      inherit (inputs'.nixpkgs) lib;
     in
-    nixpkgsVersion.lib.nixosSystem systemConfig
-  );
+    lib.nixosSystem
+      (lib.recursiveUpdate args {
+        specialArgs = inputs';
+        modules = (defaultModules inputs') ++ args.modules;
+      });
 in
 {
-  flake.nixosConfigurations = nixpkgs.lib.mapAttrs buildHost hosts;
+  flake.nixosConfigurations = {
+    git = buildDefaultSystem { } {
+      modules = [
+        ./git/configuration.nix
+      ];
+    };
+
+    ns02 = buildDefaultSystem { } {
+      modules = [ ./ns02/configuration.nix ];
+    };
+
+    ldap01 = buildDefaultSystem { } {
+      modules = [ ./ldap01/configuration.nix ];
+    };
+
+    e595 =
+      let
+        inputs' = {
+          nixpkgs = inputs.nixpkgs-unstable;
+          home-manager = inputs.home-manager-unstable;
+        };
+      in
+      buildDefaultSystem inputs'
+        {
+          modules = [
+            { nix.nixPath = [ "home-manager=${inputs'.home-manager}" ]; }
+            inputs'.home-manager.nixosModules.home-manager
+            ./e595/configuration.nix
+          ];
+        };
+  };
 }
