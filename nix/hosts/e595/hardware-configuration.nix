@@ -9,10 +9,21 @@
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  # use the systemd-boot EFI boot loader
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
+
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  boot.kernelParams = [ "nohibernate" ]; # not supported on zfs
   boot.kernelModules = [ "kvm-amd" ];
+
   boot.extraModulePackages = [ ];
+
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.devNodes = "/dev/";
 
   fileSystems."/" =
     {
