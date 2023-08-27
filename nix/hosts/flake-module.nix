@@ -72,6 +72,7 @@ in
           modules = [
             { nix.nixPath = [ "home-manager=${inputs'.home-manager}" ]; }
             inputs'.home-manager.nixosModules.home-manager
+            ../modules/amd
             ./e595/configuration.nix
           ];
         };
