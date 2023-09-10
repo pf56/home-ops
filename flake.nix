@@ -29,6 +29,7 @@
     flake-parts.lib.mkFlake { inherit inputs; }
       {
         imports = [
+          ./nix/home/profiles
           ./nix/hosts/flake-module.nix
         ];
 

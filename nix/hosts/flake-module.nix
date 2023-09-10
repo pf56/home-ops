@@ -1,4 +1,4 @@
-{ self, inputs, withSystem, ... }:
+{ self, inputs, withSystem, profiles, ... }:
 let
   system = "x86_64-linux";
   overlay-unstable = final: prev: {
@@ -15,7 +15,7 @@ let
 
   # the default modules used on every machine
   defaultModules = inputs': [
-    { _module.args = inputs'; }
+    { _module.args = { inputs = inputs'; inherit profiles; }; }
     {
       nixpkgs.overlays = [ overlay-unstable ];
       nix.nixPath = [
@@ -26,6 +26,13 @@ let
     }
     inputs'.sops-nix.nixosModules.sops
     inputs'.lollypops.nixosModules.lollypops
+    inputs'.home-manager.nixosModules.home-manager
+    {
+      nix.nixPath = [ "home-manager=${inputs'.home-manager}" ];
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.extraSpecialArgs = with inputs'; { inherit lollypops; inherit talhelper; };
+    }
     { imports = builtins.attrValues roles; }
   ];
 
@@ -70,10 +77,9 @@ in
       buildDefaultSystem inputs'
         {
           modules = [
-            { nix.nixPath = [ "home-manager=${inputs'.home-manager}" ]; }
-            inputs'.home-manager.nixosModules.home-manager
             ../modules/amd
             ./e595/configuration.nix
+            { home-manager.users.pfriedrich.imports = profiles."pfriedrich"; }
           ];
         };
   };
