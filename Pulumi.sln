@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VultrGateway", "infrastructure\vultr-gateway\VultrGateway.csproj", "{53F4A1CE-A6C1-45A1-9A49-F9BF59C4A2EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cilium", "kubernetes\infrastructure\cilium\Cilium.csproj", "{A312B060-5130-4141-8014-A4FC61F0E846}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cilium", "kubernetes\infrastructure\cilium-pulumi\Cilium.csproj", "{A312B060-5130-4141-8014-A4FC61F0E846}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traefik", "kubernetes\infrastructure\traefik\Traefik.csproj", "{71DA9CCB-6FBA-40AC-96ED-EB040D44851B}"
 EndProject
