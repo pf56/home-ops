@@ -26,7 +26,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cilium", "kubernetes\infras
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traefik", "kubernetes\infrastructure\traefik\Traefik.csproj", "{71DA9CCB-6FBA-40AC-96ED-EB040D44851B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertManager", "kubernetes\infrastructure\cert-manager\CertManager.csproj", "{D0E59D35-F223-4C51-9D95-1CF44E7202DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertManager", "kubernetes\infrastructure\cert-manager-pulumi\CertManager.csproj", "{D0E59D35-F223-4C51-9D95-1CF44E7202DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sabnzbd", "kubernetes\apps\sabnzbd\Sabnzbd.csproj", "{2557CEEA-A92C-4CB0-A6A2-57D68D2E71F9}"
 EndProject
