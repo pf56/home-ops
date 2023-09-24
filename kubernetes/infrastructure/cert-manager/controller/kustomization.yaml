@@ -5,4 +5,4 @@ namespace: cert-manager
 resources:
   - namespace.yaml
   - release.yaml
-  - cloudflare-api-token.sops.yaml
+  - secrets.sops.yaml
