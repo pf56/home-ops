@@ -8,6 +8,7 @@ keys:
   - &nomadclient01 age1llsz23rl6hhjl9ls5ax29hrg7qzghfa6zvhayt70ls3zm5gjysrq3vsyng
   - &storage age1cft5ex8pc5hn75f4dyraad4qr25lcsnvtac3ss3nv29n5slxepqqqckkn9
   - &stepca age135rrse02t76trsm53za7jg9teuwt9e4mqvamyalkudhyydgh6e9qfe8xcw
+  - &flux age1qkxcnuwjvme9667c763xpxjedfyxjpgl09msty80esrf3fuj45cqeh9v6q
 creation_rules:
   - path_regex: secrets/e595\.yaml$
     key_groups:
@@ -45,4 +46,10 @@ creation_rules:
     key_groups:
       - age:
         - *pfriedrich
+  - path_regex: kubernetes/.*\.sops\.yaml$
+    encrypted_regex: ^(data|stringData)$
+    key_groups:
+      - age:
+        - *pfriedrich
+        - *flux
 
