@@ -12,14 +12,13 @@
     };
 
     shellAliases = {
-      ls = "lsd";
       l = "ls -l";
       la = "ls -a";
       lla = "ls -la";
       lt = "ls --tree";
-    };
+    } // lib.optionalAttrs (config.programs.lsd.enable) { ls = "lsd"; };
 
-    initExtra = ''
+    initExtra = lib.concatLines([''
       # highlight the selected entry
       zstyle ':completion:*' menu select
       zmodload zsh/complist
@@ -34,9 +33,7 @@
       # ctrl+left/right
       bindkey $terminfo[kLFT5] backward-word
       bindkey $terminfo[kRIT5] forward-word
-
-      eval "$(direnv hook zsh)"
-    '';
+    ''] ++ lib.optional (lib.elem pkgs.direnv config.home.packages) "eval \"$(direnv hook zsh)\"");
 
     plugins = [
       {

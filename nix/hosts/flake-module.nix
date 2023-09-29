@@ -79,7 +79,22 @@ in
           modules = [
             ../modules/amd
             ./e595/configuration.nix
-            { home-manager.users.pfriedrich.imports = profiles."pfriedrich"; }
+            { home-manager.users.pfriedrich.imports = profiles."pfriedrich@home"; }
+          ];
+        };
+
+    work-wsl =
+      let
+        inputs' = {
+          nixpkgs = inputs.nixpkgs-unstable;
+          home-manager = inputs.home-manager-unstable;
+        };
+      in
+      buildDefaultSystem inputs'
+        {
+          modules = [
+            ./work-wsl/configuration.nix
+            { home-manager.users.pfriedrich.imports = profiles."pfriedrich@work-wsl"; }
           ];
         };
   };

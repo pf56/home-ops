@@ -3,13 +3,7 @@
 {
   imports = [
     ./apps
-    ./gtk.nix
-    ./ssh.nix
-    ./sway.nix
-    ./utilities.nix
-    ./zsh/zsh.nix
     #    nix-colors
-    lollypops.hmModule
   ];
 
   # Home Manager
@@ -22,7 +16,6 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     bcompare
-    direnv
     discord
     firefox
     jetbrains.rider
@@ -53,33 +46,8 @@
     dotnet-sdk
   ];
 
-  # configure git
-  programs.git = {
-    enable = true;
-    userName = "Paul Friedrich";
-    userEmail = "mail" + "@" + "paulfriedrich.me";
-    signing = {
-      key = "mail" + "@" + "paulfriedrich.me";
-      signByDefault = true;
-    };
-    extraConfig = {
-      init = {
-        defaultBranch = "main";
-      };
-    };
-  };
-
-
   # enable font config
   fonts.fontconfig.enable = true;
-
-  # GPG
-  services.gpg-agent = {
-    enable = true;
-    pinentryFlavor = "curses";
-    enableSshSupport = true;
-    sshKeys = [ "FF5C5944BE60F5DCC3B249F761DDD41AF24A1E8B" ];
-  };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -90,7 +58,4 @@
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "22.05";
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }

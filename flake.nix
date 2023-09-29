@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixos-23.05;
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixos-wsl.url = github:nix-community/NixOS-WSL/main;
     sops-nix.url = github:Mic92/sops-nix;
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = github:nix-community/home-manager/release-23.05;

@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     bat
-    evince
+    direnv
     htop
     unzip
   ];
