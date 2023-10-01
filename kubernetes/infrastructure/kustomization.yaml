@@ -5,3 +5,4 @@ resources:
   - ./cert-manager/kustomization-flux.yaml
   - ./cilium/
   - ./cilium-policies/
+  - ./traefik/kustomization-flux.yaml
