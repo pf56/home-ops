@@ -1,6 +1,6 @@
 [submodule "kubernetes/infrastructure/piraeus/piraeus-operator"]
 	path = kubernetes/infrastructure/piraeus/piraeus-operator
 	url = https://github.com/piraeusdatastore/piraeus-operator
-[submodule "kubernetes/infrastructure/traefik/traefik-helm-chart"]
-	path = kubernetes/infrastructure/traefik/traefik-helm-chart
+[submodule "kubernetes/infrastructure/traefik-pulumi/traefik-helm-chart"]
+	path = kubernetes/infrastructure/traefik-pulumi/traefik-helm-chart
 	url = https://github.com/traefik/traefik-helm-chart.git
