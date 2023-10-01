@@ -6,3 +6,4 @@ resources:
   - ./cilium/
   - ./cilium-policies/
   - ./traefik/kustomization-flux.yaml
+  - ./democratic-csi/kustomization-flux.yaml
