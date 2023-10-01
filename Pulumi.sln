@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pulumi.Crds", "kubernetes\c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rook", "kubernetes\infrastructure\rook\Rook.csproj", "{89EC519A-843F-43FA-B712-52FD0681F093}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemocraticCsi", "kubernetes\infrastructure\democratic-csi\DemocraticCsi.csproj", "{71BD4D6D-EC82-4716-B5AF-8B80D400B476}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemocraticCsi", "kubernetes\infrastructure\democratic-csi-pulumi\DemocraticCsi.csproj", "{71BD4D6D-EC82-4716-B5AF-8B80D400B476}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", "{9766C576-5B07-4674-B17D-AEF5829CB638}"
 EndProject
