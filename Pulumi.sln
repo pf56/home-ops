@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traefik", "kubernetes\infra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertManager", "kubernetes\infrastructure\cert-manager-pulumi\CertManager.csproj", "{D0E59D35-F223-4C51-9D95-1CF44E7202DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sabnzbd", "kubernetes\apps\sabnzbd\Sabnzbd.csproj", "{2557CEEA-A92C-4CB0-A6A2-57D68D2E71F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sabnzbd", "kubernetes\apps\sabnzbd-pulumi\Sabnzbd.csproj", "{2557CEEA-A92C-4CB0-A6A2-57D68D2E71F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6A826324-D51C-45D0-8D91-7CD9ABEFFD4A}"
 	ProjectSection(SolutionItems) = preProject
