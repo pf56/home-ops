@@ -1,9 +1,0 @@
-config:
-  democratic-csi:iscsi-password:
-    secure: AAABANWB7AAEQO360ntYbb9sIOFguByUQ8C5A95+S8LwOOlDy9O/wEobLNn4TBus
-  democratic-csi:iscsi-password-in:
-    secure: AAABAHG74kRbeS20oh1ku0SGQ0jY47pSsM+K1H3OMP28PxV95CAk3Y4KoCgGmBah
-  democratic-csi:iscsi-username: talosuser
-  democratic-csi:iscsi-username-in: talosuser
-  democratic-csi:truenas-api-key:
-    secure: AAABANromlfjdCvNoSK//QfRGgV/8nZl3GmN/1iUQVsXLL9Ibc9brHX2NnxQFG36R1qxryA9DddThMSxRbdqdDaLS2yoHN6TfEdLDwXrUVEkbPIeeH+d7vZiBri+CAfykvI=

@@ -1,4 +1,0 @@
-config:
-  cert-manager:cloudflare-api-token:
-    secure: AAABAOuuOXg+cpimDp+h53WB0nK1WrNNjJCZbW2ooq1hTf5+G5WJnkrfZ5Ufwu85OrXzRud5cPiWyoOyFxiUN8/MaoIFDbni
-  cert-manager:cloudflare-email: cloudflare@mail.paulfriedrich.me
