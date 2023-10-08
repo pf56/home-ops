@@ -1,0 +1,79 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sabnzbd
+  labels:
+    app: sabnzbd
+spec:
+  selector:
+    app: sabnzbd
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: web-ui
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sabnzbd
+  labels:
+    app: sabnzbd
+spec:
+  selector:
+    matchLabels:
+      app: sabnzbd
+#  serviceName: sabnzbd
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sabnzbd
+    spec:
+      containers:
+      - name: sabnzbd
+        image: linuxserver/sabnzbd:4.0.3
+        env:
+          - name: PUID
+            value: "1001"
+          - name: PGID
+            value: "1001"
+        ports:
+          - containerPort: 8080
+            name: web-ui
+            protocol: TCP
+        volumeMounts:
+          - name: data
+            mountPath: /config
+          - name: downloads
+            mountPath: /downloads-complete
+          - name: tmp
+            mountPath: /tmpdata
+      securityContext:
+        fsGroup: 1001
+      volumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: pvc-sabnzbd-downloads
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      namespace: sabnzbd
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "freenas-api-iscsi-csi"
+      resources:
+        requests:
+          storage: 8Gi
+  - metadata:
+      name: tmp
+      namespace: sabnzbd
+      annotations:
+        k8up.io/backup: "false"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "freenas-api-iscsi-csi"
+      resources:
+        requests:
+          storage: 128Gi

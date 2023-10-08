@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-sabnzbd-downloads
+spec:
+  storageClassName: ""
+  volumeName: pv-sabnzbd-downloads
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Ti
+
