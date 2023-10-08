@@ -5,3 +5,4 @@ namespace: traefik
 resources:
   - wildcard-certificate.yaml
   - default-tls-store.yaml
+  - middlewares.yaml
