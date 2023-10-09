@@ -16,4 +16,5 @@ spec:
       monthly: 12
       yearly: 1
     copyMethod: Snapshot
+    volumeSnapshotClassName: freenas-api-iscsi-csi
 
