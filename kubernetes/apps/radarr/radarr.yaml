@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr
+  labels:
+    app: radarr
+spec:
+  selector:
+    app: radarr
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: web-ui
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: radarr
+  labels:
+    app: radarr
+spec:
+  selector:
+    matchLabels:
+      app: radarr
+  serviceName: radarr
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      containers:
+      - name: radarr
+        image: linuxserver/radarr:4.6.4.7568-ls180
+        env:
+          - name: PUID
+            value: "1001"
+          - name: PGID
+            value: "1001"
+        ports:
+          - containerPort: 7878
+            name: web-ui
+            protocol: TCP
+        volumeMounts:
+          - name: data
+            mountPath: /config
+          - name: downloads
+            mountPath: /downloads
+          - name: movies
+            mountPath: /movies
+      securityContext:
+        fsGroup: 1001
+      volumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: pvc-radarr-downloads
+        - name: movies
+          persistentVolumeClaim:
+            claimName: pvc-radarr-movies
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      namespace: radarr
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "freenas-api-iscsi-csi"
+      resources:
+        requests:
+          storage: 8Gi
