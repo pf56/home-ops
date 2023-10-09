@@ -8,3 +8,5 @@ resources:
   - pvc-downloads.yaml
   - sabnzbd.yaml
   - ingress.yaml
+  - restic-credentials.sops.yaml
+  - backup.yaml
