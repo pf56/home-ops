@@ -24,7 +24,7 @@ spec:
   selector:
     matchLabels:
       app: sabnzbd
-#  serviceName: sabnzbd
+  serviceName: sabnzbd
   replicas: 1
   template:
     metadata:
