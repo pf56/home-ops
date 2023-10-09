@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components", "kubernetes\co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sonarr", "kubernetes\apps\sonarr\Sonarr.csproj", "{8D7E3DBD-EA3C-4660-8F93-FFDB234A21EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radarr", "kubernetes\apps\radarr\Radarr.csproj", "{5D877346-FB54-47C7-9DAD-906224069EC4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radarr", "kubernetes\apps\radarr-pulumi\Radarr.csproj", "{5D877346-FB54-47C7-9DAD-906224069EC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jellyfin", "kubernetes\apps\jellyfin\Jellyfin.csproj", "{55D59088-4E47-4907-86F2-D94DEC65DAB9}"
 EndProject
