@@ -5,3 +5,4 @@ resources:
   - ./jetstack-charts.yaml
   - ./traefik-charts.yaml
   - ./democratic-csi-charts.yaml
+  - ./backube-charts.yaml
