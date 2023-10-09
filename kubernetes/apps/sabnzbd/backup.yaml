@@ -17,4 +17,7 @@ spec:
       yearly: 1
     copyMethod: Snapshot
     volumeSnapshotClassName: freenas-api-iscsi-csi
+    moverSecurityContext:
+      fsGroup: 1001
+      fsGroupChangePolicy: "OnRootMismatch"
 
