@@ -39,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components", "kubernetes\common\components\Components.csproj", "{A8CFE375-38C3-4C51-B380-2A045BB3B2CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sonarr", "kubernetes\apps\sonarr\Sonarr.csproj", "{8D7E3DBD-EA3C-4660-8F93-FFDB234A21EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sonarr", "kubernetes\apps\sonarr-pulumi\Sonarr.csproj", "{8D7E3DBD-EA3C-4660-8F93-FFDB234A21EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radarr", "kubernetes\apps\radarr-pulumi\Radarr.csproj", "{5D877346-FB54-47C7-9DAD-906224069EC4}"
 EndProject
