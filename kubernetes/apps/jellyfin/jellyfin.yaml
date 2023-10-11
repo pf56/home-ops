@@ -53,7 +53,7 @@ spec:
             claimName: pvc-jellyfin-tv
         - name: movies
           persistentVolumeClaim:
-            claimName: pvc-movies-downloads
+            claimName: pvc-jellyfin-movies
   volumeClaimTemplates:
   - metadata:
       name: data
