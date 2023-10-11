@@ -5,3 +5,4 @@ resources:
   - ./sabnzbd/kustomization-flux.yaml
   - ./radarr/kustomization-flux.yaml
   - ./sonarr/kustomization-flux.yaml
+  - ./jellyfin/kustomization-flux.yaml

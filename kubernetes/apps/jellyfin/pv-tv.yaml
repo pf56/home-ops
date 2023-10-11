@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-jellyfin-tv
+spec:
+  capacity:
+    storage: 100Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - nfsvers=3
+    - nolock
+    - noatime
+  csi:
+    driver: org.democratic-csi.node-manual
+    readOnly: false
+    fsType: nfs
+    volumeHandle: ed93def9-99e4-4f3d-9438-0dbf2544f92e
+    volumeAttributes:
+      server: 10.0.60.3
+      share: /mnt/tank/tv
+      node_attach_driver: nfs
+      provisioner_driver: node-manual
