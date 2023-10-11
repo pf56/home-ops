@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-sonarr-downloads
+spec:
+  capacity:
+    storage: 100Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - nfsvers=3
+    - nolock
+    - noatime
+  csi:
+    driver: org.democratic-csi.node-manual
+    readOnly: false
+    fsType: nfs
+    volumeHandle: c56b4dd6-267c-4941-9e5d-07ab4fdebedf
+    volumeAttributes:
+      server: 10.0.60.3
+      share: /mnt/tank/downloads
+      node_attach_driver: nfs
+      provisioner_driver: node-manual

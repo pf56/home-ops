@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./sabnzbd/kustomization-flux.yaml
   - ./radarr/kustomization-flux.yaml
+  - ./sonarr/kustomization-flux.yaml

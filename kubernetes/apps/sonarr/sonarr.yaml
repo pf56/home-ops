@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+  labels:
+    app: sonarr
+spec:
+  selector:
+    app: sonarr
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: web-ui
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sonarr
+  labels:
+    app: sonarr
+spec:
+  selector:
+    matchLabels:
+      app: sonarr
+  serviceName: sonarr
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      containers:
+      - name: sonarr
+        image: linuxserver/sonarr:develop-version-4.0.0.575
+        env:
+          - name: PUID
+            value: "1001"
+          - name: PGID
+            value: "1001"
+        ports:
+          - containerPort: 8989
+            name: web-ui
+            protocol: TCP
+        volumeMounts:
+          - name: data
+            mountPath: /config
+          - name: downloads
+            mountPath: /downloads
+          - name: tv
+            mountPath: /tv
+      securityContext:
+        fsGroup: 1001
+      volumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: pvc-sonarr-downloads
+        - name: tv
+          persistentVolumeClaim:
+            claimName: pvc-sonarr-tv
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      namespace: sonarr
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "freenas-api-iscsi-csi"
+      resources:
+        requests:
+          storage: 8Gi

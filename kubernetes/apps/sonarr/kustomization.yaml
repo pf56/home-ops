@@ -1,0 +1,14 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: sonarr
+resources:
+  - namespace.yaml
+  - pv-downloads.yaml
+  - pvc-downloads.yaml
+  - pv-tv.yaml
+  - pvc-tv.yaml
+  - sonarr.yaml
+  - ingress.yaml
+#  - restic-credentials.sops.yaml
+#  - backup.yaml
