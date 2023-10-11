@@ -1,0 +1,23 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: radarr-backup
+spec:
+  sourcePVC: data-radarr-0
+  trigger:
+    schedule: "50 11 * * *"
+  restic:
+    pruneIntervalDays: 14
+    repository: restic-credentials
+    retain:
+      daily: 7
+      weekly: 4
+      monthly: 12
+      yearly: 1
+    copyMethod: Snapshot
+    volumeSnapshotClassName: freenas-api-iscsi-csi
+    moverSecurityContext:
+      fsGroup: 1001
+      fsGroupChangePolicy: "OnRootMismatch"
+

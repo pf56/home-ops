@@ -10,5 +10,5 @@ resources:
   - pvc-movies.yaml
   - radarr.yaml
   - ingress.yaml
-#  - restic-credentials.sops.yaml
-#  - backup.yaml
+  - restic-credentials.sops.yaml
+  - backup.yaml
