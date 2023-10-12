@@ -6,3 +6,4 @@ resources:
   - ./radarr/kustomization-flux.yaml
   - ./sonarr/kustomization-flux.yaml
   - ./jellyfin/kustomization-flux.yaml
+  - ./paperless/kustomization-flux.yaml
