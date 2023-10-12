@@ -6,7 +6,7 @@ metadata:
 spec:
   sourcePVC: data-radarr-0
   trigger:
-    schedule: "50 11 * * *"
+    schedule: "0 2 * * *"
   restic:
     pruneIntervalDays: 14
     repository: restic-credentials
