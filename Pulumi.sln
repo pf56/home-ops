@@ -45,7 +45,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radarr", "kubernetes\apps\r
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jellyfin", "kubernetes\apps\jellyfin-pulumi\Jellyfin.csproj", "{55D59088-4E47-4907-86F2-D94DEC65DAB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paperless", "kubernetes\apps\paperless\Paperless.csproj", "{D47967EF-C6CB-48C1-94FB-7285EAAD1F48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paperless", "kubernetes\apps\paperless-pulumi\Paperless.csproj", "{D47967EF-C6CB-48C1-94FB-7285EAAD1F48}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K8Up", "kubernetes\infrastructure\k8up\K8Up.csproj", "{309CF729-2B84-40A4-88E2-447BBA4367A1}"
 EndProject
