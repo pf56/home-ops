@@ -1,5 +1,0 @@
-config:
-  jellyfin:restic-password:
-    secure: AAABAGBkHXVRzQ90963mMVY3mb6Vl2Z73nBxNDtlYZyRoZzqtbHIuXW4OxbcHmKOauxhPaIn4F0+wB72Wxf8zQ==
-  jellyfin:restic-repo:
-    secure: AAABAAAeTYVf1BXbdlVR61OXBWzx/RMhfd+xSr5nyjQP4dQWmyWEFAccq4JKre+xEqs2y2txNN3riLw8Exq69GOP4rqq+NO+S7WIqWWj96h3jrkhmOI2ZJwul3Q=

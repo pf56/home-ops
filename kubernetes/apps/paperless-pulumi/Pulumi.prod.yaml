@@ -1,5 +1,0 @@
-config:
-  paperless:restic-password:
-    secure: AAABACYtDG4p6PKKg15kZLIN6NWU4SApuy4tG1q2i93/RzLNeETM2aC8DGa1J1YnHqgKsW7K/KkeIda1TfsIYQ==
-  paperless:restic-repo:
-    secure: AAABAA3I7Lwuzca43t1Y6XCQHgFKV8ryzPsqKLjsfdcUWHRcsnX1uDtyKLkPLZvJL5fiWQVqy/ZOxTBUluHIbgAiTYYrnExv+zWeXWxhjOBqairkvGQj9kdxXV4=

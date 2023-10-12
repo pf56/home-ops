@@ -1,5 +1,0 @@
-config:
-  radarr:restic-password:
-    secure: AAABAI0QSA2jR+0tNX7BgEf/h9/ULumEn+mZ+vw33JVbUwGIgWC3vIm/cTvus5QgVSvnoOEhsAp3JW+u6V/h/A==
-  radarr:restic-repo:
-    secure: AAABALlVoPf7DGGXexBAY/JoW6ikXkWcATJaNHtlK1LRyLeQBpEPgOXQp4XI4LUQUL/LJUjXKQ+dPtnjD7K8ZL8t3WwUgtUyTlNY9MI0NbthLJMmCZotVtbw99I=
