@@ -7,5 +7,5 @@ resources:
   - paperless.yaml
   - redis.yaml
   - ingress.yaml
-#  - restic-credentials.sops.yaml
-#  - backup.yaml
+  - restic-credentials.sops.yaml
+  - backup.yaml
