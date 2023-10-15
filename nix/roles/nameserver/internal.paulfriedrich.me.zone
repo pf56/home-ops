@@ -40,6 +40,9 @@ taloscontrolplane02		IN	A		10.0.60.11
 taloscontrolplane03		IN	A		10.0.60.12
 talosworker03			IN	A		10.0.60.13
 
+monitoring				IN	A		10.0.60.19
+grafana					IN	CNAME	monitoring
+
 traefik					IN	A		172.16.61.1
 sabnzbd					IN	CNAME	traefik
 sonarr					IN	CNAME	traefik

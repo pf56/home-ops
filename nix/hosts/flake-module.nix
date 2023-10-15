@@ -67,6 +67,10 @@ in
       modules = [ ./ldap01/configuration.nix ];
     };
 
+    monitoring = buildDefaultSystem { } {
+      modules = [ ./monitoring/configuration.nix ];
+    };
+
     e595 =
       let
         inputs' = {
