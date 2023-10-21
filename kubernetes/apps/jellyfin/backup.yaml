@@ -6,7 +6,7 @@ metadata:
 spec:
   sourcePVC: data-jellyfin-0
   trigger:
-    schedule: "0 2 * * *"
+    schedule: "20 2 * * *"
   restic:
     pruneIntervalDays: 14
     repository: restic-credentials
