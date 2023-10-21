@@ -6,7 +6,7 @@ metadata:
 spec:
   sourcePVC: data-sabnzbd-0
   trigger:
-    schedule: "0 2 * * *"
+    schedule: "40 12 * * *"
   restic:
     pruneIntervalDays: 14
     repository: restic-credentials
