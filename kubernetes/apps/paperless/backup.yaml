@@ -6,7 +6,7 @@ metadata:
 spec:
   sourcePVC: data-paperless-0
   trigger:
-    schedule: "40 12 * * *"
+    schedule: "15 2 * * *"
   restic:
     pruneIntervalDays: 14
     repository: restic-credentials
