@@ -28,6 +28,6 @@ $ORIGIN 60.0.10.IN-ADDR.ARPA.
 12				IN	PTR		taloscontrolplane03.internal.paulfriedrich.me.
 13				IN	PTR		taloscontrolplane03.internal.paulfriedrich.me.
 19				IN	PTR		monitoring.internal.paulfriedrich.me.
-19				IN	PTR		grafana.internal.paulfriedrich.me.
+19				IN	PTR		dashboard.internal.paulfriedrich.me.
 
 16				IN	PTR		k3s-server-01.internal.paulfriedrich.me.
