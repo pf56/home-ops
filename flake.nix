@@ -16,12 +16,11 @@
     lollypops.url = "github:pinpox/lollypops";
     lollypops.inputs.nixpkgs.follows = "nixpkgs";
     talhelper.url = "github:budimanjojo/talhelper";
-    talhelper.inputs.nixpkgs.follows = "nixpkgs";
-
+    talhelper.inputs.nixpkgs.follows = "nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     snapraid-aio-script = {
-      url = "sourcehut:~pf56/snapraid-aio-script-nix";
+      url = "sourcehut:~pfriedrich/snapraid-aio-script-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
