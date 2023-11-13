@@ -113,8 +113,10 @@
   # accidentally delete configuration.nix.
   # system.copySystemConfiguration = true;
 
-  services.borgbackup.jobs.home-e595 = {
-    repo = "j5g1w103@j5g1w103.repo.borgbase.com:repo";
+  services.restic.backups.e595 = {
+    repositoryFile = config.sops.secrets.restic_repo.path;
+    passwordFile = config.sops.secrets.restic_password.path;
+    initialize = true;
 
     paths = [
       "/home"
@@ -123,25 +125,26 @@
 
     exclude = [
       "/home/*/.cache"
-      "/home/*/.config/discord"
-      "/var/lib/systemd"
+      "/home/.zfs"
+      "/var/cache"
     ];
 
-    prune.keep = {
-      within = "1d";
-      daily = 7;
-      weekly = 4;
-      monthly = 6;
+    timerConfig = {
+      OnCalendar = "02:00";
+      Persistent = true;
+      RandomizedDelaySec = "2h";
     };
 
-    encryption = {
-      mode = "repokey-blake2";
-      passCommand = "cat ${config.sops.secrets.borg_passphrase.path}";
-    };
+    pruneOpts = [
+      "--keep-daily 7"
+      "--keep-weekly 4"
+      "--keep-monthly 12"
+      "--keep-yearly 15"
+    ];
 
-    environment.BORG_RSH = "ssh -i /home/pfriedrich/.ssh/id_ed25519_borg";
-    compression = "auto,zstd";
-    startAt = "daily";
+    checkOpts = [
+      "--with-cache"
+    ];
   };
 
   services.tailscale.enable = true;
@@ -166,7 +169,8 @@
     };
 
     secrets = {
-      borg_passphrase = { };
+      restic_repo = { };
+      restic_password = { };
     };
   };
 
