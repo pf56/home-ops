@@ -31,7 +31,6 @@ let
       nix.nixPath = [ "home-manager=${inputs'.home-manager}" ];
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = with inputs'; { inherit lollypops; inherit talhelper; };
     }
     { imports = builtins.attrValues roles; }
   ];
@@ -83,7 +82,7 @@ in
           modules = [
             ../modules/amd
             ./e595/configuration.nix
-            { home-manager.users.pfriedrich.imports = profiles."pfriedrich@home"; }
+            self.homeConfigurations."pfriedrich@home"
           ];
         };
 
@@ -98,7 +97,7 @@ in
         {
           modules = [
             ./work-wsl/configuration.nix
-            { home-manager.users.pfriedrich.imports = profiles."pfriedrich@work-wsl"; }
+            self.homeConfigurations."pfriedrich@work-wsl"
           ];
         };
   };

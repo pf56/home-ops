@@ -24,11 +24,14 @@
     flake-parts.lib.mkFlake { inherit inputs; }
       {
         imports = [
-          ./nix/home/profiles
           ./nix/hosts/flake-module.nix
         ];
 
         systems = [ "x86_64-linux" ];
+
+        flake.homeConfigurations = import ./nix/home/profiles {
+          inherit inputs;
+        };
 
         perSystem = { config, self', inputs', pkgs, system, ... }: {
           apps = {
