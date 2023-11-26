@@ -18,11 +18,6 @@
     talhelper.url = "github:budimanjojo/talhelper";
     talhelper.inputs.nixpkgs.follows = "nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
-
-    snapraid-aio-script = {
-      url = "sourcehut:~pfriedrich/snapraid-aio-script-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs@{ self, flake-parts, nixpkgs, sops-nix, lollypops, nixos-generators, ... }:

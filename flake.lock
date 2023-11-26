@@ -316,29 +316,8 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "snapraid-aio-script": "snapraid-aio-script",
         "sops-nix": "sops-nix",
         "talhelper": "talhelper"
-      }
-    },
-    "snapraid-aio-script": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1678627224,
-        "narHash": "sha256-I3E10zbisAVy/qcCbCvt4Yb7lBiGX8JBx8Yiq5g3NIc=",
-        "owner": "~pfriedrich",
-        "repo": "snapraid-aio-script-nix",
-        "rev": "3e1474bbe1f0bf5c759295fa48fdb641c9bbcfab",
-        "type": "sourcehut"
-      },
-      "original": {
-        "owner": "~pfriedrich",
-        "repo": "snapraid-aio-script-nix",
-        "type": "sourcehut"
       }
     },
     "sops-nix": {
