@@ -24,7 +24,10 @@
     ];
   };
 
-  modules.amdGpu.enable = true;
+  modules = {
+    amdGpu.enable = true;
+    pipewire.enable = true;
+  };
 
   # users
   users.users.pfriedrich = {
@@ -47,13 +50,6 @@
   programs.dconf.enable = true;
   programs.zsh.enable = true;
   programs.wireshark.enable = true;
-
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-  };
 
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
