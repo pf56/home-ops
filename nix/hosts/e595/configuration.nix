@@ -27,6 +27,7 @@
   modules = {
     amdGpu.enable = true;
     pipewire.enable = true;
+    wireshark.enable = true;
   };
 
   # users
@@ -44,12 +45,10 @@
     pavucontrol
     pinentry-curses
     gnome.gedit
-    wireshark
   ];
 
   programs.dconf.enable = true;
   programs.zsh.enable = true;
-  programs.wireshark.enable = true;
 
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
