@@ -5,6 +5,14 @@ let
     unstable = import inputs.nixpkgs-unstable { inherit system; inherit (final) config; };
   };
 
+  # load all roles from the ./modules directory
+  modules = builtins.listToAttrs (map
+    (x: {
+      name = x;
+      value = import (../modules + "/${x}");
+    })
+    (builtins.attrNames (builtins.readDir ../modules)));
+
   # load all roles from the ./roles directory
   roles = builtins.listToAttrs (map
     (x: {
@@ -32,6 +40,7 @@ let
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
     }
+    { imports = builtins.attrValues modules; }
     { imports = builtins.attrValues roles; }
   ];
 
@@ -80,7 +89,6 @@ in
       buildDefaultSystem inputs'
         {
           modules = [
-            ../modules/amd
             ./e595/configuration.nix
             self.homeConfigurations."pfriedrich@home"
           ];
