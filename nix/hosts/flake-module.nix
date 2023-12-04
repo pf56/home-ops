@@ -5,7 +5,7 @@ let
     unstable = import inputs.nixpkgs-unstable { inherit system; inherit (final) config; };
   };
 
-  # load all roles from the ./modules directory
+  # load all modules from the ./modules directory
   modules = builtins.listToAttrs (map
     (x: {
       name = x;
