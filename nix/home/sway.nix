@@ -44,7 +44,6 @@ in
     grim
     slurp
     i3pystatus
-    wl-clipboard
     mako
     i3status
     glib
