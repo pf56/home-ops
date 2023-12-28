@@ -10,9 +10,12 @@ let
     "pfriedrich@work-wsl" = pfriedrich ++ [ ../work-wsl.nix ];
   };
 
-  mkHomeConfig = { home-manager, username, env, ... }: {
+  mkHomeConfig = { home-manager, username, env, ... }: 
+  let
+    env' = if env == null then "" else "@${env}";
+  in {
     home-manager.extraSpecialArgs = with inputs; { inherit lollypops; inherit talhelper; };
-    home-manager.users."${username}".imports = profiles."${username}@${env}";
+    home-manager.users."${username}".imports = profiles."${username}${env'}";
   };
 in
 {
@@ -22,9 +25,9 @@ in
     env = "home";
   };
 
-  "pfriedrich@work-wsl" = { home-manager, ... }: mkHomeConfig {
+  "pfriedrich@work" = { home-manager, ... }: mkHomeConfig {
     inherit home-manager;
     username = "pfriedrich";
-    env = "work-wsl";
+    env = null;
   };
 }
