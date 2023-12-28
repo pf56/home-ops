@@ -85,20 +85,5 @@ in
             self.homeConfigurations."pfriedrich@home"
           ];
         };
-
-    work-wsl =
-      let
-        inputs' = {
-          nixpkgs = inputs.nixpkgs-unstable;
-          home-manager = inputs.home-manager-unstable;
-        };
-      in
-      buildDefaultSystem inputs'
-        {
-          modules = [
-            ./work-wsl/configuration.nix
-            self.homeConfigurations."pfriedrich@work-wsl"
-          ];
-        };
   };
 }
