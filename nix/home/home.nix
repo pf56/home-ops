@@ -1,5 +1,7 @@
-{ config, pkgs, nix-colors ? import <nix-colors>, lollypops, talhelper, ... }:
-
+{ config, pkgs, nix-colors ? import <nix-colors>, inputs, ... }:
+let
+  talhelper = inputs.talhelper;
+in
 {
   imports = [
     ./apps

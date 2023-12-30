@@ -1,4 +1,4 @@
-{ self, inputs, withSystem, profiles, ... }:
+{ self, inputs, withSystem, ... }:
 let
   system = "x86_64-linux";
   overlay-unstable = final: prev: {
@@ -23,9 +23,9 @@ let
 
   # the default modules used on every machine
   defaultModules = inputs': [
-    { _module.args = { inputs = inputs'; inherit profiles; }; }
+    { _module.args = { inputs = inputs'; }; }
     {
-      nixpkgs.overlays = [ overlay-unstable ];
+      nixpkgs.overlays = [ overlay-unstable self.overlays.default ];
       nix.nixPath = [
         "nixpkgs=${inputs'.nixpkgs}"
       ];

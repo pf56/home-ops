@@ -28,6 +28,7 @@
     amdGpu.enable = true;
     pipewire.enable = true;
     wireshark.enable = true;
+    hyprland.enable = true;
   };
 
   # users

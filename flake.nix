@@ -29,9 +29,8 @@
 
         systems = [ "x86_64-linux" ];
 
-        flake.homeConfigurations = import ./nix/home/profiles {
-          inherit inputs;
-        };
+        flake.homeConfigurations = import ./nix/home/profiles;
+        flake.overlays.default = import ./nix/overlays;
 
         perSystem = { config, self', inputs', pkgs, system, ... }: {
           apps = {
