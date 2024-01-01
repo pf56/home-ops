@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: #writeTextDir, writeShellScriptBin, symlinkJoin, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
@@ -13,7 +13,6 @@ let
       CONFIG_DIR=~/.config/eww-config
       mkdir -p $CONFIG_DIR
       
-      MAIN_MONITOR=$(${getMainMonitor}/bin/get-main-monitor)
       MONITORS=$(${getMonitors}/bin/get-monitors)
 
       cat <<EOF > $CONFIG_DIR/eww.yuck
@@ -111,25 +110,47 @@ let
         )
       EOF
 
+      cat <<EOF > $CONFIG_DIR/eww.scss
+      * {
+        font-family: SauceCodePro NFM Medium;
+        font-size: 15px;
+      }
+
+      .workspaces {
+        border: 1px solid #${config.colorScheme.colors.base05};
+        border-left: 0;
+      }
+
+      .workspace-button {
+        padding: 0 2px;
+
+        border: none;
+        border-left: 1px solid #${config.colorScheme.colors.base05};
+        border-radius: 0;
+
+        color: #${config.colorScheme.colors.base05};
+        background: none;
+        box-shadow: none;
+      }
+
+      .workspace-active {
+        background: #${config.colorScheme.colors.base0F};
+      }
+
+      .bar0, .bar1, .bar2 {
+        background-color: transparent;
+
+        .main-container {
+          margin: 4px 4px 0 4px;
+          padding: 2px 5px 2px 0;
+          color: #${config.colorScheme.colors.base05};
+          background-color: #${config.colorScheme.colors.base00};
+        }
+      }
+      EOF
+
       echo $CONFIG_DIR
       exit 0
-    '';
-
-  ewwScss = pkgs.writeTextDir "eww.scss"
-    ''
-      .workspace-active { color: blue; }
-    '';
-
-  getMainMonitor = pkgs.writeShellScriptBin "get-main-monitor"
-    ''
-      set -euo pipefail
-      
-      MAIN_MONITOR="912NTDV0N042"
-      INTERNAL_DISPLAY="eDP-1"
-      ${hyprctl} monitors -j | ${jq} -r \
-        --arg SERIALNO $MAIN_MONITOR \
-        --arg FALLBACK $INTERNAL_DISPLAY \
-        'map(select(.serial == $SERIALNO))[0] // map(select(.name == $FALLBACK))[0] // {id: 0, name: "_"}'
     '';
 
   getMonitors = pkgs.writeShellScriptBin "get-monitors"
@@ -167,12 +188,3 @@ in
 {
   home.packages = [ launchBars ];
 }
-#symlinkJoin {
-#  name = "eww-config";
-#  paths = [
-#    createEwwConfig
-#    ewwScss
-#    launchBars
-#    getMainMonitor
-#  ];
-#}

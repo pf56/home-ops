@@ -1,18 +1,15 @@
-{ config, pkgs, nix-colors ? import <nix-colors>, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 let
   talhelper = inputs.talhelper;
 in
 {
   imports = [
     ./apps
-    #    nix-colors
   ];
 
   # Home Manager
   home.username = "pfriedrich";
   home.homeDirectory = "/home/pfriedrich";
-
-  #  colorScheme = nix-colors.colorSchemes.nord;
 
   # packages
   nixpkgs.config.allowUnfree = true;

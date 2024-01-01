@@ -18,6 +18,7 @@
     talhelper.url = "github:budimanjojo/talhelper";
     talhelper.inputs.nixpkgs.follows = "nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs = inputs@{ self, flake-parts, nixpkgs, sops-nix, lollypops, nixos-generators, ... }:
