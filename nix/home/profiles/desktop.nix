@@ -14,6 +14,7 @@ in
   colorScheme = nix-colors.colorSchemes.nord;
 
   modules = {
+    gtk.enable = true;
     hyprland.enable = true;
     eww.enable = true;
     mako.enable = true;
