@@ -16,6 +16,7 @@ in
   modules = {
     gtk.enable = true;
     hyprland.enable = true;
+    wpaperd.enable = true;
     eww.enable = true;
     mako.enable = true;
   };
