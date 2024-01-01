@@ -23,8 +23,8 @@ in
         monitor = desc:LG Electronics 27GL850 912NTDV0N042,2560x1440@99,4480x0,1
         monitor = ,preferred,auto,1
 
-        bindl = ,switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1,1920x1080,0x0,1"
-        bindl = ,switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1,disable"
+        bindl = ,switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1,1920x1080,0x0,1"
+        bindl = ,switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1,disable"
 
         $mod = SUPER
         
