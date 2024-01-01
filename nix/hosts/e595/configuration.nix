@@ -29,6 +29,7 @@
     pipewire.enable = true;
     wireshark.enable = true;
     hyprland.enable = true;
+    yubikey.enable = true;
   };
 
   # users
