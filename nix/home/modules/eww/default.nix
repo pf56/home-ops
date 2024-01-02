@@ -5,10 +5,6 @@ let
   cfg = config.modules.eww;
 in
 {
-  imports = [
-    ./config
-  ];
-
   options.modules.eww = {
     enable = mkOption
       {
@@ -17,7 +13,7 @@ in
       };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable ({
     home.packages = [ pkgs.hyprland-workspaces ];
 
     programs.eww = {
@@ -25,5 +21,5 @@ in
       package = pkgs.eww-wayland;
       configDir = ./conf;
     };
-  };
+  } // import ./config { inherit config; inherit pkgs; inherit lib; });
 }
