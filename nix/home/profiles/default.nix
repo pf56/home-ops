@@ -1,3 +1,5 @@
+{ inputs, ... }:
+
 let
   hmModules = builtins.listToAttrs (map
     (x: {
@@ -15,8 +17,8 @@ let
 
     desktop = [ ./desktop.nix ];
     pfriedrich = [ ./pfriedrich.nix ];
+    "pfriedrich@base" = base ++ pfriedrich;
     "pfriedrich@home" = base ++ pfriedrich ++ desktop ++ [ ../home.nix ];
-    "pfriedrich@work-wsl" = base ++ pfriedrich ++ [ ../work-wsl.nix ];
   };
 
   mkHomeConfig = { inputs, username, env, ... }:
@@ -29,15 +31,15 @@ let
     };
 in
 {
-  "pfriedrich@home" = inputs: mkHomeConfig {
-    inherit inputs;
+  "pfriedrich@home" = inputs': mkHomeConfig {
+    inputs = inputs // inputs';
     username = "pfriedrich";
     env = "home";
   };
 
-  "pfriedrich@work" = { inputs, ... }: mkHomeConfig {
-    inherit inputs;
+  "pfriedrich@base" = inputs': mkHomeConfig {
+    inputs = inputs // inputs';
     username = "pfriedrich";
-    env = null;
+    env = "base";
   };
 }
