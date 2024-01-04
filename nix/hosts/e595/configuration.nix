@@ -46,7 +46,7 @@
     gnupg
     pavucontrol
     pinentry-curses
-    gnome.gedit
+    gedit
   ];
 
   programs.dconf.enable = true;
