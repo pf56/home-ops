@@ -153,16 +153,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1700608492,
-        "narHash": "sha256-27YhcATLzYCHkIOSljKO0dUEaNwOhyuFwFu5eLcqQwo=",
+        "lastModified": 1700471875,
+        "narHash": "sha256-zcrUE4hEnvQlwBlBDE60XPISWan3+sSbs3hhfbVlM5o=",
         "owner": "pinpox",
         "repo": "lollypops",
-        "rev": "63164bb5856d92d776a90c701acd3114450cdd85",
+        "rev": "ac420532258e45943d3a4da6187c8cec309f2b0f",
         "type": "github"
       },
       "original": {
         "owner": "pinpox",
         "repo": "lollypops",
+        "rev": "ac420532258e45943d3a4da6187c8cec309f2b0f",
         "type": "github"
       }
     },

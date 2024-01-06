@@ -13,7 +13,7 @@
     home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
-    lollypops.url = "github:pinpox/lollypops";
+    lollypops.url = "github:pinpox/lollypops?rev=ac420532258e45943d3a4da6187c8cec309f2b0f";
     lollypops.inputs.nixpkgs.follows = "nixpkgs";
     talhelper.url = "github:budimanjojo/talhelper";
     talhelper.inputs.nixpkgs.follows = "nixpkgs-unstable";
