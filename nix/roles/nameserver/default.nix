@@ -111,14 +111,6 @@ in
               resolver = "internal-udp";
             }
             {
-              name = "\.15\.in-addr\.arpa\.$";
-              resolver = "internal-udp";
-            }
-            {
-              name = "\.60\.in-addr\.arpa\.$";
-              resolver = "internal-udp";
-            }
-            {
               resolver = "upstream";
             }
           ];
@@ -160,6 +152,10 @@ in
             semantic-checks: on
 
         zone:
+          - domain: vultr.internal.paulfriedrich.me
+            file: "${./vultr.internal.paulfriedrich.me.zone}"
+
+        zone:
           - domain: internal.paulfriedrich.me
             file: "${./internal.paulfriedrich.me.zone}"
 
@@ -174,6 +170,10 @@ in
         zone:
           - domain: 60.0.10.in-addr.arpa
             file: "${./60.0.10.in-addr.arpa.zone}"
+
+        zone:
+          - domain: 100.10.in-addr.arpa
+            file: "${./100.10.in-addr.arpa.zone}"
       '';
     };
 

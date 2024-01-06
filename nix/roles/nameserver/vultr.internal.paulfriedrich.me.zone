@@ -1,0 +1,17 @@
+$TTL 1d
+$ORIGIN vultr.internal.paulfriedrich.me.
+
+@						IN	SOA		ns01.internal.paulfriedrich.me.	hostmaster.mail.paulfriedrich.me.	(
+										2024010601		; serial number YYMMDDNN
+										28800			; Refresh
+										7200			; Retry
+										864000			; Expire
+										86400			; Min TTL
+									)
+
+						NS		ns01.internal.paulfriedrich.me.
+						NS		ns02.internal.paulfriedrich.me.
+
+; ROUTER
+router					IN	A		10.100.0.1
+router					IN	AAAA	2a0f:9400:7387:8000::1
