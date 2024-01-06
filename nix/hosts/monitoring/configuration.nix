@@ -52,6 +52,13 @@
             targets = [ "10.0.60.1:9273" ];
           }];
         }
+        {
+          job_name = "router.vultr.internal.paulfriedrich.me";
+          scrape_interval = "15s";
+          static_configs = [{
+            targets = [ "router.vultr.internal.paulfriedrich.me:9273" ];
+          }];
+        }
       ];
     };
 
