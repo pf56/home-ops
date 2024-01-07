@@ -28,8 +28,8 @@ in
       };
 
       cursorTheme = {
-        package = pkgs.nordzy-cursor-theme;
-        name = "Nordzy";
+        package = pkgs.nordic;
+        name = "Nordic-cursors";
       };
     };
   };
