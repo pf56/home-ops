@@ -16,3 +16,5 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
+    kubeProxy:
+      enabled: false  # replaced with cilium
