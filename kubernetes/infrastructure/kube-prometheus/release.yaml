@@ -18,3 +18,11 @@ spec:
   values:
     kubeProxy:
       enabled: false  # replaced with cilium
+    kubeScheduler:
+      service:
+        selector:
+          k8s-app: kube-scheduler
+    kubeControllerManager:
+      service:
+        selector:
+          k8s-app: kube-controller-manager
