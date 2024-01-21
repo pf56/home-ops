@@ -8,3 +8,4 @@ resources:
   - ./traefik/kustomization-flux.yaml
   - ./democratic-csi/kustomization-flux.yaml
   - ./volsync/kustomization-flux.yaml
+  - ./kube-prometheus/kustomization-flux.yaml
