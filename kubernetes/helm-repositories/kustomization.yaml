@@ -6,3 +6,4 @@ resources:
   - ./traefik-charts.yaml
   - ./democratic-csi-charts.yaml
   - ./backube-charts.yaml
+  - ./prometheus-community.yaml
