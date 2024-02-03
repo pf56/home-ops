@@ -105,6 +105,8 @@ nodes:
 controlPlane:
   patches:
     - "@./patches/install-cilium-controlplane.yaml"
+    - "@./patches/scheduler-config.yaml"
+    - "@./patches/controller-manager-config.yaml"
 
 worker:
   patches:
