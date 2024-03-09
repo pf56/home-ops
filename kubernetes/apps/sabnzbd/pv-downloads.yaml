@@ -17,7 +17,7 @@ spec:
     driver: org.democratic-csi.node-manual
     readOnly: false
     fsType: nfs
-    volumeHandle: 9a5946cb-88ad-4f21-a80c-ec8f5ec25152
+    volumeHandle: 91edcb37-ceef-4a61-8f16-033af68745f1
     volumeAttributes:
       server: 10.0.60.3
       share: /mnt/tank/downloads
