@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: sabnzbd
-        image: linuxserver/sabnzbd:4.1.0
+        image: linuxserver/sabnzbd:4.2.2
         env:
           - name: PUID
             value: "1001"
