@@ -47,6 +47,7 @@
     pavucontrol
     pinentry-curses
     gedit
+    vban
   ];
 
   programs.dconf.enable = true;
