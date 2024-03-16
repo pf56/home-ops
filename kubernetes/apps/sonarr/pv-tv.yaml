@@ -17,7 +17,7 @@ spec:
     driver: org.democratic-csi.node-manual
     readOnly: false
     fsType: nfs
-    volumeHandle: cdba8357-ec28-48ef-9509-921704759fa9
+    volumeHandle: ca4cb233-0c62-490f-83ac-d9e0678cff22
     volumeAttributes:
       server: 10.0.60.3
       share: /mnt/tank/tv
