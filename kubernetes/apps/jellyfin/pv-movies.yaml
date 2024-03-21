@@ -17,7 +17,7 @@ spec:
     driver: org.democratic-csi.node-manual
     readOnly: false
     fsType: nfs
-    volumeHandle: 65f811eb-eed1-488f-9a7d-354257ac49d7
+    volumeHandle: 78181a1a-c4b1-4f92-979b-949aba92eea1
     volumeAttributes:
       server: 10.0.60.3
       share: /mnt/tank/movies
