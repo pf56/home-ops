@@ -46,7 +46,8 @@ spec:
           - name: movies
             mountPath: /media/movies
       securityContext:
-        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
         fsGroup: 1001
       volumes:
         - name: tv
