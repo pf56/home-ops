@@ -43,12 +43,8 @@
     plugins = [
       {
         name = "forgit";
-        src = pkgs.fetchFromGitHub {
-          owner = "wfxr";
-          repo = "forgit";
-          rev = "3f00348d5c712e1a0013bf64a08dd2ce8c8539e3";
-          sha256 = "1x9pak8hqmd4k1771yyc4n0x89q3l5p4102n8810s9zfxhidhnyy";
-        };
+        src = "${pkgs.zsh-forgit}";
+        file = "share/zsh/zsh-forgit/forgit.plugin.zsh";
       }
     ];
   };
