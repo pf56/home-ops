@@ -24,19 +24,15 @@ let
   # the default modules used on every machine
   defaultModules = inputs': [
     { _module.args = { inputs = inputs'; }; }
-    {
+    ({ config, lib, ... }: {
       nixpkgs.overlays = [ overlay-unstable self.overlays.default ];
-      nix.nixPath = [
-        "nixpkgs=${inputs'.nixpkgs}"
-      ];
-
-      nix.registry.nixpkgs.flake = inputs'.nixpkgs;
-    }
+      nix.registry = lib.mapAttrs (_: value: { flake = value; }) inputs';
+      nix.nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+    })
     inputs'.sops-nix.nixosModules.sops
     inputs'.lollypops.nixosModules.lollypops
     inputs'.home-manager.nixosModules.home-manager
     {
-      nix.nixPath = [ "home-manager=${inputs'.home-manager}" ];
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
     }
