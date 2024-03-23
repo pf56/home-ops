@@ -9,6 +9,7 @@
 
     history = {
       ignoreSpace = true;
+      size = 1000000;
     };
 
     shellAliases = {
