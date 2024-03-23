@@ -18,7 +18,6 @@ in
 
     programs.eww = {
       enable = true;
-      package = pkgs.eww-wayland;
       configDir = ./conf;
     };
   } // import ./config { inherit config; inherit pkgs; inherit lib; });

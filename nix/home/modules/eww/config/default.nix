@@ -2,7 +2,7 @@
 
 let
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
-  eww = "${pkgs.eww-wayland}/bin/eww";
+  eww = "${pkgs.eww}/bin/eww";
   jq = "${pkgs.jq}/bin/jq";
   hyprland-workspaces = "${pkgs.hyprland-workspaces}/bin/hyprland-workspaces";
   yubikey-touch-detector = pkgs.callPackage ./scripts/yubikey-touch-detector { };
@@ -149,7 +149,7 @@ let
       }
 
       .workspaces {
-        border: 1px solid #${config.colorScheme.colors.base05};
+        border: 1px solid #${config.colorScheme.palette.base05};
         border-left: 0;
       }
 
@@ -157,16 +157,16 @@ let
         padding: 0 2px;
 
         border: none;
-        border-left: 1px solid #${config.colorScheme.colors.base05};
+        border-left: 1px solid #${config.colorScheme.palette.base05};
         border-radius: 0;
 
-        color: #${config.colorScheme.colors.base05};
+        color: #${config.colorScheme.palette.base05};
         background: none;
         box-shadow: none;
       }
 
       .workspace-active {
-        background: #${config.colorScheme.colors.base0F};
+        background: #${config.colorScheme.palette.base0F};
       }
 
       .bar0, .bar1, .bar2 {
@@ -175,8 +175,8 @@ let
         .main-container {
           margin: 4px 4px 0 4px;
           padding: 2px 5px 2px 0;
-          color: #${config.colorScheme.colors.base05};
-          background-color: #${config.colorScheme.colors.base00};
+          color: #${config.colorScheme.palette.base05};
+          background-color: #${config.colorScheme.palette.base00};
         }
       }
 
@@ -188,7 +188,7 @@ let
         }
 
         &--active {
-          color: #${config.colorScheme.colors.base08};
+          color: #${config.colorScheme.palette.base08};
         }
       }
       EOF
