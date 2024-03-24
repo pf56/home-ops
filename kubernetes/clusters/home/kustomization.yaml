@@ -6,4 +6,3 @@ resources:
   - ./flux-system
   - ../../helm-repositories
   - ./infrastructure.yaml
-  - ./apps.yaml
