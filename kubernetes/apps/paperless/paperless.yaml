@@ -32,7 +32,7 @@ spec:
         app: paperless
     spec:
       containers:
-      - name: radarr
+      - name: paperless
         image: ghcr.io/paperless-ngx/paperless-ngx:1.17.4
         env:
           - name: USERMAP_UID
