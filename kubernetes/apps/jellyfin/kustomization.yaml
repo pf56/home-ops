@@ -11,4 +11,4 @@ resources:
   - jellyfin.yaml
   - ingress.yaml
   - restic-credentials.sealed.yaml
-#  - backup.yaml
+  - backup.yaml
