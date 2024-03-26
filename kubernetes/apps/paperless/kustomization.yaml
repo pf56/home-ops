@@ -8,4 +8,4 @@ resources:
   - redis.yaml
   - ingress.yaml
   - restic-credentials.sealed.yaml
-#  - backup.yaml
+  - backup.yaml
