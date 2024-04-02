@@ -44,6 +44,10 @@ in
     dotnet-sdk
   ];
 
+  modules = {
+    _3d-printing.enable = true;
+  };
+
   # enable font config
   fonts.fontconfig.enable = true;
 
