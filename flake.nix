@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixos-23.11;
-    nixpkgs-unstable.url = "nixpkgs/master";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixos-wsl.url = github:nix-community/NixOS-WSL/main;
     sops-nix.url = github:Mic92/sops-nix;
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
