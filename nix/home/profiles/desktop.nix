@@ -1,4 +1,4 @@
-{ config, lib, inputs, ... }:
+{ pkgs, config, lib, inputs, ... }:
 
 let
   nix-colors = inputs.nix-colors;
@@ -19,5 +19,14 @@ in
     wpaperd.enable = true;
     eww.enable = true;
     mako.enable = true;
+  };
+
+  home.packages = with pkgs; [
+    xfce.thunar
+    xfce.thunar-archive-plugin
+  ];
+
+  xdg.mimeApps.defaultApplications = {
+    "inode/directory" = [ "thunar.desktop" "nnn.desktop" ];
   };
 }

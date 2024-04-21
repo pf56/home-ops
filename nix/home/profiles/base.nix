@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 {
   imports = [
     ../git.nix
@@ -7,4 +7,9 @@
     ../utilities.nix
     ../zsh/zsh.nix
   ];
+
+  home.packages = with pkgs; [
+    nnn
+  ];
+
 }
