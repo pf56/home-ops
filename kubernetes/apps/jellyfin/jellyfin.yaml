@@ -65,4 +65,4 @@ spec:
       storageClassName: "freenas-api-iscsi-csi"
       resources:
         requests:
-          storage: 8Gi
+          storage: 16Gi
