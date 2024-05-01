@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   boot.growPartition = true;
@@ -31,7 +31,7 @@
   };
 
   lollypops.deployment = {
-    ssh.host = "${config.networking.hostName}.internal.paulfriedrich.me";
+    ssh.host = lib.mkDefault "${config.networking.hostName}.internal.paulfriedrich.me";
     ssh.user = "pfriedrich";
     sudo.enable = true;
   };
