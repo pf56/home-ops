@@ -39,6 +39,7 @@ talosworker02			IN	A		10.0.60.10
 taloscontrolplane02		IN	A		10.0.60.11
 taloscontrolplane03		IN	A		10.0.60.12
 talosworker03			IN	A		10.0.60.13
+auth					IN	A		10.0.60.15
 
 monitoring				IN	A		10.0.60.19
 dashboard				IN	CNAME	monitoring

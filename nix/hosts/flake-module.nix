@@ -75,6 +75,10 @@ in
       modules = [ ./monitoring/configuration.nix ];
     };
 
+    keycloak = buildDefaultSystem { } {
+      modules = [ ./keycloak/configuration.nix ];
+    };
+
     e595 =
       let
         inputs' = {
