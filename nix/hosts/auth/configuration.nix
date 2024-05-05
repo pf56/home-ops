@@ -11,7 +11,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "auth";
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 636 ];
   networking.firewall.allowedUDPPorts = [ 443 ];
 
   roles = {

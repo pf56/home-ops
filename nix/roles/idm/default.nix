@@ -39,7 +39,7 @@ in
         tls_key = "/var/lib/acme/${cfg.domain}/key.pem";
         tls_chain = "/var/lib/acme/${cfg.domain}/fullchain.pem";
         bindaddress = "[::1]:8443";
-        ldapbindaddress = null;
+        ldapbindaddress = "0.0.0.0:636";
       };
 
       clientSettings = {
