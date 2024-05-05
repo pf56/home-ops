@@ -76,6 +76,13 @@
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.brgenml1lpr pkgs.brgenml1cupswrapper ];
 
+  services = {
+    kanidm = {
+      enableClient = true;
+      clientSettings.uri = "https://auth.internal.paulfriedrich.me";
+    };
+  };
+
   virtualisation.libvirtd.enable = true;
 
   xdg.portal = {

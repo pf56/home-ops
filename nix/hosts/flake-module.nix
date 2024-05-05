@@ -79,6 +79,10 @@ in
       modules = [ ./keycloak/configuration.nix ];
     };
 
+    auth = buildDefaultSystem { } {
+      modules = [ ./auth/configuration.nix ];
+    };
+
     e595 =
       let
         inputs' = {

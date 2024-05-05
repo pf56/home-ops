@@ -11,6 +11,7 @@ keys:
   - &flux age1qkxcnuwjvme9667c763xpxjedfyxjpgl09msty80esrf3fuj45cqeh9v6q
   - &monitoring age1k23ghcwa5rx37yf34pgpe482wjeyr6vvkacyl38n778hkf00fuascvcx3a
   - &keycloak age1a4yxrvrqms4vdwpqefmh4rtznc2wcuj96vdpfpzygy49atnqp9kqgf0qu8
+  - &auth age1nkjs7c87566zwyafgjrtsg4z4efklm4zqz3ylruqys2hjluhweqqgwqeur
 creation_rules:
   - path_regex: secrets/e595\.yaml$
     key_groups:
@@ -54,6 +55,11 @@ creation_rules:
       - age:
         - *pfriedrich
         - *keycloak
+  - path_regex: nix/secrets/auth\.yaml$
+    key_groups:
+      - age:
+        - *pfriedrich
+        - *auth
   - path_regex: kubernetes/talos/talsecret.sops.yaml
     key_groups:
       - age:
