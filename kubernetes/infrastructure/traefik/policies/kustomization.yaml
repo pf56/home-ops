@@ -5,3 +5,4 @@ resources:
   - wildcard-certificate.yaml
   - default-tls-store.yaml
   - middlewares.yaml
+  - oauth2-route.yaml

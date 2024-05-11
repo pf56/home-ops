@@ -20,6 +20,8 @@ spec:
           kubernetesIngress:
             publishedService:
               enabled: true
+          kubernetesCRD:
+            allowExternalNameServices: true
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

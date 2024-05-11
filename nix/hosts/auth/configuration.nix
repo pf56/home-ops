@@ -23,6 +23,14 @@
         quic = true;
         useACMEHost = config.roles.idm.domain;
       };
+
+      proxyDomain = "auth-proxy.internal.paulfriedrich.me";
+      proxyKeyFile = config.sops.secrets.oauth2-proxy-credentials.path;
+      proxyNginx = {
+        forceSSL = true;
+        quic = true;
+        useACMEHost = config.roles.idm.proxyDomain;
+      };
     };
   };
 
@@ -47,10 +55,15 @@
     certs."${config.roles.idm.domain}" = {
       group = config.roles.idm.certGroup;
     };
+
+    certs."${config.roles.idm.proxyDomain}" = {
+      group = config.roles.idm.proxyCertGroup;
+    };
   };
 
   sops.secrets = {
     acme-credentials = { };
+    oauth2-proxy-credentials = { };
   };
 
   lollypops.deployment = {

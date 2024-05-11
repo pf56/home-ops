@@ -7,3 +7,46 @@ spec:
   redirectScheme:
     scheme: https
     permanent: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: auth-errors
+spec:
+  errors:
+    status:
+      - "401-403"
+    service:
+      name: oauth2-proxy
+      port: 443
+    query: "/oauth2/sign_in"
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: oauth2-auth
+spec:
+  forwardAuth:
+    address: https://auth-proxy.internal.paulfriedrich.me
+    trustForwardHeader: true
+    authResponseHeaders:
+      - X-Auth-Request-User
+      - X-Auth-Request-Email
+      - X-Auth-Request-Redirect
+      - Set-Cookie
+      - X-Auth-Request-Access-Token
+      - Authorization
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: oauth2-headers
+spec:
+  headers:
+    stsSeconds: 315360000
+    browserXssFilter: true
+    contentTypeNosniff: true
+    forceSTSHeader: true
+    stsIncludeSubdomains: true
+    stsPreload: true
+    frameDeny: true
