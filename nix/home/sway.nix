@@ -63,7 +63,7 @@ in
   xdg.configFile."i3status/config".source = ./py3status.conf;
 
   wayland.windowManager.sway = {
-    enable = true;
+    enable = false;
     xwayland = true;
     wrapperFeatures.gtk = true;
 
