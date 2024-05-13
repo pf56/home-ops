@@ -1,0 +1,29 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: {{ .Values.spec.source.repoURL }}
+      revision: {{ .Values.spec.source.targetRevision }}
+      files:
+        - path: kubernetes/apps/**/config.json
+  template:
+    metadata:
+      name: '{{ `{{ .name }}` }}'
+    spec:
+      project: default
+      source:
+        repoURL: {{ .Values.spec.source.repoURL }}
+        targetRevision: {{ .Values.spec.source.targetRevision }}
+        path: '{{ `{{ .path.path }}` }}'
+      destination:
+        server: {{ .Values.spec.destination.server }}
+        namespace: '{{ `{{ .namespace }}` }}'

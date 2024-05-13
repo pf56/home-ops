@@ -1,0 +1,6 @@
+spec:
+  source:
+    repoURL: git@git.sr.ht:~pfriedrich/home-ops
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
