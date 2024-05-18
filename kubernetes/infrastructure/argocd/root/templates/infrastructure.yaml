@@ -8,7 +8,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
+  goTemplateOptions: ["missingkey=default"]
   generators:
   - git:
       repoURL: {{ .Values.spec.source.repoURL }}
@@ -27,3 +27,16 @@ spec:
       destination:
         server: {{ .Values.spec.destination.server }}
         namespace: '{{ `{{ .namespace }}` }}'
+  templatePatch: |
+    spec:
+      syncPolicy:
+        syncOptions:
+          {{`{{- range $value := .syncPolicy.syncOptions }}
+          - {{ $value }}
+          {{- end }}`}}
+        managedNamespaceMetadata:
+          labels:
+            {{`{{- range $value := .syncPolicy.managedNamespaceMetadata.labels }}
+              {{ $value }}
+            {{- end }}`}}
+            
