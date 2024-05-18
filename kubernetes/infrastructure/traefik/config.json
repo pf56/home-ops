@@ -1,0 +1,9 @@
+{
+  "name": "traefik",
+  "namespace": "traefik",
+  "syncPolicy": {
+    "syncOptions": [
+      "CreateNamespace=true"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+traefik:
+  service:
+    annotations:
+      "io.cilium/lb-ipam-ips": "172.16.61.1"
+  providers:
+    kubernetesIngress:
+      publishedService:
+        enabled: true
+    kubernetesCRD:
+      allowExternalNameServices: true
