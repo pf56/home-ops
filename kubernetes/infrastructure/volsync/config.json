@@ -1,0 +1,9 @@
+{
+  "name": "volsync",
+  "namespace": "volsync",
+  "syncPolicy": {
+    "syncOptions": [
+      "CreateNamespace=true"
+    ]
+  }
+}
