@@ -1,0 +1,43 @@
+democratic-csi-freenas-api-iscsi:
+    storageClasses:
+        - name: ENC[AES256_GCM,data:AAft9E8yi5tTqgcLpjUz4q3tmjE8,iv:ml9FerSHgAmHFzSDO2UcF2ZJIDe7s8/4dLlUvUWZEqc=,tag:UjRydyDw09zLXsoZZGXbPg==,type:str]
+          secrets:
+            node-stage-secret:
+                node-db.node.session.auth.authmethod: ENC[AES256_GCM,data:/JAjOg==,iv:0cvudgSeb46hIH90INF3HVyq8l4J9aDBmHTe7QePvUI=,tag:JopimgSsJ5bKmmJqgECQ7Q==,type:str]
+                node-db.node.session.auth.username: ENC[AES256_GCM,data:8w2HLvCbpuR0,iv:JcLe3fAUAJ8YFCS7C372CRBNyVMbldgAbCukIJZFPlU=,tag:3A0cDWpfe8VZsggqi0s9mA==,type:str]
+                node-db.node.session.auth.password: ENC[AES256_GCM,data:cTUdxwL63FJr16RVzLZfKg==,iv:Iic2iWKnV/U+UfWodBzcZWvYlrhLdn0uSYFOXOm85hE=,tag:Jh8eYsaCyqCfAdI+qKpkGA==,type:str]
+                node-db.node.session.auth.username_in: ENC[AES256_GCM,data:CllIV5UTeJQh,iv:XKRig5BYuhUFaPJvEvIAy0d5qubPzHsiQ75XBSS/wtk=,tag:OnvxCQbJcZtamCIODnqPfQ==,type:str]
+                node-db.node.session.auth.password_in: ENC[AES256_GCM,data:uga6bZ5033G9Zoa1qO3UVA==,iv:HiapY7ZxGiokGZTY14TR2Hp2Su+Yt7agSS3wyGZZshk=,tag:AMD2UcJ+Ay4G8DvDkJARZw==,type:str]
+    driver:
+        config:
+            httpConnection:
+                apiKey: ENC[AES256_GCM,data:UKeNnUQ0PxOsZD1Dh76pXEEFwh06SLvr6P15L9PCKsDDtddl5oRx+uBq6KohLTqTRCYGWhZX3+P9jA8ayHxtOaTC,iv:2so6ZkaY7uJWaHsPvDrznmfzb4fMS+kYhynEJdHu0Ss=,tag:ZAzRipoOva1NLs+q/gtGCw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1jxmmkdzm0gas4z03q6mnzcv5exs7wlxjxrp8qzh0eujzqk8wvvyqk3qcjy
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAramxZZmk2RG53Nk5CM1kx
+            b25xaFcvVWNDODI3Z1hnamp0QzlRd0d5c2prCkhxdzE4ek43Q3VxV1VaVUI1SWNF
+            cGZWVVNSZ3Q2SHFCc0tDZ3N5OEw4eFEKLS0tIFc1ZnBEN1FtSU5LKzY3eVVkU1Rw
+            ekVuaU1FL2JxMm5vNUpLNGc5K0o0VUUK6Rid4Q3bUoJ/2jm/rjaaCX5nJPYE/7bg
+            1hhfZdQKaRqZN//6P5DXHOkI/N7NQjxvZZp1O11DP2RX+uBspSJjZQ==
+            -----END AGE ENCRYPTED FILE-----
+        - recipient: age18spf8ku8hn2yc6g7v3tlh8859chmxkv952lr52ppwknzwl7eh58sq9yu56
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBFblJyeGFQZ1ZONllqSnY5
+            NVVBSHZQdHV6SE9qSWRLWjV2ZVdqaWtBTlRVCmVzMXVGa1o3Z01hc1JIbU1RQXpD
+            bk9DYXV3M05KdnRlMVptTDBOa0Q1UlUKLS0tIG0vYUd4WEtLV3c2Q1NtME1scHox
+            NzZNUkd2ZXAwMnBxZ3RKV1AzTWxYd28KQ1akKhHQUJwfrXL0QRo8xTLhq8XM2nQr
+            6pqUp2FX2chPSMdFLRZo/hKsVFaG4p6UMZS0awZqtqERhg/I9tgkkg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-05-20T18:21:50Z"
+    mac: ENC[AES256_GCM,data:BnzVS/Mr7CwoD2ymK6l56SszF6LApTtSEufa+6NxfgiXEKJxgrvGlyRxOwcMwb9+R7zcjRUoQR88JnATwDUC2OfCvBXT1Gc0CAjOok7YWR5Ka+nmf1eytiAmBy64jC62z8knrwsGip0cSNtRH9WP1pdFdY77RVqCDGfk/BPv+ww=,iv:XjB5Q5SSuCe6WSEPAG48lPZON40/DiRIx9fcAyDVACQ=,tag:KGEIJx4XRIZkAaZ+yMFQYg==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.8.1

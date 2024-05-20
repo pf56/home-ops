@@ -1,0 +1,83 @@
+democratic-csi-node-manual:
+  csiDriver:
+    name: org.democratic-csi.node-manual
+  controller:
+    enabled: false
+  driver:
+    config:
+      driver: node-manual
+  node:
+    hostPID: true
+    driver:
+      extraEnv:
+        - name: ISCSIADM_HOST_STRATEGY
+          value: nsenter
+        - name: ISCSIADM_HOST_PATH
+          value: /usr/local/sbin/iscsiadm
+      iscsiDirHostPath: /usr/local/etc/iscsi
+      iscsiDirHostPathType: ""
+
+democratic-csi-freenas-api-iscsi:
+  node:
+    hostPID: true
+    driver:
+      extraEnv:
+        - name: ISCSIADM_HOST_STRATEGY
+          value: nsenter
+        - name: ISCSIADM_HOST_PATH
+          value: /usr/local/sbin/iscsiadm
+      iscsiDirHostPath: /usr/local/etc/iscsi
+      iscsiDirHostPathType: ""
+  csiDriver:
+    name: org.democratic-csi.freenas-api-iscsi
+  storageClasses:
+    - name: freenas-api-iscsi-csi
+      defaultClass: true
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate
+      allowVolumeExpansion: true
+      parameters:
+        fsType: ext4
+      mountOptions: []
+      secrets:
+        node-stage-secret:
+          node-db.node.session.auth.authmethod: CHAP
+          node-db.node.session.auth.username: overridden
+          node-db.node.session.auth.password: overridden
+          node-db.node.session.auth.username_in: overridden
+          node-db.node.session.auth.password_in: overridden
+  volumeSnapshotClasses:
+    - name: freenas-api-iscsi-csi
+      parameters:
+        detachedSnapshots: true
+  driver:
+    config:
+      driver: freenas-api-iscsi
+      httpConnection:
+        protocols: https
+        host: storage.internal.paulfriedrich.me
+        port: 443
+        apiKey: overridden
+        allowInsecure: false
+      zfs:
+        datasetProperties:
+          "org.freenas:description": "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}/{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
+        datasetParentName: local/k8s/volumes
+        detachedSnapshotsDatasetParentName: local/k8s/snapshots
+        zvolEnableReservation: false
+      iscsi:
+        targetPortal: "10.0.60.3:3260"
+        nameTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
+        namePrefix: "csi-"
+        targetGroups:
+          - targetGroupAuthGroup: 1
+            targetGroupAuthType: CHAP Mutual
+            targetGroupInitiatorGroup: 1
+            targetGroupPortalGroup: 2
+        extentInsecureTpc: true
+        extentXenCompat: false
+        extentDisablePhysicalBlocksize: true
+        extentBlocksize: 512
+        extentRpm: SSD
+        extentAvailThreshold: 80
+
