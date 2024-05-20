@@ -16,6 +16,9 @@ cilium:
       enabled: true
     ui:
       enabled: true
+    tls:
+      auto:
+        method: cronJob
   securityContext:
     capabilities:
       ciliumAgent:
