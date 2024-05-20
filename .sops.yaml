@@ -12,6 +12,7 @@ keys:
   - &monitoring age1k23ghcwa5rx37yf34pgpe482wjeyr6vvkacyl38n778hkf00fuascvcx3a
   - &keycloak age1a4yxrvrqms4vdwpqefmh4rtznc2wcuj96vdpfpzygy49atnqp9kqgf0qu8
   - &auth age1nkjs7c87566zwyafgjrtsg4z4efklm4zqz3ylruqys2hjluhweqqgwqeur
+  - &argocd age18spf8ku8hn2yc6g7v3tlh8859chmxkv952lr52ppwknzwl7eh58sq9yu56
 creation_rules:
   - path_regex: secrets/e595\.yaml$
     key_groups:
@@ -64,6 +65,11 @@ creation_rules:
     key_groups:
       - age:
         - *pfriedrich
+  - path_regex: kubernetes/.*/values\.sops\.yaml$
+    key_groups:
+      - age:
+        - *pfriedrich
+        - *argocd
   - path_regex: kubernetes/.*\.sops\.yaml$
     encrypted_regex: ^(data|stringData)$
     key_groups:

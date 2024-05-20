@@ -8,6 +8,7 @@ resources:
 - base/namespace.yaml
 - base/project.yaml
 - base/argocd.yaml
+- base/argocd-cm.yaml
 - base/root.yaml
 - base/ingress-route.yaml
 
