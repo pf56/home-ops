@@ -1,4 +1,4 @@
-democratic-csi-node-manual:
+dcsi-nm:
   csiDriver:
     name: org.democratic-csi.node-manual
   controller:
@@ -17,7 +17,7 @@ democratic-csi-node-manual:
       iscsiDirHostPath: /usr/local/etc/iscsi
       iscsiDirHostPathType: ""
 
-democratic-csi-freenas-api-iscsi:
+dcsi-fn-api-iscsi:
   node:
     hostPID: true
     driver:

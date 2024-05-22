@@ -1,4 +1,5 @@
 helm:
+  releaseName: democratic-csi
   valueFiles:
     - values.yaml
     - secrets://values.sops.yaml

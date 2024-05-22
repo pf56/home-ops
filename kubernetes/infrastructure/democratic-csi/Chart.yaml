@@ -6,10 +6,10 @@ dependencies:
     version: 0.2.4
     repository: https://democratic-csi.github.io/charts/
   - name: democratic-csi
-    alias: democratic-csi-node-manual
+    alias: dcsi-nm
     version: 0.13.7
     repository: https://democratic-csi.github.io/charts/
   - name: democratic-csi
-    alias: democratic-csi-freenas-api-iscsi
+    alias: dcsi-fn-api-iscsi
     version: 0.14.1
     repository: https://democratic-csi.github.io/charts/

@@ -1,17 +1,17 @@
-democratic-csi-freenas-api-iscsi:
+dcsi-fn-api-iscsi:
     storageClasses:
-        - name: ENC[AES256_GCM,data:AAft9E8yi5tTqgcLpjUz4q3tmjE8,iv:ml9FerSHgAmHFzSDO2UcF2ZJIDe7s8/4dLlUvUWZEqc=,tag:UjRydyDw09zLXsoZZGXbPg==,type:str]
+        - name: ENC[AES256_GCM,data:f1ev1e0KfrEPZKMObCNw/C7Gulk9,iv:YT6sCwH0Z4ZSOSyUZbICFW3sQdQ6AoGVvG8o/MF/ugY=,tag:Mf0iMZ5KL8T5Q2a/3fE6PQ==,type:str]
           secrets:
             node-stage-secret:
-                node-db.node.session.auth.authmethod: ENC[AES256_GCM,data:/JAjOg==,iv:0cvudgSeb46hIH90INF3HVyq8l4J9aDBmHTe7QePvUI=,tag:JopimgSsJ5bKmmJqgECQ7Q==,type:str]
-                node-db.node.session.auth.username: ENC[AES256_GCM,data:8w2HLvCbpuR0,iv:JcLe3fAUAJ8YFCS7C372CRBNyVMbldgAbCukIJZFPlU=,tag:3A0cDWpfe8VZsggqi0s9mA==,type:str]
-                node-db.node.session.auth.password: ENC[AES256_GCM,data:cTUdxwL63FJr16RVzLZfKg==,iv:Iic2iWKnV/U+UfWodBzcZWvYlrhLdn0uSYFOXOm85hE=,tag:Jh8eYsaCyqCfAdI+qKpkGA==,type:str]
-                node-db.node.session.auth.username_in: ENC[AES256_GCM,data:CllIV5UTeJQh,iv:XKRig5BYuhUFaPJvEvIAy0d5qubPzHsiQ75XBSS/wtk=,tag:OnvxCQbJcZtamCIODnqPfQ==,type:str]
-                node-db.node.session.auth.password_in: ENC[AES256_GCM,data:uga6bZ5033G9Zoa1qO3UVA==,iv:HiapY7ZxGiokGZTY14TR2Hp2Su+Yt7agSS3wyGZZshk=,tag:AMD2UcJ+Ay4G8DvDkJARZw==,type:str]
+                node-db.node.session.auth.authmethod: ENC[AES256_GCM,data:sAHj+A==,iv:5Gicd/ZtY6Vmhwua/Ug/Oao64iLP9npOCi0PW626x+w=,tag:cP/SrpW7+J3ZUwYYEwz5mQ==,type:str]
+                node-db.node.session.auth.username: ENC[AES256_GCM,data:JL8t2/IZjht1,iv:G0MjZCv/dNDkuy+v11z/8wVU2uwJO6rHZPbkyniHHiM=,tag:PiIc6KTlQgz0fccIxedF0A==,type:str]
+                node-db.node.session.auth.password: ENC[AES256_GCM,data:dodoSWAwLZq3aRDKLWc3Rw==,iv:MnTCaPKIyeekXVt0XgJQi1JvrthReEWtaimQQnmXqJw=,tag:OZ8FA4P8esLz0KGNhMr4wQ==,type:str]
+                node-db.node.session.auth.username_in: ENC[AES256_GCM,data:oymuOVKtgVv6,iv:jlKYGypwlPs2XwMm0zhWdDuBZgW7TfUG019rBy9WiNM=,tag:DelJLF2/7xCyIkcRlq00bw==,type:str]
+                node-db.node.session.auth.password_in: ENC[AES256_GCM,data:bVqhLqFntRrSs00o/njm8A==,iv:VakR5ij8UgBQja0TkO9N2PAF1RI2OiFwqiPnDJHGx/o=,tag:5x63XO8SaxSAQmmINAEnXA==,type:str]
     driver:
         config:
             httpConnection:
-                apiKey: ENC[AES256_GCM,data:UKeNnUQ0PxOsZD1Dh76pXEEFwh06SLvr6P15L9PCKsDDtddl5oRx+uBq6KohLTqTRCYGWhZX3+P9jA8ayHxtOaTC,iv:2so6ZkaY7uJWaHsPvDrznmfzb4fMS+kYhynEJdHu0Ss=,tag:ZAzRipoOva1NLs+q/gtGCw==,type:str]
+                apiKey: ENC[AES256_GCM,data:ZPOkcFDmR/G4IlZ/GeM92poen54W5s1Y6Gg602gzo0M0zCd5w/rLHdq5W41zNNzc/Pojn2Z2/9peKgIRcMWdslva,iv:M8pRUvjSUrGYzZio7GCMPsZ/qYr+rsxcM09o1H4h4Q8=,tag:L9HaYFQUpv82UkhjDORLsw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -36,8 +36,8 @@ sops:
             NzZNUkd2ZXAwMnBxZ3RKV1AzTWxYd28KQ1akKhHQUJwfrXL0QRo8xTLhq8XM2nQr
             6pqUp2FX2chPSMdFLRZo/hKsVFaG4p6UMZS0awZqtqERhg/I9tgkkg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-05-20T18:21:50Z"
-    mac: ENC[AES256_GCM,data:BnzVS/Mr7CwoD2ymK6l56SszF6LApTtSEufa+6NxfgiXEKJxgrvGlyRxOwcMwb9+R7zcjRUoQR88JnATwDUC2OfCvBXT1Gc0CAjOok7YWR5Ka+nmf1eytiAmBy64jC62z8knrwsGip0cSNtRH9WP1pdFdY77RVqCDGfk/BPv+ww=,iv:XjB5Q5SSuCe6WSEPAG48lPZON40/DiRIx9fcAyDVACQ=,tag:KGEIJx4XRIZkAaZ+yMFQYg==,type:str]
+    lastmodified: "2024-05-22T18:05:16Z"
+    mac: ENC[AES256_GCM,data:24NvoFka8fYD5/DAmah9doLtMufwU0IF/C+V+r06dL/T90ltNmRfVUY/xFUw6UM7k4A5PiYLJ/I80gwgM0BOgp+4x8XwY43ShX/qsDEp1Z26JVUNW1uxkFgKlKLZCXKD9SQv4VKvcLqKRkDWZK12evO2XoVWJ9YyK8Pm6fY/QkU=,iv:384dEj0aissThzOMlw+GR44lt1BeyPHQL9XB6qJRJ1A=,tag:GzVSpUjEJiNGFV/3IMkGbQ==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.8.1
