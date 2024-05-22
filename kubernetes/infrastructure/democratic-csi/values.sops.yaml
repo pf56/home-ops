@@ -1,6 +1,25 @@
 dcsi-fn-api-iscsi:
+    node:
+        hostPID: ENC[AES256_GCM,data:oSKNgA==,iv:6BS6x6Fy1rVpcl9pRVqdpCGDuwsCClYEroWCPJCgGdA=,tag:iJLuRa2hNTMT/H8S3JMpaw==,type:bool]
+        driver:
+            extraEnv:
+                - name: ENC[AES256_GCM,data:R40PtZnXbqSc4GyKmp1kpXcey73D/g==,iv:eigRGO9usMFACF5Bfy4PmtcXBMlRhY50qnuc7XdxpHQ=,tag:67jOiog+OwkJSHdHrCP+JQ==,type:str]
+                  value: ENC[AES256_GCM,data:g0C0xqhHJA==,iv:hPx8hqNzimvMSYo1FqacTjeSeGy/lnMussyVVd0H0Nc=,tag:R/JJeYcICeV/wCDJQed3YA==,type:str]
+                - name: ENC[AES256_GCM,data:BZMEjBzOf1YcXE5VbaTjTVFi,iv:Zlrzh9VTIZQl/dK0nPH//EBkDnhaztmN7aEuljPCdu4=,tag:t//pnz9qlg7UWK0e450jTQ==,type:str]
+                  value: ENC[AES256_GCM,data:TlSOCVq6l2jgG18g4hX1K21ifEIz4Ucv,iv:0m8pHhMt0C2GhAc6tz+Ytoq4TajdSs4sQUspWovYcZw=,tag:hC9rsYL2C/w2YIwTP2TXMg==,type:str]
+            iscsiDirHostPath: ENC[AES256_GCM,data:0o7p1pU7ynXrBY7HuUWcsVf+9UI=,iv:nu9f5YzRAi6Ng9gBBFud7jVhYPUDQz4VBNmjGi42OSI=,tag:4JUFYiNKS7eDsNEaTRHuQA==,type:str]
+            iscsiDirHostPathType: ""
+    csiDriver:
+        name: ENC[AES256_GCM,data:E9yWKxRbD5OHfs2dZPZa6JI222oFdh539kcZxxfFJgiRn+On,iv:4C7BKWmcQa810cBTZ16ZUCSo8svd+wNW+Bds/kxFrPs=,tag:mPBdStmHCbp5pjmU+jVaGQ==,type:str]
     storageClasses:
         - name: ENC[AES256_GCM,data:f1ev1e0KfrEPZKMObCNw/C7Gulk9,iv:YT6sCwH0Z4ZSOSyUZbICFW3sQdQ6AoGVvG8o/MF/ugY=,tag:Mf0iMZ5KL8T5Q2a/3fE6PQ==,type:str]
+          defaultClass: ENC[AES256_GCM,data:NjPEvg==,iv:Z+1K1iOgSvudnPbXyqPn4AaxNddfxvw6cq0297EAPyM=,tag:YjOfuoImjch1w5i5/YYoeg==,type:bool]
+          reclaimPolicy: ENC[AES256_GCM,data:pxOoIAG0,iv:TuER1sbRuvPRhcQ5LR9xTfds580OKoRcTuarNVfE8ww=,tag:hEQ7/uSAWMmtVJwZlzkywA==,type:str]
+          volumeBindingMode: ENC[AES256_GCM,data:5ZoiuD4Nxc8B,iv:Od0YZOO/05u3snUM/gw0SyfTB2w9vj9B7TbaOYXG3uU=,tag:9YHmurcqEdjbvbQ1ShXjow==,type:str]
+          allowVolumeExpansion: ENC[AES256_GCM,data:l14rGQ==,iv:ss3CCgpdNGyG++9KZiw0boWQVKyZD0BKLd+ATCtq5Wg=,tag:I9aWep4un13EB8Y6xE3HSw==,type:bool]
+          parameters:
+            fsType: ENC[AES256_GCM,data:O2IarA==,iv:1djk0rYURtgu6qYdds2RgqFwv5TBCkoxMgj6tm4iFB8=,tag:VrNGasQ1+QfdXftMU7qLvg==,type:str]
+          mountOptions: []
           secrets:
             node-stage-secret:
                 node-db.node.session.auth.authmethod: ENC[AES256_GCM,data:sAHj+A==,iv:5Gicd/ZtY6Vmhwua/Ug/Oao64iLP9npOCi0PW626x+w=,tag:cP/SrpW7+J3ZUwYYEwz5mQ==,type:str]
@@ -8,10 +27,40 @@ dcsi-fn-api-iscsi:
                 node-db.node.session.auth.password: ENC[AES256_GCM,data:dodoSWAwLZq3aRDKLWc3Rw==,iv:MnTCaPKIyeekXVt0XgJQi1JvrthReEWtaimQQnmXqJw=,tag:OZ8FA4P8esLz0KGNhMr4wQ==,type:str]
                 node-db.node.session.auth.username_in: ENC[AES256_GCM,data:oymuOVKtgVv6,iv:jlKYGypwlPs2XwMm0zhWdDuBZgW7TfUG019rBy9WiNM=,tag:DelJLF2/7xCyIkcRlq00bw==,type:str]
                 node-db.node.session.auth.password_in: ENC[AES256_GCM,data:bVqhLqFntRrSs00o/njm8A==,iv:VakR5ij8UgBQja0TkO9N2PAF1RI2OiFwqiPnDJHGx/o=,tag:5x63XO8SaxSAQmmINAEnXA==,type:str]
+    volumeSnapshotClasses:
+        - name: ENC[AES256_GCM,data:b2RHcCXiQ3W310wlvjSOwj239pdX,iv:+++Cw+l9T88WVGPsTmMIDMLJB/vmPVzpJzHT+Vnu1A8=,tag:FV4s+mTJpH3huPBbqmk4QA==,type:str]
+          parameters:
+            detachedSnapshots: ENC[AES256_GCM,data:iSsbQA==,iv:F+J2jiWrjDLZ5kLmP8hMBYVuPNxcqEWFqtXFNl0YFyk=,tag:U+8i+XsMR7LlFn/m7aj8HQ==,type:bool]
     driver:
         config:
+            driver: ENC[AES256_GCM,data:FkC2zrbWVIxBJ7gjf2rA19I=,iv:fGGZQiwVH3tIvujMlza1hmk6vTIuhhllRUfALHixbCs=,tag:wJRtj6mO2wYQEFseOoaNag==,type:str]
             httpConnection:
+                protocols: ENC[AES256_GCM,data:Ofzfx3Y=,iv:Zgb0/r60t0D1I2/sIGWmiBERM/0kU9fuWSwFc/DZPMk=,tag:ouSWi4Hbyar6NH3Mzxs2MA==,type:str]
+                host: ENC[AES256_GCM,data:33LuVmY8ZiNkUfLSib6FsFNqs7C5SXXU7f7EWLElF0CN,iv:lAHJI8tvAg9bfXMHEe1XaWm9kaujVhrZ5yNhSC3ZC8Q=,tag:x+1KkXY3baEj2GbSNfwjfA==,type:str]
+                port: ENC[AES256_GCM,data:ojuu,iv:oLVEE2E30n7s+ApNUSyRofpTxhNtE8n5pyZQ3V3aa5k=,tag:5U14hMVTddjWSNO0BavXlw==,type:int]
                 apiKey: ENC[AES256_GCM,data:ZPOkcFDmR/G4IlZ/GeM92poen54W5s1Y6Gg602gzo0M0zCd5w/rLHdq5W41zNNzc/Pojn2Z2/9peKgIRcMWdslva,iv:M8pRUvjSUrGYzZio7GCMPsZ/qYr+rsxcM09o1H4h4Q8=,tag:L9HaYFQUpv82UkhjDORLsw==,type:str]
+                allowInsecure: ENC[AES256_GCM,data:mu2Yc2E=,iv:OAP+dGvM4vv4Nb4nh65n1lpNEZSRiqWufxwIp7uxHU4=,tag:0b10D+X4O2fBhLbEOF1WlQ==,type:bool]
+            zfs:
+                datasetProperties:
+                    org.freenas:description: ENC[AES256_GCM,data:nkpxJ22qjqfmJkbXb5FDabp5UpUD4sxNj5F9/esqGmBHA9IS+D2Se/NS3hKMCKuNegOHvvWngSdwg6GKAuNzZlqnMaglNodLw19kN/XlsISJU4NajQ8qVFILrD7WZw+LDZU=,iv:364z2h7CUUS8SiMmmc7/o2Y7Hx5m58Pw2Qvq1aNjeyA=,tag:7xz0Fo835CH+/Q0fbYIxsg==,type:str]
+                datasetParentName: ENC[AES256_GCM,data:vktLBjFWMiD6e97vr+O0FvY=,iv:QtCu61I7U40YahUj+MXuZ67Pz7ji11zl/BlJSDVPXYw=,tag:kHMyTSSu150EESro20Sgfw==,type:str]
+                detachedSnapshotsDatasetParentName: ENC[AES256_GCM,data:cCzRkd/nNt7CEXOjiIBOfAxBFQ==,iv:ke2p9dy8C5uS4Y8lIycABiDygwOtDcui0X/YUa504G0=,tag:1BBUzthhwtIgjeX9bs/HXg==,type:str]
+                zvolEnableReservation: ENC[AES256_GCM,data:fraAPjg=,iv:yfk7BWBiB9GigtekTZtYrSnOZloVrTp0TCOs5Ov7Les=,tag:8JuNQppQS2lZOg8OqYAQvw==,type:bool]
+            iscsi:
+                targetPortal: ENC[AES256_GCM,data:8uxBGfGNmBTlgm7gZl4=,iv:Kq1NIjY9naoT2dQLgBl4ugtGrdlE9kQZTfPscEOr04M=,tag:t8yH8e1tmppRI2IX4VrYTA==,type:str]
+                nameTemplate: ENC[AES256_GCM,data:17HKEE+QqSH0z2CHgfeLzNxChzUF3LxiTyf+gdG3lz14B/Q9jBX3DwYnajbLVQlEZpsv+3N2xFMSxCIJJXJrHXy/z0Mxk9MwzRgUpaPMylDwmzB8UmZs3EJLRVqgB/s4uNs=,iv:+FJSOqO1jzbq4696QAX9MmT+a8ZO/X/l/nrxkgCH95E=,tag:Xu9eKdN+GCwiuf8hhh10VQ==,type:str]
+                namePrefix: ENC[AES256_GCM,data:h6cXpQ==,iv:Z1TQe9lcPkLg+KFTq7m4lr6r8bOdPxdfa9x6pU1C1tc=,tag:rsFWQya6LCBg00kZ8ywOVA==,type:str]
+                targetGroups:
+                    - targetGroupAuthGroup: ENC[AES256_GCM,data:+A==,iv:2E5rM2HcAfbfwroW3mNw/iqIQsNsdfGD+PkFPaWlbEQ=,tag:DC9wyD4SrlrTL+CfZWokrg==,type:int]
+                      targetGroupAuthType: ENC[AES256_GCM,data:tXr4uxlfSAcA+NM=,iv:Q3sc6rTr5VBz6bDNEd+pBqGzz7biDhHSX/wW1NQztPU=,tag:YQVim2lVALPD5pnUja29kQ==,type:str]
+                      targetGroupInitiatorGroup: ENC[AES256_GCM,data:ZA==,iv:TqwrMlcru3ldwfJ5p2nMAHi43jfUjA8u4YVlVpiU32c=,tag:sLAec1zMrPJz/0TtVRBlVw==,type:int]
+                      targetGroupPortalGroup: ENC[AES256_GCM,data:+g==,iv:Rsl0zZIy9ZU7/zqS14pO3dz/F19oHZW45b34sscCdjI=,tag:eN+bwWf1OsTTjhSQGcYPng==,type:int]
+                extentInsecureTpc: ENC[AES256_GCM,data:hfKWCA==,iv:FLKSMirHDXf9LHNnxdWnmwhNRkcntHnh3c03oYaix2E=,tag:aooUxlMUIxuVKMoLUElqmA==,type:bool]
+                extentXenCompat: ENC[AES256_GCM,data:A6pFgHw=,iv:qpbePkCZ76+kUQtvIwZ2SdDFWTm7hUIuW3XxrciOdug=,tag:FGcHaNMxo8Wy3Fb7zQRBYg==,type:bool]
+                extentDisablePhysicalBlocksize: ENC[AES256_GCM,data:5kTxsw==,iv:adLG4csKc7PRTh6xXnqNEICEHnvvck9qdPX2cScb1OQ=,tag:9PHuXCAoE22IykVBSiODhA==,type:bool]
+                extentBlocksize: ENC[AES256_GCM,data:qPEZ,iv:mOFktpqU32eTVhyWAOxNLsVcIcbRPGVChsKS8+FIRq8=,tag:85RZO+9oDH+C/egoYzNedg==,type:int]
+                extentRpm: ENC[AES256_GCM,data:gXa0,iv:gVDJPSFFg/icpwLGVPrGsd8L2r59oXoyQbGJlizDn00=,tag:C3SXysv+DpbhopQkx1rAVA==,type:str]
+                extentAvailThreshold: ENC[AES256_GCM,data:2EE=,iv:KOtO3whJzcbkq25sZYXMKE2PiNOLvyhdzTPdoRSVjUY=,tag:Gjj/lyNHu77IdgHMd6GZ5g==,type:int]
 sops:
     kms: []
     gcp_kms: []
@@ -36,8 +85,8 @@ sops:
             NzZNUkd2ZXAwMnBxZ3RKV1AzTWxYd28KQ1akKhHQUJwfrXL0QRo8xTLhq8XM2nQr
             6pqUp2FX2chPSMdFLRZo/hKsVFaG4p6UMZS0awZqtqERhg/I9tgkkg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-05-22T18:05:16Z"
-    mac: ENC[AES256_GCM,data:24NvoFka8fYD5/DAmah9doLtMufwU0IF/C+V+r06dL/T90ltNmRfVUY/xFUw6UM7k4A5PiYLJ/I80gwgM0BOgp+4x8XwY43ShX/qsDEp1Z26JVUNW1uxkFgKlKLZCXKD9SQv4VKvcLqKRkDWZK12evO2XoVWJ9YyK8Pm6fY/QkU=,iv:384dEj0aissThzOMlw+GR44lt1BeyPHQL9XB6qJRJ1A=,tag:GzVSpUjEJiNGFV/3IMkGbQ==,type:str]
+    lastmodified: "2024-05-22T18:46:47Z"
+    mac: ENC[AES256_GCM,data:AmBVn3oOpxcvo3bJ9St/VTuEkTqFjG6uNNlrH8Vs/bsfF5WhQr2khD7Rs+K0qFu3pNfFDim5+S+Pzdl9pEvjtdu3pYLUuUUNhfYUu4nWa/CDPSF4i+vDQampYtTI5a4W7DqJOvgOUFwIsWUIwhHSNNTK94xDLWad40+3+f0Imsw=,iv:JqEFBLAMn0DA/PpqoEVqQTa5NyE34Xp94TIMuZlfdkM=,tag:BLR+b2gmULrCb3R0nUuUzw==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.8.1
