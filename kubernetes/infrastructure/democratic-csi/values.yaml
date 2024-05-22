@@ -1,4 +1,4 @@
-dcsi-nm:
+node-man:
   csiDriver:
     name: org.democratic-csi.node-manual
   controller:
