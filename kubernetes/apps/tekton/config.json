@@ -1,0 +1,4 @@
+{
+  "name": "tekton",
+  "namespace": "tekton-operator"
+}

@@ -1,0 +1,15 @@
+---
+apiVersion: operator.tekton.dev/v1alpha1
+kind: TektonConfig
+metadata:
+  name: config
+spec:
+  profile: all
+  targetNamespace: tekton-pipelines
+  pruner:
+    resources:
+    - pipelinerun
+    - taskrun
+    keep: 3
+    prune-per-resource: true
+    schedule: "0 8 * * *"
