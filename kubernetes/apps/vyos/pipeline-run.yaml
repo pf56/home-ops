@@ -1,0 +1,26 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  namespace: vyos
+  generateName: vyos-build-run-
+spec:
+  pipelineRef:
+    name: vyos-build
+  params:
+    - name: repo-url
+      value: https://github.com/vyos/vyos-build.git
+    - name: revision
+      value: current
+  podTemplate:
+    securityContext:
+      fsGroup: 65532
+  workspaces:
+  - name: shared-data
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 8Gi
