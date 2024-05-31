@@ -21,6 +21,14 @@ data:
 
   kustomize.buildOptions: --enable-helm
 
+  resource.exclusions: |
+   - apiGroups:
+       - cilium.io
+     kinds:
+       - CiliumIdentity
+     clusters:
+       - "*"
+
   server.rbac.log.enforce.enable: "false"
 
   statusbadge.enabled: "false"
