@@ -39,4 +39,9 @@ spec:
             {{`{{- range $value := .syncPolicy.managedNamespaceMetadata.labels }}
               {{ $value }}
             {{- end }}`}}
-            
+      ignoreDifferences:
+        {{`{{- range .ignoreDifferences }}
+          - {{ range $key, $value := . -}}
+              {{ $key }}: {{ $value }}
+            {{ end }}
+        {{- end }}`}}
