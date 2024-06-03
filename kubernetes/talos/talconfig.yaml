@@ -1,5 +1,5 @@
 clusterName: internal-paulfriedrich-me-prod
-talosVersion: v1.5.5
+talosVersion: v1.5.6
 kubernetesVersion: v1.28.4
 endpoint: https://kube.internal.paulfriedrich.me:6443
 nodes:
@@ -109,7 +109,11 @@ controlPlane:
     - "@./patches/controller-manager-config.yaml"
 
 worker:
+  schematic:
+    customization:
+      systemExtensions:
+          officialExtensions:
+              - siderolabs/iscsi-tools
   patches:
     - "@./patches/install-cilium-worker.yaml"
-    - "@./patches/install-iscsi-tools.yaml"
     - "@./patches/enable-peering.yaml"
