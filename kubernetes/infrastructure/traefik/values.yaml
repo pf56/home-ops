@@ -8,3 +8,4 @@ traefik:
         enabled: true
     kubernetesCRD:
       allowExternalNameServices: true
+      allowCrossNamespace: true
