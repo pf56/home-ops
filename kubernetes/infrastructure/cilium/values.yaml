@@ -1,4 +1,5 @@
 cilium:
+  upgradeCompatibility: "1.14"
   ipam:
     mode: kubernetes
   kubeProxyReplacement: strict
