@@ -32,9 +32,9 @@ spec:
   routes:
     - kind: Rule
       match: Host(`argocd.internal.paulfriedrich.me`)
-#      middlewares:
-#        - name: http-to-https
-#          namespace: traefik
+      middlewares:
+        - name: http-to-https
+          namespace: traefik
       services:
         - name: argocd-server
           port: 80
