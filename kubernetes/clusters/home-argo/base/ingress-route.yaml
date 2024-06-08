@@ -20,8 +20,7 @@ spec:
         - name: argocd-server
           port: 80
           scheme: h2c
-  tls:
-    certResolver: default
+  tls: {}
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
