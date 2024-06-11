@@ -2,16 +2,16 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "hyprland-workspaces";
-  version = "1.2.5";
+  version = "2.0.1";
 
   src = fetchFromGitHub {
     owner = "FieldofClay";
     repo = pname;
     rev = "v${version}";
-    sha256 = "sha256-5/add1VSJe5ChKi4UU5iUKRAj4kMjOnbB76QX/FkA6k=";
+    sha256 = "sha256-GhUjvFMlgjTdgtV9ASW7IqE2dBktPyOlRwg6qM1r7vc=";
   };
 
-  cargoSha256 = "sha256-kUDo+6fsrzzojHYNMNBYpztGJPPtPp/OXUypUJnzebY=";
+  cargoSha256 = "sha256-RZVQSkegX8Fa9SNY7tGNxyu312oeDjXK4U1+1/UIAyA=";
 
   meta = with lib; {
     description = "A multi-monitor aware Hyprland workspace widget ";
