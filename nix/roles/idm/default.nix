@@ -34,7 +34,7 @@ in
 
       proxyCertGroup = mkOption {
         type = types.str;
-        default = "oauth2_proxy";
+        default = "oauth2-proxy";
       };
 
       proxyNginx = mkOption {
@@ -68,7 +68,7 @@ in
       };
     };
 
-    services.oauth2_proxy = {
+    services.oauth2-proxy = {
       enable = true;
       httpAddress = "0.0.0.0:4180";
       provider = "oidc";
@@ -109,7 +109,7 @@ in
 
       upstreams."oauth2-proxy" = {
         servers = {
-          "${config.services.oauth2_proxy.tls.httpsAddress}" = { };
+          "${config.services.oauth2-proxy.tls.httpsAddress}" = { };
         };
       };
 
@@ -135,6 +135,6 @@ in
     };
 
     users.groups."${cfg.certGroup}".members = [ "kanidm" "nginx" ];
-    users.groups."${cfg.proxyCertGroup}".members = [ "oauth2_proxy" "nginx" ];
+    users.groups."${cfg.proxyCertGroup}".members = [ "oauth2-proxy" "nginx" ];
   };
 }
