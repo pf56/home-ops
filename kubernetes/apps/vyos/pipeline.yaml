@@ -6,31 +6,54 @@ metadata:
 spec:
   description: Builds a VyOS iso
   params:
-    - name: repo-url
-      type: string
-      description: URL of the git repo
     - name: revision
       type: string
       description: Revision to clone from the git repo
+    - name: vyos-build-image
+      type: string
+      default: vyos/vyos-build:sagitta
+    - name: build-by-email
+      type: string
   workspaces:
     - name: shared-data
-      description: Cloned repository
+      description: cloned repository and APT repository
   tasks:
-    - name: fetch-source
+    - name: init-build
       taskRef:
-        name: git-clone
-      workspaces:
-        - name: output
-          workspace: shared-data
+        name: init-build
       params:
-        - name: url
-          value: $(params.repo-url)
         - name: revision
           value: $(params.revision)
-    - name: build
-      runAfter: [ "fetch-source" ]
+        - name: vyos-build-image
+          value: $(params.vyos-build-image)
+      workspaces:
+        - name: data
+          workspace: shared-data
+    - name: build-packages
+      runAfter: ["init-build"]
+      taskRef:
+        name: build-packages
+      params:
+        - name: revision
+          value: $(params.revision)
+        - name: vyos-build-image
+          value: $(params.vyos-build-image)
+        - name: build-by-email
+          value: $(params.build-by-email)
+      workspaces:
+        - name: data
+          workspace: shared-data
+    - name: build-image
+      runAfter: ["build-packages"]
       taskRef:
         name: build-image
+      params:
+        - name: revision
+          value: $(params.revision)
+        - name: vyos-build-image
+          value: $(params.vyos-build-image)
+        - name: build-by-email
+          value: $(params.build-by-email)
       workspaces:
         - name: source
           workspace: shared-data
@@ -38,19 +61,1169 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
+  name: init-build
+spec:
+  description: Initializes the workspace and fetches the vyos-build git repository.
+  params:
+    - name: revision
+      type: string
+    - name: vyos-build-image
+      type: string
+  workspaces:
+    - name: data
+  steps:
+    - name: init-flags
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+        [ -d $(workspaces.data.path)/flags ] || mkdir $(workspaces.data.path)/flags
+    - name: git-fetch
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/fetch-vyos-build ]; then
+          exit 0
+        fi
+
+        mkdir -p $(workspaces.data.path)/src/
+        cd $(workspaces.data.path)/src/
+        git clone --branch $(params.revision) https://github.com/vyos/vyos-build.git
+
+        touch $(workspaces.data.path)/flags/fetch-vyos-build
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-packages
+spec:
+  description: Build additional packages.
+  params:
+    - name: revision
+      type: string
+    - name: vyos-build-image
+      type: string
+    - name: build-by-email
+      type: string
+  workspaces:
+    - name: data
+  steps:
+    - name: build-vyos-1x
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyos-1x ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./vyos-1x
+        git clone --depth 1 --branch $(params.revision) https://github.com/vyos/vyos-1x.git
+        cd vyos-1x
+
+        dpkg-buildpackage -uc -us -tc -b
+        mv ../vyos-1x*.deb ../vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyos-1x
+    - name: build-vyos-world
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyos-world ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./vyos-world
+        git clone --depth 1 --branch $(params.revision) https://github.com/vyos/vyos-world.git
+        cd vyos-world
+
+        dpkg-buildpackage -uc -us -tc -b
+        mv ../vyos-world_*.deb ../vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyos-world
+    - name: build-vyos-user-utils
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyos-user-utils ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./vyos-user-utils
+        git clone --depth 1 --branch $(params.revision) https://github.com/vyos/vyos-user-utils.git
+        cd vyos-user-utils
+
+        dpkg-buildpackage -uc -us -tc -b
+        mv ../vyos-user-utils_*.deb ../vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyos-user-utils
+    - name: build-vyos-xe-guest-utilities
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyos-xe-guest-utilities ]; then
+          exit 0
+        fi
+
+        apt update && apt install -y gawk
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./vyos-xe-guest-utilities
+        git clone --depth 1 https://github.com/vyos/vyos-xe-guest-utilities.git
+        cd vyos-xe-guest-utilities
+
+        dpkg-buildpackage -uc -us -tc -b
+        mv ../vyos-xe-guest-utilities_*.deb ../vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyos-xe-guest-utilities
+    - name: build-telegraf
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/telegraf ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/telegraf
+        rm -rf ./telegraf
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://github.com/influxdata/telegraf.git
+
+        ./build.sh
+        mv telegraf/build/dist/*.deb ../
+        touch $(workspaces.data.path)/flags/telegraf
+    - name: build-pmacct
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/pmacct ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/pmacct
+        rm -rf ./pmacct
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://salsa.debian.org/debian/pmacct.git
+        cd pmacct
+        mk-build-deps --install --tool "apt-get --yes --no-install-recommends"
+        ../build.py
+        cd ..
+
+        mv pmacct_*.deb ../
+        touch $(workspaces.data.path)/flags/pmacct
+    - name: build-radvd
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/radvd ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/radvd
+        rm -rf ./radvd
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone https://github.com/radvd-project/radvd
+        cd radvd
+        git reset --hard $VERSION
+        cd ..
+        ./build.sh
+
+        mv radvd_*.deb ../
+        touch $(workspaces.data.path)/flags/radvd
+    - name: build-wide-dhcpv6
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/wide-dhcpv6 ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/wide-dhcpv6
+        rm -rf ./wide-dhcpv6
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://salsa.debian.org/debian/wide-dhcpv6
+        cd wide-dhcpv6
+        mk-build-deps --install --tool "apt-get --yes --no-install-recommends"
+        cd ..
+        ./build.sh
+
+        mv wide-dhcpv6-*.deb ../
+        touch $(workspaces.data.path)/flags/wide-dhcpv6
+    - name: build-linux-kernel
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/linux-kernel ]; then
+          exit 0
+        fi
+
+        git config --global --add safe.directory $(workspaces.data.path)/src/vyos-build
+        cd $(workspaces.data.path)/src/vyos-build/packages/linux-kernel/
+        rm -rf ./linux
+
+        KERNEL_VER=$(cat ../../data/defaults.toml | tomlq -r .kernel_version)
+        gpg2 --locate-keys torvalds@kernel.org gregkh@kernel.org
+        curl -OL https://www.kernel.org/pub/linux/kernel/v6.x/linux-${KERNEL_VER}.tar.xz
+        curl -OL https://www.kernel.org/pub/linux/kernel/v6.x/linux-${KERNEL_VER}.tar.sign
+        xz -cd linux-${KERNEL_VER}.tar.xz | gpg2 --verify linux-${KERNEL_VER}.tar.sign -
+        if [ $? -ne 0 ]; then
+            exit 1
+        fi
+
+        tar xf linux-${KERNEL_VER}.tar.xz
+        ln -s linux-${KERNEL_VER} linux
+        ./build-kernel.sh
+
+        mv linux-*.deb ../
+        touch $(workspaces.data.path)/flags/linux-kernel
+    - name: build-linux-firmware
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/linux-firmware ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/linux-kernel/
+        rm -rf ./linux-firmware
+
+        git clone https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
+        cd linux-firmware
+        git reset --hard 20231211
+        cd ..
+
+         ./build-linux-firmware.sh
+        mv vyos-linux-firmware_*.deb ../
+        touch $(workspaces.data.path)/flags/linux-firmware
+    - name: build-accel-ppp
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/accel-ppp ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/linux-kernel/
+        rm -rf ./accel-ppp
+
+        git clone --depth 1 https://github.com/accel-ppp/accel-ppp.git
+
+         ./build-accel-ppp.sh
+        mv accel-ppp_*.deb ../
+        touch $(workspaces.data.path)/flags/accel-ppp
+    - name: build-intel-drivers
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/intel-drivers ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/linux-kernel/
+
+        ./build-intel-ixgbe.sh
+        ./build-intel-ixgbevf.sh
+        ./build-intel-qat.sh
+
+        mv vyos-intel-*.deb ../
+
+        touch $(workspaces.data.path)/flags/intel-drivers
+    - name: build-openvpn-dco
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/openvpn-dco ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/linux-kernel/
+        rm -rf ./ovpn-dco
+
+        VERSION=$(sed -n "s/^\(.*\)'name': 'ovpn-dco','scmCommit': '\(.*\)',$/\2/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://github.com/OpenVPN/ovpn-dco
+
+         ./build-openvpn-dco.sh
+        mv openvpn-dco_*.deb ../
+        touch $(workspaces.data.path)/flags/openvpn-dco
+    - name: build-isc-dhcp
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/isc-dhcp ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/isc-dhcp/
+        rm -rf ./isc-dhcp
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://salsa.debian.org/debian/isc-dhcp
+        cd isc-dhcp
+        mk-build-deps --install --tool "apt-get --yes --no-install-recommends"
+        cd ..
+
+         ./build.sh
+        mv isc-dhcp-*.deb ../
+        touch $(workspaces.data.path)/flags/isc-dhcp
+    - name: build-keepalived
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/keepalived ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/keepalived/
+        rm -rf ./keepalived
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://salsa.debian.org/debian/pkg-keepalived keepalived
+        cd keepalived
+        mk-build-deps --install --tool "apt-get --yes --no-install-recommends"
+        ../build.py
+        cd ..
+
+        mv keepalived_*.deb ../
+        touch $(workspaces.data.path)/flags/keepalived
+    - name: build-jool
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/jool ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/linux-kernel/
+         ./build-jool.py
+
+        mv jool_*.deb ../
+        touch $(workspaces.data.path)/flags/jool
+    - name: build-pam-tacplus
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        # ignore this step for now. pam_tacplus builds version 1.7.0. we need 1.4.3.
+        # the correct version is build in the step build-libnss-tacplus
+        exit 0
+
+
+        if [ -f $(workspaces.data.path)/flags/pam-tacplus ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/pam_tacplus
+
+        VERSIONS=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+
+        VERSION1=$(echo $VERSIONS | cut -f 1 -d ' ' -)
+        rm -rf ./pam_tacplus-debian
+        git clone https://github.com/kravietz/pam_tacplus-debian
+        cd pam_tacplus-debian
+        git reset --hard $VERSION1
+        cd ..
+
+        VERSION2=$(echo $VERSIONS | cut -f 2 -d ' ' -)
+        VERSION2="7908a7faa0205beda9ea198bdd3aa37868be6da2" # pam_tacplus is broken at the used revision
+        rm -rf ./pam_tacplus
+        git clone https://github.com/kravietz/pam_tacplus
+        cd pam_tacplus
+        git reset --hard $VERSION2
+        cd ..
+
+         ./build.sh
+        mv *.deb ../
+        touch $(workspaces.data.path)/flags/pam-tacplus
+    - name: build-frr
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/frr ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/frr
+
+        VERSIONS=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+
+        VERSION1=$(echo $VERSIONS | cut -f 1 -d ' ' -)
+        rm -rf ./libyang
+        git clone --depth 1 --branch $VERSION1 https://github.com/CESNET/libyang.git
+        cd libyang
+        pipx run apkg build -i
+        find pkg/pkgs -type f -name *.deb -exec mv -t .. {} +
+        cd ..
+
+        VERSION2=$(echo $VERSIONS | cut -f 2 -d ' ' -)
+        rm -rf ./rtrlib
+        git clone --depth 1 --branch $VERSION2 https://github.com/rtrlib/rtrlib.git
+        cd rtrlib
+        mk-build-deps --install --tool "apt-get --yes --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        VERSION3=$(echo $VERSIONS | cut -f 3 -d ' ' -)
+        rm -rf ./frr
+        git clone --depth 1 --branch $VERSION3 https://github.com/FRRouting/frr.git
+        cd frr
+        dpkg -i ../*.deb
+        mk-build-deps --install --tool "apt-get --yes --no-install-recommends"
+        cd ..
+
+        EMAIL="mail@example.org" ./build-frr.sh
+        mv *.deb ../
+        touch $(workspaces.data.path)/flags/frr
+    - name: build-hostap
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/hostap ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/hostap
+
+        VERSIONS=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+
+        VERSION1=$(echo $VERSIONS | cut -f 1 -d ' ' -)
+        rm -rf ./libyang
+        git clone --depth 1 --branch $VERSION1 https://salsa.debian.org/debian/wpa
+
+        VERSION2=$(echo $VERSIONS | cut -f 2 -d ' ' -)
+        rm -rf ./hostap
+        git clone git://w1.fi/srv/git/hostap.git
+        cd hostap
+        git reset --hard $VERSION2
+        cd ..
+
+        EMAIL="$(params.build-by-email)" ./build.sh
+        mv *.deb ../
+        touch $(workspaces.data.path)/flags/hostap
+    - name: build-ddclient
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/ddclient ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/ddclient
+
+        VERSIONS=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+
+        VERSION1=$(echo $VERSIONS | cut -f 1 -d ' ' -)
+        rm -rf ./ddclient-debian
+        git clone --depth 1 --branch $VERSION1 https://salsa.debian.org/debian/ddclient ddclient-debian
+
+        VERSION2=$(echo $VERSIONS | cut -f 2 -d ' ' -)
+        rm -rf ./ddclient-github
+        git clone --depth 1 --branch $VERSION2 https://github.com/ddclient/ddclient ddclient-github
+
+        EMAIL="$(params.build-by-email)" ./build.sh
+        mv ddclient_*.deb ../
+        touch $(workspaces.data.path)/flags/ddclient
+    - name: build-netfilter
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/netfilter ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/netfilter
+
+        VERSIONS=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+
+        VERSION1=$(echo $VERSIONS | cut -f 1 -d ' ' -)
+        rm -rf ./pkg-libnftnl
+        git clone --depth 1 --branch $VERSION1 https://salsa.debian.org/pkg-netfilter-team/pkg-libnftnl.git
+        cd pkg-libnftnl
+        mk-build-deps --install --tool "apt-get --yes --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        VERSION2=$(echo $VERSIONS | cut -f 2 -d ' ' -)
+        rm -rf ./pkg-nftables
+        git clone --depth 1 --branch $VERSION2 https://salsa.debian.org/pkg-netfilter-team/pkg-nftables.git
+        cd pkg-nftables
+        dpkg -i ../libnftnl*.deb
+        mk-build-deps --install --tool "apt-get --yes --no-install-recommends"
+        ../build.py
+        cd ..
+
+        mv *.deb ../
+        touch $(workspaces.data.path)/flags/netfilter
+    - name: build-libnss-tacplus
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/libnss-tacplus ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+
+        rm -rf ./libtacplus-map
+        git clone --depth 1 https://github.com/vyos/libtacplus-map.git
+        cd libtacplus-map
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        export DEB_CFLAGS_APPEND="-Wno-address -Wno-stringop-truncation"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+        dpkg -i *.deb
+
+        rm -rf ./libpam-tacplus
+        git clone --depth 1 https://github.com/vyos/libpam-tacplus.git
+        cd libpam-tacplus
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+        dpkg -i *.deb
+
+        rm -rf ./libnss-tacplus
+        git clone --depth 1 https://github.com/vyos/libnss-tacplus.git
+        cd libnss-tacplus
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv *.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/libnss-tacplus
+    - name: build-libnss-mapuser
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/libnss-mapuser ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+
+        rm -rf ./libnss-mapuser
+        git clone https://github.com/vyos/libnss-mapuser.git
+        cd libnss-mapuser
+        git checkout sagitta
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv *.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/libnss-mapuser
+    - name: build-vyos-cloud-init
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyos-cloud-init ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+
+        rm -rf ./vyos-cloud-init
+        git clone https://github.com/vyos/vyos-cloud-init.git
+        cd vyos-cloud-init
+        git checkout sagitta
+        ./packages/bddeb
+
+        mv *.deb ../vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyos-cloud-init
+    - name: build-libpam-radius-auth
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/libpam-radius-auth ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+
+        rm -rf ./libpam-radius-auth
+        git clone https://github.com/vyos/libpam-radius-auth.git
+        cd libpam-radius-auth
+        git checkout sagitta
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv *.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/libpam-radius-auth
+    - name: build-live-boot
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/live-boot ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+
+        rm -rf ./live-boot
+        git clone https://github.com/vyos/live-boot.git
+        cd libpam-radius-auth
+        git checkout sagitta
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv *.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/live-boot
+    - name: build-libvyosconfig
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/libvyosconfig ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./libvyosconfig
+
+        git clone --depth 1 --branch sagitta https://github.com/vyos/libvyosconfig
+        cd libvyosconfig
+        eval $(opam env --root=/opt/opam --set-root) && dpkg-buildpackage -us -uc -tc -b
+        cd ..
+
+        mv libvyosconfig0_*.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/libvyosconfig
+    - name: build-vyatta-bash
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyatta-bash ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./vyatta-bash
+        git clone https://github.com/vyos/vyatta-bash.git
+        cd vyatta-bash
+        git reset --hard $(params.revision)
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv vyatta-bash_*.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyatta-bash
+    - name: build-vyatta-cfg
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyatta-cfg ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./vyatta-cfg
+        git clone https://github.com/vyos/vyatta-cfg.git
+        cd vyatta-cfg
+        git reset --hard $(params.revision)
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv vyatta-cfg_*.deb vyos-build/packages/
+        mv libvyatta-cfg*.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyatta-cfg
+    - name: build-vyos-http-api-tools
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyos-http-api-tools ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./vyos-http-api-tools
+        git clone https://github.com/vyos/vyos-http-api-tools.git
+        cd vyos-http-api-tools
+        git reset --hard $(params.revision)
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv vyos-http-api-tools_*.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyos-http-api-tools
+    - name: build-vyos-utils
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyos-utils ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./vyos-utils
+        git clone https://github.com/vyos/vyos-utils.git
+        cd vyos-utils
+        git reset --hard $(params.revision)
+        eval $(opam env --root=/opt/opam --set-root) && dpkg-buildpackage -us -uc -tc -b
+        cd ..
+
+        mv vyos-utils_*.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyos-utils
+    - name: build-pyhumps
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/pyhumps ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/pyhumps
+        rm -rf ./humps
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://github.com/nficano/humps.git
+        cd humps
+        python setup.py --command-packages=stdeb.command bdist_deb
+        mv deb_dist/*.deb ../../
+
+        touch $(workspaces.data.path)/flags/pyhumps
+    - name: build-ipaddrcheck
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/ipaddrcheck ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./ipaddrcheck
+
+        git clone --depth 1 --branch sagitta https://github.com/vyos/ipaddrcheck.git
+        cd ipaddrcheck
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv ipaddrcheck_*.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/ipaddrcheck
+    - name: build-hsflowd
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/hsflowd ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/hsflowd
+        rm -rf ./host-sflow
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://github.com/sflow/host-sflow.git
+        chmod -R g-s host-sflow
+        ./build.sh
+
+        mv host-sflow/*.deb ../
+        touch $(workspaces.data.path)/flags/hsflowd
+    - name: build-opennhrp
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/opennhrp ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/opennhrp
+        rm -rf ./opennhrp
+        find . -type f -name \*.deb -exec rm {} \;
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone https://git.code.sf.net/p/opennhrp/code opennhrp
+        cd opennhrp
+        git reset --hard $VERSION
+        cd ..
+        ./build.sh
+
+        mv opennhrp_*.deb ../
+        touch $(workspaces.data.path)/flags/opennhrp
+    - name: build-ndppd
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/ndppd ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/ndppd
+        rm -rf ./ndppd
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://salsa.debian.org/debian/ndppd
+        ./build.sh
+
+        mv ndppd_*.deb ../
+        touch $(workspaces.data.path)/flags/ndppd
+    - name: build-openvpn-otp
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/openvpn-otp ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/openvpn-otp
+        rm -rf ./openvpn-otp
+
+        git clone https://github.com/evgeny-gridasov/openvpn-otp
+        ./build-openvpn-otp.sh
+
+        mv *.deb ../
+        touch $(workspaces.data.path)/flags/openvpn-otp
+    - name: build-owamp
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/owamp ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/owamp
+        rm -rf ./owamp
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://github.com/perfsonar/owamp 
+        cd owamp
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        cd ..
+
+        useradd --no-create-home owamp-build
+        chown -R owamp-build:owamp-build .
+        sudo -u owamp-build bash ./build.sh
+
+        mv *.deb ../
+        touch $(workspaces.data.path)/flags/owamp
+    - name: build-dropbear
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/dropbear ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/dropbear
+        rm -rf ./dropbear
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://salsa.debian.org/debian/dropbear.git
+        cd dropbear
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        cd ..
+
+        ./build.sh
+
+        mv dropbear*.deb ../
+        touch $(workspaces.data.path)/flags/dropbear
+    - name: build-ethtool
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/ethtool ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/ethtool
+        rm -rf ./ethtool
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://salsa.debian.org/kernel-team/ethtool.git
+        cd ethtool
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv ethtool_*.deb ../
+        touch $(workspaces.data.path)/flags/ethtool
+    - name: build-aws-gwlbtun
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/aws-gwlbtun ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/aws-gateway-load-balancer-tunnel-handler
+        rm -rf ./aws-gateway-load-balancer-tunnel-handler
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone https://github.com/aws-samples/aws-gateway-load-balancer-tunnel-handler
+        chmod -R g-s aws-gateway-load-balancer-tunnel-handler
+        cd aws-gateway-load-balancer-tunnel-handler
+        git reset --hard $VERSION
+        cd ..
+        ./build.sh
+
+        mv *.deb ../
+        touch $(workspaces.data.path)/flags/aws-gwlbtun
+    - name: build-udp-broadcast-relay
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/udp-broadcast-relay ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./udp-broadcast-relay
+        git clone --depth 1 --branch sagitta https://github.com/vyos/udp-broadcast-relay.git
+        cd udp-broadcast-relay
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv udp-broadcast-relay_*.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/udp-broadcast-relay
+    - name: build-hvinfo
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/hvinfo ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./hvinfo
+        git clone --depth 1 --branch sagitta https://github.com/vyos/hvinfo.git
+        cd hvinfo
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv hvinfo_*.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/hvinfo
+    - name: build-vyatta-cfg-system
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyatta-cfg-system ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./vyatta-cfg-system
+        git clone https://github.com/vyos/vyatta-cfg-system
+        cd vyatta-cfg-system
+        git reset --hard $(params.revision)
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv vyatta-cfg-system_*.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyatta-cfg-system
+    - name: build-vyatta-op
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyatta-op ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./vyatta-op
+        git clone https://github.com/vyos/vyatta-op
+        cd vyatta-op
+        git reset --hard $(params.revision)
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv vyatta-op_*.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyatta-op
+    - name: build-vyatta-wanloadbalance
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyatta-wanloadbalance ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./vyatta-wanloadbalance
+        git clone https://github.com/vyos/vyatta-wanloadbalance
+        cd vyatta-wanloadbalance
+        git reset --hard $(params.revision)
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv vyatta-wanloadbalance_*.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyatta-wanloadbalance
+    - name: build-vyatta-biosdevname
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/vyatta-biosdevname ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/
+        rm -rf ./vyatta-biosdevname
+        git clone https://github.com/vyos/vyatta-biosdevname
+        cd vyatta-biosdevname
+        git reset --hard $(params.revision)
+        mk-build-deps --install --tool="apt-get -y --no-install-recommends"
+        dpkg-buildpackage -uc -us -tc -b
+        cd ..
+
+        mv vyatta-biosdevname_*.deb vyos-build/packages/
+        touch $(workspaces.data.path)/flags/vyatta-biosdevname
+    - name: build-strongswan
+      image: $(params.vyos-build-image)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        if [ -f $(workspaces.data.path)/flags/strongswan ]; then
+          exit 0
+        fi
+
+        cd $(workspaces.data.path)/src/vyos-build/packages/strongswan
+        rm -rf ./strongswan
+
+        VERSION=$(sed -n "s/^.*'scmCommit': '\(.*\)',$/\1/p" Jenkinsfile)
+        git clone --depth 1 --branch $VERSION https://salsa.debian.org/debian/strongswan.git
+
+        # credits to https://github.com/dd010101/vyos-build/tree/current/packages/strongswan
+        sed -i "s/dpkg-buildpackage -uc -us -tc -b -d/dpkg-buildpackage -uc -us -b -d/" build.sh
+        sed -i "s/CONFIGUREARGS_VYOS :=/CONFIGUREARGS_VYOS := --enable-python-eggs/g" patches/0004-VyOS-disable-options-enabled-by-Debian-that-are-unus.patch
+
+        EMAIL="$(params.build-by-email)" ./build.sh
+        mv *.deb ../
+
+        cd strongswan/src/libcharon/plugins/vici/python
+        python setup.py --command-packages=stdeb.command bdist_deb
+        mv deb_dist/python3-vici*.deb $(workspaces.data.path)/src/vyos-build/packages/
+
+        touch $(workspaces.data.path)/flags/strongswan
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
   name: build-image
 spec:
   description: Builds a VyOS image.
+  params:
+    - name: revision
+      type: string
+    - name: vyos-build-image
+      type: string
+    - name: build-by-email
+      type: string
   workspaces:
     - name: source
   steps:
     - name: build-vyos-image
-      image: vyos/vyos-build:current
+      image: $(params.vyos-build-image)
       securityContext:
         runAsUser: 0
         privileged: true
-      script: | 
-        #!/usr/bin/env sh
-        cd $(workspaces.source.path)
+      script: |
+        #!/usr/bin/env -S bash -i
+        set -xe
+
+        cd $(workspaces.source.path)/src/vyos-build
+        git config --global --add safe.directory .
+
         make clean
-        ./build-vyos-image generic --architecture amd64 --build-by "vyos@mail.paulfriedrich.me"
+        ./build-vyos-image iso \
+          --architecture amd64 \
+          --build-by "$(params.build-by-email)" \
+          --build-type release \
+          --version "$(params.revision)" \
+          --vyos-mirror http://localhost:8080  # doesn't exist. packages are placed directly in vyos-build/packages

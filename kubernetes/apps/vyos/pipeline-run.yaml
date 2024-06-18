@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-vyos
+  namespace: vyos
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 16Gi
 ---
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
@@ -8,19 +20,26 @@ spec:
   pipelineRef:
     name: vyos-build
   params:
-    - name: repo-url
-      value: https://github.com/vyos/vyos-build.git
     - name: revision
-      value: current
+      value: "1.4.0"
+    - name: build-by-email
+      value: "vyos@mail.paulfriedrich.me"
+  timeouts:
+    pipeline: "1h30m"
   podTemplate:
     securityContext:
       fsGroup: 65532
   workspaces:
-  - name: shared-data
-    volumeClaimTemplate:
-      spec:
-        accessModes:
-        - ReadWriteOnce
-        resources:
-          requests:
-            storage: 8Gi
+    - name: shared-data
+      persistentVolumeClaim:
+        claimName: pvc-vyos
+    #    volumeClaimTemplate:
+    #      spec:
+    #        accessModes:
+    #        - ReadWriteOnce
+    #        resources:
+    #          requests:
+    #            storage: 16Gi
+    - name: apt-credentials
+      secret:
+        secretName: apt-credentials
