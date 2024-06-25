@@ -714,7 +714,7 @@ spec:
 
         rm -rf ./live-boot
         git clone https://github.com/vyos/live-boot.git
-        cd libpam-radius-auth
+        cd live-boot
         git checkout sagitta
         mk-build-deps --install --tool="apt-get -y --no-install-recommends"
         dpkg-buildpackage -uc -us -tc -b
