@@ -1,0 +1,12 @@
+netbox:
+  superuser:
+    existingSecret: superuser-secret
+  existingSecret: config-secret
+  persistence:
+    enabled: false
+  email:
+    username: mail@paulfriedrich.me
+    server: smtp.fastmail.com
+    port: 456
+    useSSL: true
+    from: netbox@mail.paulfriedrich.me

@@ -1,0 +1,7 @@
+apiVersion: v2
+name: netbox
+version: 1.0.0
+dependencies:
+  - name: netbox
+    version: 5.0.0-beta.39
+    repository: oci://ghcr.io/netbox-community/netbox-chart

@@ -1,0 +1,10 @@
+{
+  "name": "netbox",
+  "namespace": "netbox",
+  "syncPolicy": {
+    "syncOptions": [
+      "CreateNamespace=true",
+      "ServerSideApply=true"
+    ]
+  }
+}
