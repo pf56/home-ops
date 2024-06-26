@@ -9,6 +9,8 @@ cilium:
     enabled: true
   egressGateway:
     enabled: true
+  gatewayAPI:
+    enabled: true
   bpf:
     masquerade: true
   MTU: 1360
