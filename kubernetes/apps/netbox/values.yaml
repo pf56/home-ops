@@ -2,8 +2,13 @@ netbox:
   superuser:
     existingSecret: superuser-secret
   existingSecret: config-secret
+
+  powerFeedDefaultVoltage: 240
+  powerFeedDefaultAmperate: 16
+
   persistence:
     enabled: false
+
   email:
     username: mail@paulfriedrich.me
     server: smtp.fastmail.com
