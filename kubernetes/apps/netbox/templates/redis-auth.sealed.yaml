@@ -1,0 +1,15 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: redis-auth
+  namespace: netbox
+spec:
+  encryptedData:
+    redis-password: AgDFnIwNvg+aJT0NBgUHPFqexHapIhGJo0R/ZiEbdEnMkrHwOwl0BzBNazf2VSkAzxMS6HrPEFQM80aRtl83QRcvF2mITF3ldcal+q0yP1suv/Q4ivUA0ImU1j1nO82oxW9BFhKtf7s+zBhxbnZSPpBwM4x/CLeu7eIFsjWDeyYbkpjZ1Cvb3IOv+AiLIWmHVpmf/kGTNq1Tv4us8EnWBd9H+2Dy2DZGayGrXz+s0fHUwehgdHJk/rncUUYCnpD0UFNWRcJNScQU+bx/+TJGPSVSt6y1DNZHQ7mAH1pm2F3TOWta80ZWSsPEMtXMXBS1VFV/PrgbIlUK1ZWhjCBSWEswCD8UZ313lQjFJL0cAZ/Vkrisp4MQjeJL2JnFvLRlC1Tmkkl9VVFrQT5CFsvocgdQbwVv4KskHG8gTRA9jNuYARObOqCN5aXC22FYAzBqQyE0GovU+VqKox993Qkl1+TckCDNL83o6kB51YRBC4lu2yzF0OYz2yWgInNdnzceyJVQnn3dlDWZ8sSjlUa2JixHhsKrBdBFGVgYiT92wEk5kDN02yXWACjDoT9vkqJTVHh1a3/ClwINQAZo1My56z+tXd5L85kbax4CgBT9NQHMRU9ZQWLbvZxHfEbtlt/9Qd8Jvw68SyEs1XrkZrqZQM2ohLz6QgkSgEM8u1NXatbitQjG+wltRCXBRS/5OPF4+x9EzSb5RE/TMbRs
+  template:
+    metadata:
+      creationTimestamp: null
+      name: redis-auth
+      namespace: netbox

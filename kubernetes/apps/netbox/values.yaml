@@ -15,3 +15,12 @@ netbox:
     port: 456
     useSSL: true
     from: netbox@mail.paulfriedrich.me
+
+  postgresql:
+    auth:
+      existingSecret: "postgres-auth"
+
+  redis:
+    auth:
+      existingSecret: "redis-auth"
+      existingSecretPasswordKey: "redis-password"
