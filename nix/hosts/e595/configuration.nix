@@ -16,12 +16,15 @@
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Berlin";
 
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
+  hardware = {
+    enableAllFirmware = true;
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
+    };
   };
 
   modules = {
