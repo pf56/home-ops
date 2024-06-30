@@ -16,7 +16,7 @@
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Berlin";
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       vaapiVdpau
