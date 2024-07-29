@@ -48,7 +48,7 @@ in
     i3status
     glib
     gsettings-desktop-schemas
-    gnome3.adwaita-icon-theme
+    adwaita-icon-theme
     configure-gtk
 
     (python310Packages.py3status.overrideAttrs (oldAttrs: {
