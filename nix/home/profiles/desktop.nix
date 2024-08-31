@@ -19,9 +19,13 @@ in
     wpaperd.enable = true;
     eww.enable = true;
     mako.enable = true;
+    river.enable = true;
+    kanshi.enable = true;
+    waybar.enable = true;
   };
 
   home.packages = with pkgs; [
+    wlr-randr
     xfce.thunar
     xfce.thunar-archive-plugin
   ];
