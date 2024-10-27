@@ -18,6 +18,7 @@
 
   hardware = {
     enableAllFirmware = true;
+
     graphics = {
       enable = true;
       extraPackages = with pkgs; [
@@ -25,6 +26,8 @@
         libvdpau-va-gl
       ];
     };
+
+    wooting.enable = true;
   };
 
   modules = {
@@ -39,7 +42,7 @@
   users.users.pfriedrich = {
     isNormalUser = true;
     home = "/home/pfriedrich";
-    extraGroups = [ "wheel" "networkmanager" "scanner" "lp" "libvirtd" "wireshark" ];
+    extraGroups = [ "wheel" "networkmanager" "scanner" "lp" "libvirtd" "wireshark" "input" ];
     shell = pkgs.zsh;
   };
 
