@@ -1,5 +1,5 @@
 clusterName: internal-paulfriedrich-me-prod
-talosVersion: v1.7.4
+talosVersion: v1.8.2
 kubernetesVersion: v1.29.5
 endpoint: https://kube.internal.paulfriedrich.me:6443
 nodes:
