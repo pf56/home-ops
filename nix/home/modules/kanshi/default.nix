@@ -50,6 +50,15 @@ in
             }
           ];
         }
+        {
+          profile.name = "undocked";
+          profile.outputs = [
+            {
+              # internal display
+              criteria = "Lenovo Group Limited 0x40BA Unknown";
+            }
+          ];
+        }
       ];
     };
   };
