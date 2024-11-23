@@ -16,7 +16,7 @@
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
 
-  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+#  boot.kernelPackages = pkgs.linuxPackages_6_11;
   boot.kernelParams = [ "nohibernate" ]; # not supported on zfs
   boot.kernelModules = [ "kvm-amd" ];
 

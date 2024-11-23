@@ -33,7 +33,7 @@ in
     # fonts
     (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     noto-fonts-emoji
 
     kubectl

@@ -170,7 +170,7 @@
 
   nixpkgs.config.allowUnfree = true;
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     settings = {
       secret-key-files = /home/pfriedrich/.keys/priv-key.pem;
     };
