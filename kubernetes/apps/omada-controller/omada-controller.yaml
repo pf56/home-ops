@@ -65,23 +65,23 @@ spec:
         image: mbentley/omada-controller
         env:
           - name: MANAGE_HTTP_PORT
-            value: 8088
+            value: "8088"
           - name: MANAGE_HTTPS_PORT
-            value: 8043
+            value: "8043"
           - name: PORTAL_HTTP_PORT
-            value: 8088
+            value: "8088"
           - name: PORTAL_HTTPS_PORT
-            value: 8843
+            value: "8843"
           - name: PORT_APP_DISCOVERY
-            value: 27001
+            value: "27001"
           - name: PORT_DISCOVERY
-            value: 29810
+            value: "29810"
           - name: PORT_MANAGER_V2
-            value: 29814
+            value: "29814"
           - name: PORT_TRANSFER_V2
-            value: 29815
+            value: "29815"
           - name: PORT_RTTY
-            value: 29816
+            value: "29816"
         ports:
           - containerPort: 8088
             name: http
@@ -113,7 +113,9 @@ spec:
           - name: logs
             mountPath: /opt/tplink/EAPController/logs
   volumeClaimTemplates:
-  - metadata:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
       name: data
       namespace: omada-controller
     spec:
@@ -122,7 +124,9 @@ spec:
       resources:
         requests:
           storage: 8Gi
-  - metadata:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
       name: logs
       namespace: omada-controller
     spec:
