@@ -1,0 +1,25 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: omada-controller-https
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: cilium-gateway
+      namespace: cilium
+      sectionName: https
+  hostnames:
+    - "omada.internal.paulfriedrich.me"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: "/"
+      backendRefs:
+        - group: ''
+          kind: Service
+          name: omada-controller
+          port: 80
+          weight: 1

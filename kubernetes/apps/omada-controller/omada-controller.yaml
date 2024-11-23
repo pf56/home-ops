@@ -1,0 +1,133 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: omada-controller
+  annotations:
+    "lbipam.cilium.io/ips": "172.16.61.3"
+spec:
+  selector:
+    app: omada-controller
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8088
+      protocol: TCP
+      targetPort: http
+    - name: manage-https
+      port: 8043
+      protocol: TCP
+      targetPort: manage-https
+    - name: portal-https
+      port: 8843
+      protocol: TCP
+      targetPort: portal-https
+    - name: app-discovery
+      port: 27001
+      protocol: UDP
+      targetPort: app-discovery
+    - name: discovery
+      port: 29810
+      protocol: UDP
+      targetPort: discovery
+    - name: manager
+      port: 29814
+      protocol: TCP
+      targetPort: manager
+    - name: transfer
+      port: 29815
+      protocol: TCP
+      targetPort: transfer
+    - name: rtty
+      port: 29816
+      protocol: TCP
+      targetPort: rtty
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: omada-controller
+  labels:
+    app: omada-controller
+spec:
+  selector:
+    matchLabels:
+      app: omada-controller
+  serviceName: omada-controller
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: omada-controller
+    spec:
+      containers:
+      - name: omada-controller
+        image: mbentley/omada-controller
+        env:
+          - name: MANAGE_HTTP_PORT
+            value: 8088
+          - name: MANAGE_HTTPS_PORT
+            value: 8043
+          - name: PORTAL_HTTP_PORT
+            value: 8088
+          - name: PORTAL_HTTPS_PORT
+            value: 8843
+          - name: PORT_APP_DISCOVERY
+            value: 27001
+          - name: PORT_DISCOVERY
+            value: 29810
+          - name: PORT_MANAGER_V2
+            value: 29814
+          - name: PORT_TRANSFER_V2
+            value: 29815
+          - name: PORT_RTTY
+            value: 29816
+        ports:
+          - containerPort: 8088
+            name: http
+            protocol: TCP
+          - containerPort: 8043
+            name: manage-https
+            protocol: TCP
+          - containerPort: 8843
+            name: portal-https
+            protocol: TCP
+          - containerPort: 27001
+            name: app-discovery
+            protocol: UDP
+          - containerPort: 29810
+            name: discovery
+            protocol: UDP
+          - containerPort: 29814
+            name: manager
+            protocol: TCP
+          - containerPort: 29815
+            name: transfer
+            protocol: TCP
+          - containerPort: 29816
+            name: rtty
+            protocol: TCP
+        volumeMounts:
+          - name: data
+            mountPath: /opt/tplink/EAPController/data
+          - name: logs
+            mountPath: /opt/tplink/EAPController/logs
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      namespace: omada-controller
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "freenas-api-iscsi-csi"
+      resources:
+        requests:
+          storage: 8Gi
+  - metadata:
+      name: logs
+      namespace: omada-controller
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "freenas-api-iscsi-csi"
+      resources:
+        requests:
+          storage: 8Gi

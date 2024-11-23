@@ -1,0 +1,10 @@
+{
+  "name": "omada-controller",
+  "namespace": "omada-controller",
+  "syncPolicy": {
+    "syncOptions": [
+      "CreateNamespace=true",
+      "ServerSideApply=true"
+    ]
+  }
+}
