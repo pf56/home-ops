@@ -38,13 +38,13 @@ in
             }
             {
               # left
-              criteria = "LG Electronics LG ULTRAGEAR 101NTNHSV159";
+              criteria = "LG Electronics 27GL850 912NTDV0N042";
               mode = "2560x1440@59.951000Hz";
               position = "1920,0";
             }
             {
               # main
-              criteria = "LG Electronics 27GL850 912NTDV0N042";
+              criteria = "LG Electronics LG ULTRAGEAR 101NTNHSV159";
               mode = "2560x1440@99.90002Hz";
               position = "4480,0";
             }
