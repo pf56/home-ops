@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, options, ... }:
 
 with lib;
 let
@@ -13,24 +13,33 @@ in
       };
   };
 
-  config = mkIf cfg.enable {
-
-    boot.initrd.kernelModules = [ "amdgpu" ];
-
-    environment.systemPackages = with pkgs; [
-      clinfo
-      radeontop
-    ];
-
-    hardware.graphics = {
-      extraPackages = with pkgs; [
+  config =
+    let
+      extraPkgs = with pkgs; [
         rocmPackages.clr.icd
         amdvlk
       ];
-    };
+    in
+    mkIf cfg.enable
+      {
 
-    systemd.tmpfiles.rules = [
-      "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
-    ];
-  };
+        boot.initrd.kernelModules = [ "amdgpu" ];
+
+        environment.systemPackages = with pkgs; [
+          clinfo
+          radeontop
+        ];
+
+        systemd.tmpfiles.rules = [
+          "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+        ];
+      } // optionalAttrs (builtins.hasAttr "graphics" options.hardware) {
+      hardware.graphics = {
+        extraPackages = extraPkgs;
+      } // optionalAttrs (builtins.hasAttr "opengl" options.hardware) {
+        hardware.opengl = {
+          extraPackages = extraPkgs;
+        };
+      };
+    };
 }
