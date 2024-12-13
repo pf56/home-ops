@@ -27,13 +27,13 @@
   };
 
   networking.firewall = {
-    enable = true;
+    enable = lib.mkDefault true;
   };
 
   lollypops.deployment = {
     ssh.host = lib.mkDefault "${config.networking.hostName}.internal.paulfriedrich.me";
-    ssh.user = "pfriedrich";
-    sudo.enable = true;
+    ssh.user = lib.mkDefault "pfriedrich";
+    sudo.enable = lib.mkDefault true;
   };
 
   sops = {
