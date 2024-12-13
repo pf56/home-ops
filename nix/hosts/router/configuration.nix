@@ -160,6 +160,7 @@ in
           }
 
           chain ZONE_SERVER {
+            iifname vlan10 jump MGMT-SERVER
             iifname vlan20 jump OFFICE-SERVER
             counter drop
           }
@@ -198,6 +199,7 @@ in
             ip daddr 10.0.60.5 tcp dport 6443 accept comment "Allow Kubernetes API"
             ip daddr $TALOS_NODES tcp dport 50000 accept comment "Allow Talos control plane"
             ip daddr 172.16.61.0/24 tcp dport { 80, 443 } accept comment "Allow Cilium LB"
+            ip daddr 172.16.61.0/24 tcp dport { 8043 } accept comment "Allow Omada"
           }
 
           chain MGMT-WAN {
@@ -208,6 +210,10 @@ in
             tcp dport 22 accept comment "Allow SSH"
             meta l4proto { tcp, udp } th dport 53 accept comment "Allow DNS"
             udp dport 67 udp sport 68 accept comment "Allow DHCP"
+          }
+
+          chain MGMT-SERVER {
+            ip daddr 172.16.61.3 meta l4proto { tcp, udp } accept comment "Allow Omada"
           }
 
           chain SERVER-WAN {
