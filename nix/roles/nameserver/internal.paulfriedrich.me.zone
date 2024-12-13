@@ -17,9 +17,9 @@ $ORIGIN internal.paulfriedrich.me.
 ns01					IN	A		10.0.60.17
 ns02					IN	A		10.0.60.18
 
+
 ; MGMT
-esxi					IN	A		10.0.15.3
-storage					IN	A		10.0.15.4
+storage					IN	A		10.0.10.2
 
 
 ; OFFICE
