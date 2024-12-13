@@ -83,6 +83,10 @@ in
       modules = [ ./auth/configuration.nix ];
     };
 
+    router = buildDefaultSystem { } {
+      modules = [ ./router/configuration.nix ];
+    };
+
     e595 =
       let
         inputs' = {
