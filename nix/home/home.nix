@@ -31,7 +31,7 @@ in
     omnisharp-roslyn
 
     # fonts
-    (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
+    nerd-fonts.sauce-code-pro
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
