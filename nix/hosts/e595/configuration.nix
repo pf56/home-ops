@@ -171,9 +171,17 @@
   nixpkgs.config.allowUnfree = true;
   nix = {
     package = pkgs.nixVersions.stable;
+
     settings = {
       secret-key-files = /home/pfriedrich/.keys/priv-key.pem;
+      auto-optimise-store = true;
     };
+
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 30d";
+    };
+
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -200,6 +208,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
-
 }
 
