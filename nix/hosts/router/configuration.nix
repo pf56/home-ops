@@ -190,6 +190,7 @@ in
             tcp dport 22 accept comment "Allow SSH"
             meta l4proto { tcp, udp } th dport 53 accept comment "Allow DNS"
             udp dport 67 udp sport 68 accept comment "Allow DHCP"
+            udp dport 123 accept comment "Allow NTP"
           }
 
           chain OFFICE-SERVER {
@@ -210,6 +211,7 @@ in
             tcp dport 22 accept comment "Allow SSH"
             meta l4proto { tcp, udp } th dport 53 accept comment "Allow DNS"
             udp dport 67 udp sport 68 accept comment "Allow DHCP"
+            udp dport 123 accept comment "Allow NTP"
           }
 
           chain MGMT-SERVER {
@@ -224,6 +226,7 @@ in
             tcp dport 22 accept comment "Allow SSH"
             meta l4proto { tcp, udp } th dport 53 accept comment "Allow DNS"
             udp dport 67 udp sport 68 accept comment "Allow DHCP"
+            udp dport 123 accept comment "Allow NTP"
             tcp dport 179 accept comment "Allow BGP"
           }
         }
@@ -437,6 +440,10 @@ in
                 data = "10.0.10.1";
               }
               {
+                name = "time-servers";
+                data = "10.0.10.1";
+              }
+              {
                 name = "domain-name-servers";
                 data = "10.0.10.1";
               }
@@ -466,6 +473,10 @@ in
             option-data = [
               {
                 name = "routers";
+                data = "10.0.20.1";
+              }
+              {
+                name = "time-servers";
                 data = "10.0.20.1";
               }
               {
@@ -504,6 +515,10 @@ in
             option-data = [
               {
                 name = "routers";
+                data = "10.0.60.1";
+              }
+              {
+                name = "time-servers";
                 data = "10.0.60.1";
               }
               {
@@ -579,6 +594,18 @@ in
       DNSStubListenerExtra=10.0.10.1
       DNSStubListenerExtra=10.0.20.1
       DNSStubListenerExtra=10.0.60.1
+    '';
+  };
+
+  services.timesyncd.enable = false;
+  services.chrony = {
+    enable = true;
+
+    extraConfig = ''
+      # make chrony act as an NTP server
+      allow 10.0.10.0/24
+      allow 10.0.20.0/24
+      allow 10.0.60.0/24
     '';
   };
 
