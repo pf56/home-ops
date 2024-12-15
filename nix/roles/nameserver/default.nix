@@ -60,21 +60,19 @@ in
     networking.firewall.allowedUDPPorts = [ 53 ];
 
     services.frr = {
-      bgp = {
-        enable = true;
+      bgpd.enable = true;
 
-        config = ''
-          route-map ALLOW-ALL permit 100
+      config = ''
+        route-map ALLOW-ALL permit 100
 
-          router bgp ${cfg.localAS}
-            neighbor ${cfg.remotePeer} remote-as ${cfg.remoteAS}
-            address-family ipv4 unicast
-              neighbor ${cfg.remotePeer} activate
-              neighbor ${cfg.remotePeer} route-map ALLOW-ALL out
-              network ${cfg.virtualIp}/32
-            exit-address-family
-        '';
-      };
+        router bgp ${cfg.localAS}
+          neighbor ${cfg.remotePeer} remote-as ${cfg.remoteAS}
+          address-family ipv4 unicast
+            neighbor ${cfg.remotePeer} activate
+            neighbor ${cfg.remotePeer} route-map ALLOW-ALL out
+            network ${cfg.virtualIp}/32
+          exit-address-family
+      '';
     };
 
     services.routedns = {
@@ -138,44 +136,52 @@ in
     services.knot = {
       enable = true;
 
-      extraConfig = ''
-        server:
-          listen: 127.0.0.1@5300
-          listen: ::1@5300
+      settings = {
+        server = {
+          listen = [ "127.0.0.1@5300" "::1@5300" ];
+        };
 
-        log:
-          - target: syslog
-            any: info
+        log = [
+          {
+            target = "syslog";
+            any = "info";
+          }
+        ];
 
-        template:
-          - id: default
-            semantic-checks: on
+        template = [
+          {
+            id = "default";
+            semantic-checks = "on";
+          }
+        ];
 
-        zone:
-          - domain: vultr.internal.paulfriedrich.me
-            file: "${./vultr.internal.paulfriedrich.me.zone}"
-
-        zone:
-          - domain: internal.paulfriedrich.me
-            file: "${./internal.paulfriedrich.me.zone}"
-
-        zone:
-          - domain: 15.0.10.in-addr.arpa
-            file: "${./15.0.10.in-addr.arpa.zone}"
-
-        zone:
-          - domain: 20.0.10.in-addr.arpa
-            file: "${./20.0.10.in-addr.arpa.zone}"
-
-        zone:
-          - domain: 60.0.10.in-addr.arpa
-            file: "${./60.0.10.in-addr.arpa.zone}"
-
-        zone:
-          - domain: 100.10.in-addr.arpa
-            file: "${./100.10.in-addr.arpa.zone}"
-      '';
+        zone = [
+          {
+            domain = "vultr.internal.paulfriedrich.me";
+            file = "${./vultr.internal.paulfriedrich.me.zone}";
+          }
+          {
+            domain = "internal.paulfriedrich.me";
+            file = "${./internal.paulfriedrich.me.zone}";
+          }
+          {
+            domain = "15.0.10.in-addr.arpa";
+            file = "${./15.0.10.in-addr.arpa.zone}";
+          }
+          {
+            domain = "20.0.10.in-addr.arpa";
+            file = "${./20.0.10.in-addr.arpa.zone}";
+          }
+          {
+            domain = "60.0.10.in-addr.arpa";
+            file = "${./60.0.10.in-addr.arpa.zone}";
+          }
+          {
+            domain = "100.10.in-addr.arpa";
+            file = "${./100.10.in-addr.arpa.zone}";
+          }
+        ];
+      };
     };
-
   };
 }
