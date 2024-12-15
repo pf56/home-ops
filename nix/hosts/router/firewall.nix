@@ -58,6 +58,7 @@ in
             iifname ${interfaces.wan.name} jump WAN-LOCAL
             iifname ${vlans.mgmt.name} jump MGMT-LOCAL
             iifname ${vlans.office.name} jump OFFICE-LOCAL
+            iifname ${vlans.iot.name} jump IOT-LOCAL
             iifname ${vlans.server.name} jump SERVER-LOCAL
           }
 
@@ -76,6 +77,7 @@ in
             oifname ${interfaces.wan.name} jump ZONE_WAN
             oifname ${vlans.mgmt.name} jump ZONE_MGMT
             oifname ${vlans.office.name} jump ZONE_OFFICE
+            oifname ${vlans.iot.name} jump ZONE_IOT
             oifname ${vlans.server.name} jump ZONE_SERVER
           }
 
@@ -111,6 +113,10 @@ in
             counter drop
           }
 
+          chain ZONE_IOT {
+            counter drop
+          }
+          
           chain ZONE_SERVER {
             iifname ${vlans.mgmt.name} jump MGMT-SERVER
             iifname ${vlans.office.name} jump OFFICE-SERVER
@@ -184,6 +190,12 @@ in
 
           chain SERVER-MGMT {
             ip daddr 10.0.10.2 tcp dport { 80, 443 } accept comment "Allow TrueNAS API"
+          }
+          
+          chain IOT-LOCAL {
+            meta l4proto { tcp, udp } th dport 53 accept comment "Allow DNS"
+            udp dport 67 udp sport 68 accept comment "Allow DHCP"
+            udp dport 123 accept comment "Allow NTP"
           }
         }
 

@@ -36,6 +36,14 @@ let
       gateway = "10.0.20.1";
     };
 
+    iot = {
+      id = 40;
+      name = "vlan40";
+      prefixLength = "24";
+      subnet = "10.0.40.0/${vlans.iot.prefixLength}";
+      gateway = "10.0.40.1";
+    };
+
     server = {
       id = 60;
       name = "vlan60";

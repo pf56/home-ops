@@ -38,6 +38,15 @@ in
         vlanConfig.Id = vlans.office.id;
       };
 
+      "20-vlan40" = {
+        netdevConfig = {
+          Kind = "vlan";
+          Name = vlans.iot.name;
+        };
+
+        vlanConfig.Id = vlans.iot.id;
+      };
+
       "20-vlan60" = {
         netdevConfig = {
           Kind = "vlan";
@@ -107,6 +116,7 @@ in
         vlan = [
           vlans.mgmt.name
           vlans.office.name
+          vlans.iot.name
           vlans.server.name
         ];
       };
@@ -140,6 +150,22 @@ in
 
         address = [
           "${vlans.office.gateway}/${vlans.office.prefixLength}"
+        ];
+      };
+
+      "50-vlan40" = {
+        matchConfig.Name = vlans.iot.name;
+
+        networkConfig = {
+          Description = "IOT";
+          DHCP = false;
+          IPv6AcceptRA = false;
+          IPv4Forwarding = true;
+          IPv6Forwarding = true;
+        };
+
+        address = [
+          "${vlans.iot.gateway}/${vlans.iot.prefixLength}"
         ];
       };
 

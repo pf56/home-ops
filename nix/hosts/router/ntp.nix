@@ -12,6 +12,7 @@ in
       # make chrony act as an NTP server
       allow ${vlans.mgmt.subnet}
       allow ${vlans.office.subnet}
+      allow ${vlans.iot.subnet}
       allow ${vlans.server.subnet}
     '';
   };

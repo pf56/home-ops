@@ -20,6 +20,7 @@ in
           interfaces = [
             vlans.mgmt.name
             vlans.office.name
+            vlans.iot.name
             vlans.server.name
           ];
         };
@@ -115,6 +116,33 @@ in
                 hw-address = "10:9c:70:2c:d2:40";
                 ip-address = "10.0.20.4";
               }
+            ];
+          }
+          {
+            id = 40;
+            subnet = vlans.iot.subnet;
+            pools = [
+              {
+                pool = "10.0.40.100 - 10.0.40.199";
+              }
+            ];
+
+            option-data = [
+              {
+                name = "routers";
+                data = vlans.iot.gateway;
+              }
+              {
+                name = "time-servers";
+                data = vlans.iot.gateway;
+              }
+              {
+                name = "domain-name-servers";
+                data = vlans.iot.gateway;
+              }
+            ];
+
+            reservations = [
             ];
           }
           {

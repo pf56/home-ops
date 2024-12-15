@@ -16,6 +16,7 @@ in
     extraConfig = ''
       DNSStubListenerExtra=${vlans.mgmt.gateway}
       DNSStubListenerExtra=${vlans.office.gateway}
+      DNSStubListenerExtra=${vlans.iot.gateway}
       DNSStubListenerExtra=${vlans.server.gateway}
     '';
   };
