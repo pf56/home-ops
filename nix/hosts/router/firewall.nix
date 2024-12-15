@@ -103,6 +103,7 @@ in
 
           chain ZONE_MGMT {
             iifname ${vlans.office.name} jump OFFICE-MGMT
+            iifname ${vlans.server.name} jump SERVER-MGMT
             counter drop
           }
 
@@ -179,6 +180,10 @@ in
             udp dport 67 udp sport 68 accept comment "Allow DHCP"
             udp dport 123 accept comment "Allow NTP"
             tcp dport 179 accept comment "Allow BGP"
+          }
+
+          chain SERVER-MGMT {
+            ip daddr 10.0.10.2 tcp dport { 80, 443 } accept comment "Allow TrueNAS API"
           }
         }
 
