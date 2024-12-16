@@ -2,11 +2,31 @@
 
 let
   inherit (routerConfig) vlans;
+
+  dhcpV4ControlSocket = "/run/kea/dhcpv4";
+
+  getLeases = pkgs.writeShellScriptBin "get-dhcp-leases"
+    ''
+      set -euo pipefail
+
+      GET_LEASES=$(cat <<-END
+        {
+          "command": "lease4-get-all"
+        }
+      END
+      )
+
+      LEASES=$(echo $GET_LEASES | ${pkgs.socat}/bin/socat UNIX-CONNECT:${dhcpV4ControlSocket} -)
+
+      echo $LEASES | ${pkgs.jq}/bin/jq -r '["HOST", "IP", "MAC"], ["----", "----", "----"], (.arguments.leases.[] | [.hostname, ."ip-address", ."hw-address"]) | @tsv' - | column -ts $'\t'
+    '';
 in
 {
   networking = {
     useDHCP = false;
   };
+
+  environment.systemPackages = [ getLeases ];
 
   services.kea = {
     dhcp4 = {
@@ -30,6 +50,17 @@ in
           persist = true;
           type = "memfile";
         };
+
+        control-socket = {
+          socket-type = "unix";
+          socket-name = dhcpV4ControlSocket;
+        };
+
+        hooks-libraries = [
+          {
+            library = "${pkgs.kea}/lib/kea/hooks/libdhcp_lease_cmds.so";
+          }
+        ];
 
         option-data = [
           {
