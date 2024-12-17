@@ -20,4 +20,14 @@ in
       DNSStubListenerExtra=${vlans.server.gateway}
     '';
   };
+
+  services.avahi = {
+    enable = true;
+    reflector = true;
+    allowInterfaces = [
+      vlans.office.name
+      vlans.iot.name
+      vlans.server.name
+    ];
+  };
 }

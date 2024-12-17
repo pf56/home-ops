@@ -54,6 +54,9 @@ in
             ip protocol icmp accept
             meta l4proto ipv6-icmp accept
 
+            # Allow mDNS
+            iifname { ${vlans.office.name}, ${vlans.iot.name}, ${vlans.server.name} } ip daddr 224.0.0.251 udp dport 5353 accept
+
             iif lo accept
             iifname ${interfaces.wan.name} jump WAN-LOCAL
             iifname ${vlans.mgmt.name} jump MGMT-LOCAL
@@ -91,6 +94,9 @@ in
             ip protocol icmp accept
             meta l4proto ipv6-icmp accept
 
+            # Allow mDNS
+            oifname { ${vlans.office.name}, ${vlans.iot.name}, ${vlans.server.name} } ip daddr 224.0.0.251 udp dport 5353 accept
+
             oif lo accept
             oifname ${interfaces.wan.name} accept
             oifname ${vlans.server.name} jump LOCAL-SERVER
@@ -99,6 +105,7 @@ in
           chain ZONE_WAN {
             iifname ${vlans.mgmt.name} jump MGMT-WAN
             iifname ${vlans.office.name} jump OFFICE-WAN
+            iifname ${vlans.iot.name} jump IOT-WAN
             iifname ${vlans.server.name} jump SERVER-WAN
             counter drop
           }
@@ -114,6 +121,7 @@ in
           }
 
           chain ZONE_IOT {
+            iifname ${vlans.office.name} jump OFFICE-IOT
             counter drop
           }
           
@@ -161,6 +169,11 @@ in
             ip daddr 172.16.61.0/24 tcp dport { 8043 } accept comment "Allow Omada"
           }
 
+          chain OFFICE-IOT {
+            ip daddr 10.0.40.3 tcp dport { 4357, 8123 } accept comment "Allow Home Assistant"
+            ip daddr 10.0.40.4 tcp dport { 8000, 8443, 8444, 8445, 8446 } accept comment "Allow Bosch SHC"
+          }
+
           chain MGMT-WAN {
             accept
           }
@@ -196,6 +209,12 @@ in
             meta l4proto { tcp, udp } th dport 53 accept comment "Allow DNS"
             udp dport 67 udp sport 68 accept comment "Allow DHCP"
             udp dport 123 accept comment "Allow NTP"
+          }
+
+          chain IOT-WAN {
+            ip saddr 10.0.40.3 accept comment "Allow Home Assistant"
+            ip saddr 10.0.40.4 accept comment "Allow Bosch Smart Home Controller"
+            drop comment "Drop everything else"
           }
         }
 

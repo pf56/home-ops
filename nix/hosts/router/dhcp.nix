@@ -174,6 +174,21 @@ in
             ];
 
             reservations = [
+              {
+                # TrueNAS
+                hw-address = "ff:ff:ff:ff:ff:ff";
+                ip-address = "10.0.40.2";
+              }
+              {
+                # Home Assistant
+                hw-address = "00:a0:98:29:f9:b4";
+                ip-address = "10.0.40.3";
+              }
+              {
+                # Bosch Smart Home Controller
+                hw-address = "64:da:a0:40:85:50";
+                ip-address = "10.0.40.4";
+              }
             ];
           }
           {
