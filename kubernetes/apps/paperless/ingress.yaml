@@ -30,7 +30,7 @@ metadata:
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.tls: "true"
-    traefik.ingress.kubernetes.io/router.middlewares: "traefik-oauth2-headers@kubernetescrd,traefik-auth-errors@kubernetescrd,traefik-oauth2-auth@kubernetescrd"
+#    traefik.ingress.kubernetes.io/router.middlewares: "traefik-oauth2-headers@kubernetescrd,traefik-auth-errors@kubernetescrd,traefik-oauth2-auth@kubernetescrd"
 spec:
   rules:
     - host: paperless.internal.paulfriedrich.me
