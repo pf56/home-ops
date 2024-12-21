@@ -17,6 +17,10 @@ let
     lan3 = {
       name = "enp4s0";
     };
+
+    tailscale = {
+      name = "tailscale0";
+    };
   };
 
   vlans = {
@@ -72,6 +76,7 @@ in
       (import ./dns.nix (inputs // { inherit routerConfig; }))
       (import ./ntp.nix (inputs // { inherit routerConfig; }))
       (import ./bgp.nix (inputs // { inherit routerConfig; }))
+      (import ./tailscale.nix (inputs // { inherit routerConfig; }))
     ];
 
   boot = {

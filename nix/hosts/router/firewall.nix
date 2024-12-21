@@ -59,6 +59,7 @@ in
 
             iif lo accept
             iifname ${interfaces.wan.name} jump WAN-LOCAL
+            iifname ${interfaces.tailscale.name} jump TAILSCALE-LOCAL
             iifname ${vlans.mgmt.name} jump MGMT-LOCAL
             iifname ${vlans.office.name} jump OFFICE-LOCAL
             iifname ${vlans.iot.name} jump IOT-LOCAL
@@ -121,11 +122,13 @@ in
           }
 
           chain ZONE_IOT {
+            iifname ${interfaces.tailscale.name} jump TAILSCALE-IOT
             iifname ${vlans.office.name} jump OFFICE-IOT
             counter drop
           }
           
           chain ZONE_SERVER {
+            iifname ${interfaces.tailscale.name} jump TAILSCALE-SERVER
             iifname ${vlans.mgmt.name} jump MGMT-SERVER
             iifname ${vlans.office.name} jump OFFICE-SERVER
             counter drop
@@ -133,6 +136,23 @@ in
 
           chain WAN-LOCAL {
             tcp dport 22 accept comment "Allow SSH"
+            counter drop
+          }
+
+          chain TAILSCALE-LOCAL {
+            counter drop
+          }
+
+          chain TAILSCALE-SERVER {
+            ip daddr $NAMESERVERS meta l4proto { tcp, udp } th dport 53 accept comment "Allow DNS"
+            ip daddr 172.16.61.0/24 tcp dport { 80, 443 } accept comment "Allow Cilium LB"
+            ip daddr 10.0.60.8 accept comment "Allow Git"
+            ip daddr 10.0.60.15 accept comment "Allow Auth"
+            counter drop
+          }
+
+          chain TAILSCALE-IOT {
+            ip daddr 10.0.40.3 tcp dport { 443 } accept comment "Allow Home Assistant"
             counter drop
           }
 
