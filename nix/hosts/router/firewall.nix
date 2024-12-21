@@ -112,18 +112,21 @@ in
           }
 
           chain ZONE_MGMT {
+            iifname ${vlans.mgmt.name} accept comment "Loopback"
             iifname ${vlans.office.name} jump OFFICE-MGMT
             iifname ${vlans.server.name} jump SERVER-MGMT
             counter drop
           }
 
           chain ZONE_OFFICE {
+            iifname ${vlans.office.name} accept comment "Loopback"
             counter drop
           }
 
           chain ZONE_IOT {
             iifname ${interfaces.tailscale.name} jump TAILSCALE-IOT
             iifname ${vlans.office.name} jump OFFICE-IOT
+            iifname ${vlans.iot.name} accept comment "Loopback"
             counter drop
           }
           
@@ -131,6 +134,7 @@ in
             iifname ${interfaces.tailscale.name} jump TAILSCALE-SERVER
             iifname ${vlans.mgmt.name} jump MGMT-SERVER
             iifname ${vlans.office.name} jump OFFICE-SERVER
+            iifname ${vlans.server.name} accept comment "Loopback"
             counter drop
           }
 
