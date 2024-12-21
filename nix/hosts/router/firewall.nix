@@ -149,6 +149,7 @@ in
 
           chain OFFICE-MGMT {
             ip daddr 10.0.10.2 tcp dport { 80, 443 } accept comment "Allow TrueNAS"
+            ip daddr 10.0.10.3 tcp dport { 80, 443 } accept comment "Allow MikroTik"
             counter drop
           }
 
