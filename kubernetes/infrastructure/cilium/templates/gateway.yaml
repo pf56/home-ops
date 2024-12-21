@@ -5,6 +5,9 @@ metadata:
   name: cilium-gateway
 spec:
   gatewayClassName: cilium
+  infrastructure:
+    annotations:
+      "lbipam.cilium.io/ips": "172.16.61.2"
   listeners:
     - name: http
       hostname: "*.internal.paulfriedrich.me"

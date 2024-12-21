@@ -1,8 +1,7 @@
 cilium:
-  upgradeCompatibility: "1.14"
   ipam:
     mode: kubernetes
-  kubeProxyReplacement: strict
+  kubeProxyReplacement: true
   k8sServiceHost: 10.0.60.5
   k8sServicePort: 6443
   bgpControlPlane:
