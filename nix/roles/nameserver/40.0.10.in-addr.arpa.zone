@@ -1,0 +1,15 @@
+$TTL 1d
+$ORIGIN 40.0.10.IN-ADDR.ARPA.
+
+@       		IN	SOA		ns01.internal.paulfriedrich.me.		hostmaster.mail.paulfriedrich.me.	(
+                        		2023070201		; serial number YYMMDDNN
+                        		28800           ; Refresh
+                        		7200            ; Retry
+                        		864000          ; Expire
+                        		86400           ; Min TTL
+								)
+
+					NS		ns01.internal.paulfriedrich.me. 
+					NS		ns02.internal.paulfriedrich.me. 
+
+3				IN	PTR		homeassistant.internal.paulfriedrich.me.

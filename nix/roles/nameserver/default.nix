@@ -173,6 +173,10 @@ in
             file = "${./20.0.10.in-addr.arpa.zone}";
           }
           {
+            domain = "40.0.10.in-addr.arpa";
+            file = "${./40.0.10.in-addr.arpa.zone}";
+          }
+          {
             domain = "60.0.10.in-addr.arpa";
             file = "${./60.0.10.in-addr.arpa.zone}";
           }

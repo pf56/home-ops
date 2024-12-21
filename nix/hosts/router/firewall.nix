@@ -170,7 +170,7 @@ in
           }
 
           chain OFFICE-IOT {
-            ip daddr 10.0.40.3 tcp dport { 4357, 8123 } accept comment "Allow Home Assistant"
+            ip daddr 10.0.40.3 tcp dport { 4357, 443 } accept comment "Allow Home Assistant"
             ip daddr 10.0.40.4 tcp dport { 8000, 8443, 8444, 8445, 8446 } accept comment "Allow Bosch SHC"
           }
 
