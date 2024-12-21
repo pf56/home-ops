@@ -10,4 +10,4 @@ resources:
 
 images:
   - name: mbentley/omada-controller
-    newTag: "5.14-chromium"
+    newTag: "5.15-chromium"
