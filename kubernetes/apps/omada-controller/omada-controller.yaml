@@ -11,11 +11,11 @@ spec:
   type: LoadBalancer
   ports:
     - name: http
-      port: 8088
+      port: 80
       protocol: TCP
       targetPort: http
     - name: manage-https
-      port: 8043
+      port: 443
       protocol: TCP
       targetPort: manage-https
     - name: portal-https
@@ -60,14 +60,18 @@ spec:
       labels:
         app: omada-controller
     spec:
+      securityContext:
+        sysctls:
+          - name: net.ipv4.ip_unprivileged_port_start
+            value: "0"
       containers:
       - name: omada-controller
         image: mbentley/omada-controller
         env:
           - name: MANAGE_HTTP_PORT
-            value: "8088"
+            value: "80"
           - name: MANAGE_HTTPS_PORT
-            value: "8043"
+            value: "443"
           - name: PORTAL_HTTP_PORT
             value: "8088"
           - name: PORTAL_HTTPS_PORT
@@ -83,10 +87,10 @@ spec:
           - name: PORT_RTTY
             value: "29816"
         ports:
-          - containerPort: 8088
+          - containerPort: 80
             name: http
             protocol: TCP
-          - containerPort: 8043
+          - containerPort: 443
             name: manage-https
             protocol: TCP
           - containerPort: 8843
