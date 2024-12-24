@@ -143,7 +143,7 @@ in
                 ip-address = "10.0.20.3";
               }
               {
-                # Prua Mk4
+                # Prusa Mk4
                 hw-address = "10:9c:70:2c:d2:40";
                 ip-address = "10.0.20.4";
               }
