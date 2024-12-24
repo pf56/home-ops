@@ -134,6 +134,7 @@ in
             iifname ${interfaces.tailscale.name} jump TAILSCALE-SERVER
             iifname ${vlans.mgmt.name} jump MGMT-SERVER
             iifname ${vlans.office.name} jump OFFICE-SERVER
+            iifname ${vlans.iot.name} jump IOT-SERVER
             iifname ${vlans.server.name} accept comment "Loopback"
             counter drop
           }
@@ -238,7 +239,13 @@ in
           chain IOT-WAN {
             ip saddr 10.0.40.3 accept comment "Allow Home Assistant"
             ip saddr 10.0.40.4 accept comment "Allow Bosch Smart Home Controller"
+            ip saddr 10.0.40.5 accept comment "Allow Zenfone 8"
+            ip saddr 10.0.40.6 accept comment "Allow LR4"
             drop comment "Drop everything else"
+          }
+
+          chain IOT-SERVER {
+            ip daddr 172.16.61.0/24 tcp dport { 80, 443 } accept comment "Allow Cilium LB"
           }
         }
 

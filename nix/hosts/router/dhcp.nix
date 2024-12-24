@@ -189,6 +189,16 @@ in
                 hw-address = "64:da:a0:40:85:50";
                 ip-address = "10.0.40.4";
               }
+              {
+                # Zenfone 8
+                hw-address = "7c:10:c9:0b:e9:65";
+                ip-address = "10.0.40.5";
+              }
+              {
+                # LR4
+                hw-address = "c8:f0:9e:76:9f:38";
+                ip-address = "10.0.40.6";
+              }
             ];
           }
           {
