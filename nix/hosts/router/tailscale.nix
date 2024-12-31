@@ -18,6 +18,6 @@ in
   };
 
   sops.secrets = {
-    tailscaleAuth = {};
+    tailscaleAuth = { };
   };
 }
