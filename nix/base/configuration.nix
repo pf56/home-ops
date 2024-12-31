@@ -44,9 +44,14 @@
   nix = {
     # trust packages built on a different machine
     settings = {
-      trusted-public-keys = [ "e595.internal.paulfriedrich.me:BRG0TzHjcB93cncYvpY6ZT4TmFAWPH13MEFRf08y/lc=" ];
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
+
+      substituters = [ "https://ghostty.cachix.org" ];
+      trusted-public-keys = [
+        "e595.internal.paulfriedrich.me:BRG0TzHjcB93cncYvpY6ZT4TmFAWPH13MEFRf08y/lc="
+        "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
+      ];
     };
 
     gc = {

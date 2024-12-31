@@ -93,7 +93,7 @@ in
               "${mod}+Shift F" = "toggle-fullscreen";
               "${mod}+Shift Q" = "close";
 
-              "${mod} Return" = "spawn alacritty";
+              "${mod} Return" = "spawn ghostty";
               "${mod} D" = "spawn wofi";
 
               "${mod} R" = "enter-mode float";

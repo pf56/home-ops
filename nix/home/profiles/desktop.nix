@@ -1,6 +1,7 @@
 { pkgs, config, lib, inputs, ... }:
 
 let
+  ghostty = inputs.ghostty;
   nix-colors = inputs.nix-colors;
 in
 {
@@ -25,6 +26,7 @@ in
   };
 
   home.packages = with pkgs; [
+    ghostty.packages.${stdenv.hostPlatform.system}.default
     wlr-randr
     xfce.thunar
     xfce.thunar-archive-plugin
