@@ -16,7 +16,6 @@ in
   config =
     let
       extraPkgs = with pkgs; [
-        rocmPackages.clr.icd
         amdvlk
       ];
     in
@@ -30,9 +29,6 @@ in
           radeontop
         ];
 
-        systemd.tmpfiles.rules = [
-          "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
-        ];
       } // optionalAttrs (builtins.hasAttr "graphics" options.hardware) {
       hardware.graphics = {
         extraPackages = extraPkgs;
