@@ -37,16 +37,10 @@ in
               status = "disable";
             }
             {
-              # left
-              criteria = "LG Electronics 27GL850 912NTDV0N042";
-              mode = "2560x1440@59.951000Hz";
-              position = "1920,0";
-            }
-            {
               # main
-              criteria = "LG Electronics LG ULTRAGEAR 101NTNHSV159";
-              mode = "2560x1440@99.90002Hz";
-              position = "4480,0";
+              criteria = "Microstep MPG341CX OLED Unknown";
+              mode = "3440x1440@164.992004Hz";
+              position = "0,0";
             }
           ];
         }
