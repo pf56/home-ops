@@ -7,9 +7,9 @@ dependencies:
     repository: https://democratic-csi.github.io/charts/
   - name: democratic-csi
     alias: node-man
-    version: 0.13.7
+    version: 0.14.7
     repository: https://democratic-csi.github.io/charts/
   - name: democratic-csi
     alias: fn-iscsi
-    version: 0.14.1
+    version: 0.14.7
     repository: https://democratic-csi.github.io/charts/

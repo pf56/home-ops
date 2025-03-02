@@ -4,9 +4,9 @@ dependencies:
   version: 0.2.4
 - name: democratic-csi
   repository: https://democratic-csi.github.io/charts/
-  version: 0.13.7
+  version: 0.14.7
 - name: democratic-csi
   repository: https://democratic-csi.github.io/charts/
-  version: 0.14.1
-digest: sha256:0e2c7050ce95c646fd4429fddbee35c3a0fed26667a68799eac58082d82a3b68
-generated: "2024-05-22T21:05:40.258553438+02:00"
+  version: 0.14.7
+digest: sha256:5e91819df731e3b89707886a4298ef0bb4c9aa30aca4b1ad1bdcb509719f0653
+generated: "2025-03-02T15:23:03.5660536+01:00"
