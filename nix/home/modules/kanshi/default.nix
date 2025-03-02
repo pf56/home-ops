@@ -39,7 +39,7 @@ in
             {
               # main
               criteria = "Microstep MPG341CX OLED Unknown";
-              mode = "3440x1440@164.992004Hz";
+              mode = "3440x1440@59.973000Hz";
               position = "0,0";
             }
           ];
