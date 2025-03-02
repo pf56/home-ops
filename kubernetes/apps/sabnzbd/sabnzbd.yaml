@@ -69,8 +69,6 @@ spec:
   - metadata:
       name: tmp
       namespace: sabnzbd
-      annotations:
-        k8up.io/backup: "false"
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "freenas-api-iscsi-csi"
