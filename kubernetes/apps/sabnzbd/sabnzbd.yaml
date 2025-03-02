@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: sabnzbd
-        image: linuxserver/sabnzbd:4.3.3
+        image: lscr.io/linuxserver/sabnzbd:4.4.1-ls204
         env:
           - name: PUID
             value: "1001"
@@ -57,7 +57,9 @@ spec:
           persistentVolumeClaim:
             claimName: pvc-sabnzbd-downloads
   volumeClaimTemplates:
-  - metadata:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
       name: data
       namespace: sabnzbd
     spec:
@@ -66,7 +68,9 @@ spec:
       resources:
         requests:
           storage: 8Gi
-  - metadata:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
       name: tmp
       namespace: sabnzbd
     spec:
