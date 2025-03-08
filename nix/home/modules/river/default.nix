@@ -128,7 +128,7 @@ in
 
           keyboard-layout = "eu";
           input = {
-            pointer-1133-16531-Logitech_PRO_X = {
+            pointer-1133-16568-Logitech_PRO_X_2_DEX = {
               accel-profile = "flat";
               pointer-accel = 0.2;
             };
