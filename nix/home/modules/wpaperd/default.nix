@@ -14,7 +14,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.wpaperd = {
+    services.wpaperd = {
       enable = true;
 
       settings = {
