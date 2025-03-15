@@ -23,11 +23,5 @@ in
         };
       };
     };
-
-    systemd.user.services.wpaperd = {
-      Unit.Description = "wpaperd wallpaper daemon";
-      Install.WantedBy = [ "graphicall-session.target" ];
-      Service.ExecStart = "${pkgs.wpaperd}/bin/wpaperd --no-daemon";
-    };
   };
 }
