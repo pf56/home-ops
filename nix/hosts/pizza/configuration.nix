@@ -26,15 +26,6 @@
 
   hardware = {
     enableAllFirmware = true;
-
-    graphics = {
-      enable = true;
-      extraPackages = with pkgs; [
-        vaapiVdpau
-        libvdpau-va-gl
-      ];
-    };
-
     wooting.enable = true;
   };
 
