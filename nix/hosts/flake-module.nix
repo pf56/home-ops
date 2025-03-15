@@ -102,7 +102,7 @@ in
           ];
         };
 
-        
+
     pizza =
       let
         inputs' = {

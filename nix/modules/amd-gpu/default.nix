@@ -21,7 +21,7 @@ in
           radeontop
         ];
 
-        
+
         hardware = {
           graphics = {
             enable = true;
@@ -38,7 +38,7 @@ in
           ];
 
           amdgpu.initrd.enable = true;
-          amdgpu.amdvlk.enable = true;           
+          amdgpu.amdvlk.enable = true;
         };
 
         programs = {
@@ -47,5 +47,5 @@ in
             gpuOverclock.enable = true;
           };
         };
-    };
+      };
 }

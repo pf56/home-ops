@@ -6,7 +6,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -52,7 +53,7 @@
     extraGroups = [ "wheel" "networkmanager" "scanner" "lp" "libvirtd" "wireshark" "input" ];
     shell = pkgs.zsh;
   };
-  
+
   # system packages
   environment.systemPackages = with pkgs; [
     git
@@ -73,7 +74,7 @@
       "de_DE.UTF-8/UTF-8"
     ];
   };
-  
+
   services.dbus.enable = true;
   services.dbus.packages = with pkgs; [ gcr dconf ];
 
@@ -103,7 +104,7 @@
   virtualisation.vmVariant = {
     users.users.pfriedrich.password = "foo";
   };
-  
+
   nixpkgs.config.allowUnfree = true;
   nix = {
     package = pkgs.nixVersions.stable;
@@ -126,7 +127,7 @@
       experimental-features = nix-command flakes
     '';
   };
-  
+
   system.stateVersion = "24.11";
 }
 
