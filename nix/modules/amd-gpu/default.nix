@@ -14,28 +14,38 @@ in
   };
 
   config =
-    let
-      extraPkgs = with pkgs; [
-        amdvlk
-      ];
-    in
     mkIf cfg.enable
       {
-
-        boot.initrd.kernelModules = [ "amdgpu" ];
-
         environment.systemPackages = with pkgs; [
           clinfo
           radeontop
         ];
 
-      } // optionalAttrs (builtins.hasAttr "graphics" options.hardware) {
-      hardware.graphics = {
-        extraPackages = extraPkgs;
-      } // optionalAttrs (builtins.hasAttr "opengl" options.hardware) {
-        hardware.opengl = {
-          extraPackages = extraPkgs;
+        
+        hardware = {
+          graphics = {
+            enable = true;
+            enable32Bit = true;
+          };
+
+          firmware = with pkgs; [
+            (linux-firmware.overrideAttrs (old: {
+              src = builtins.fetchGit {
+                url = "https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git";
+                rev = "1d4c88ee96ec0176fa6e239ffe3d3a4278a8e418";
+              };
+            }))
+          ];
+
+          amdgpu.initrd.enable = true;
+          amdgpu.amdvlk.enable = true;           
         };
-      };
+
+        programs = {
+          corectrl = {
+            enable = true;
+            gpuOverclock.enable = true;
+          };
+        };
     };
 }
