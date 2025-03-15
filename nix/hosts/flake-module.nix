@@ -101,5 +101,21 @@ in
             self.homeConfigurations."pfriedrich@home"
           ];
         };
+
+        
+    pizza =
+      let
+        inputs' = {
+          nixpkgs = inputs.nixpkgs-unstable;
+          home-manager = inputs.home-manager-unstable;
+        };
+      in
+      buildDefaultSystem inputs'
+        {
+          modules = [
+            ./pizza/configuration.nix
+            self.homeConfigurations."pfriedrich@home"
+          ];
+        };
   };
 }
