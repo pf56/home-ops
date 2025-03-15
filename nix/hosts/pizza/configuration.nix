@@ -44,6 +44,7 @@
     wireshark.enable = true;
     hyprland.enable = true;
     yubikey.enable = true;
+    gaming.enable = true;
   };
 
   # users
