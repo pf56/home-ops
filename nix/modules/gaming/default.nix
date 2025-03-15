@@ -14,6 +14,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      gamemode
+      gamescope
+    ];
+
     modules.steam.enable = true;
   };
 }

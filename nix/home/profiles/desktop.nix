@@ -23,6 +23,7 @@ in
     river.enable = true;
     kanshi.enable = true;
     waybar.enable = true;
+    gaming.enable = true;
   };
 
   home.packages = with pkgs; [
