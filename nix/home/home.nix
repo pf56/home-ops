@@ -12,7 +12,6 @@ in
   home.homeDirectory = "/home/pfriedrich";
 
   # packages
-  nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     bcompare
     discord
