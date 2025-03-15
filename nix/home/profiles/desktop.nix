@@ -32,6 +32,15 @@ in
     xfce.thunar-archive-plugin
   ];
 
+  programs.librewolf = {
+    enable = true;
+    settings = {
+      "identity.fxaccounts.enabled" = true;
+      "privacy.clearOnShutdown.history" = false;
+      "middlemouse.paste" = false;
+    };
+  };
+
   xdg.mimeApps.defaultApplications = {
     "inode/directory" = [ "thunar.desktop" "nnn.desktop" ];
   };
