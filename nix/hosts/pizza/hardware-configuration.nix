@@ -16,7 +16,7 @@
 
   fileSystems."/" =
     {
-      device = "UUID=f72b3bbe-9195-4a41-bc56-73a7b5dee0db";
+      device = "/dev/disk/by-uuid/f72b3bbe-9195-4a41-bc56-73a7b5dee0db";
       fsType = "bcachefs";
     };
 
