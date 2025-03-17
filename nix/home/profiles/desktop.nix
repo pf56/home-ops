@@ -24,6 +24,7 @@ in
     kanshi.enable = true;
     waybar.enable = true;
     gaming.enable = true;
+    vfio.enable = true;
   };
 
   home.packages = with pkgs; [

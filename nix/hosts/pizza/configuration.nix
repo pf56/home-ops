@@ -16,7 +16,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "bcachefs" ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
+  boot.kernelParams = [ "split_lock_detect=off" ];
 
   # general stuff
   networking.hostName = "pizza";
@@ -36,6 +36,7 @@
     hyprland.enable = true;
     yubikey.enable = true;
     gaming.enable = true;
+    vfio.enable = true;
   };
 
   # users
@@ -53,6 +54,8 @@
     pavucontrol
     pinentry-curses
     gedit
+    easyeffects
+    qpwgraph
   ];
 
   programs.dconf.enable = true;
@@ -87,7 +90,11 @@
 
   networking.firewall = {
     enable = true;
-    #trustedInterfaces = [ "tailscale0" ];
+    trustedInterfaces = [
+      "virbr0"
+      #"tailscale0"
+    ];
+
     #allowedUDPPorts = [ config.services.tailscale.port ];
     #    allowedTCPPortRanges = [ { from = 8000; to = 8999; } ];  # packer http server
     #checkReversePath = "loose"; # for tailscale
