@@ -22,34 +22,13 @@ in
 
       settings = [
         {
-          # internal display
-          output.criteria = "Lenovo Group Limited 0x40BA Unknown";
-          output.mode = "1920x1080@59.977001Hz";
-          output.position = "0,0";
-          output.status = "enable";
-        }
-        {
           profile.name = "home";
           profile.outputs = [
             {
-              # internal display
-              criteria = "Lenovo Group Limited 0x40BA Unknown";
-              status = "disable";
-            }
-            {
               # main
               criteria = "Microstep MPG341CX OLED Unknown";
-              mode = "3440x1440@59.973000Hz";
+              mode = "3440x1440@239.998993Hz";
               position = "0,0";
-            }
-          ];
-        }
-        {
-          profile.name = "undocked";
-          profile.outputs = [
-            {
-              # internal display
-              criteria = "Lenovo Group Limited 0x40BA Unknown";
             }
           ];
         }
