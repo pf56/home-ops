@@ -13,13 +13,8 @@ let
     modprobe vfio_iommu_type1
     modprobe vfio_pci
 
-    virsh nodedev-detach --device ${gpuVideoBusId}
-    virsh nodedev-detach --device ${gpuAudioBusId}
-  '';
-
-  scriptRebindDevices = pkgs.writeShellScriptBin "vfio-rebind-devices" ''
-    virsh nodedev-reattach --device ${gpuVideoBusId}
-    virsh nodedev-reattach --device ${gpuAudioBusId}
+    echo '0000:03:00.0' > '/sys/bus/pci/drivers/amdgpu/unbind'
+    echo '0000:03:00.1' > '/sys/bus/pci/drivers/snd_hda_intel/unbind'
   '';
 
   scriptAllocHugepages = pkgs.writeShellScriptBin "vfio-alloc-hugepages" ''
@@ -122,7 +117,6 @@ in
 
     environment.systemPackages = with pkgs; [
       scriptUnbindDevices
-      scriptRebindDevices
       scriptAllocHugepages
       scriptDeallocHugepages
       scream
