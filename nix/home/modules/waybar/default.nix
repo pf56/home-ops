@@ -30,10 +30,14 @@ in
           ];
 
           modules-center = [
+            "river/window"
           ];
 
           modules-right = [
-            "battery"
+            "cpu"
+            "temperature"
+            "memory"
+            "disk"
             "tray"
             "clock"
           ];
@@ -42,15 +46,15 @@ in
             num-tags = 9;
 
             set-tags = [
-              2147483649
-              2147483650
-              2147483652
-              2147483656
-              2147483664
-              2147483680
-              2147483712
-              2147483776
-              2147483904
+              1
+              2
+              4
+              8
+              16
+              32
+              64
+              128
+              256
             ];
 
             toggle-tags = [
@@ -66,7 +70,21 @@ in
             ];
           };
 
-          battery = { };
+          cpu = {
+            format = " {usage}%";
+            interval = 5;
+          };
+
+          memory = {
+            format = " {percentage}%";
+            interval = 10;
+          };
+
+          disk = {
+            format = "󰋊 {percentage_used}%";
+            unit = "GB";
+            tooltip-format = "{free} / {total}";
+          };
 
           clock = {
             timezone = "Europe/Berlin";
