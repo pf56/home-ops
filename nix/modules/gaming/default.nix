@@ -3,6 +3,11 @@
 with lib;
 let
   cfg = config.modules.gaming;
+
+  vfio-steam = pkgs.writeShellScriptBin "vfio-steam" ''
+    export SUDO_ASKPASS=${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass
+    sudo -A -g passthru -E ${pkgs.steam}/bin/steam
+  '';
 in
 {
   options.modules.gaming = {
@@ -17,6 +22,7 @@ in
     environment.systemPackages = with pkgs; [
       gamemode
       gamescope
+      vfio-steam
     ];
 
     modules.steam.enable = true;
