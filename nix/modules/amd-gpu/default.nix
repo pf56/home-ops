@@ -42,7 +42,7 @@ in
             (linux-firmware.overrideAttrs (old: {
               src = builtins.fetchGit {
                 url = "https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git";
-                rev = "1d4c88ee96ec0176fa6e239ffe3d3a4278a8e418";
+                rev = "710a336b31981773a3a16e7909fd83daeaec9db1";
               };
             }))
           ];
