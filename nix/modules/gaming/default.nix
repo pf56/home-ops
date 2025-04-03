@@ -28,7 +28,7 @@ in
     ];
 
     nixpkgs.config.permittedInsecurePackages = [
-      "dotnet-runtime-7.0.20"  # vintage story
+      "dotnet-runtime-7.0.20" # vintage story
     ];
 
     modules.steam.enable = true;
