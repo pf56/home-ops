@@ -43,7 +43,16 @@ in
     };
   };
 
-  xdg.mimeApps.defaultApplications = {
-    "inode/directory" = [ "thunar.desktop" "nnn.desktop" ];
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "inode/directory" = [ "thunar.desktop" "nnn.desktop" ];
+
+      "text/html" = "librewolf.desktop";
+      "x-scheme-handler/http" = "librewolf.desktop";
+      "x-scheme-handler/https" = "librewolf.desktop";
+      "x-scheme-handler/about" = "librewolf.desktop";
+      "x-scheme-handler/unknown" = "librewolf.desktop";
+    };
   };
 }
