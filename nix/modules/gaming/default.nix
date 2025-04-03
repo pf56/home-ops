@@ -24,6 +24,7 @@ in
       gamescope
       vfio-steam
       vintagestory
+      heroic
     ];
 
     nixpkgs.config.permittedInsecurePackages = [
