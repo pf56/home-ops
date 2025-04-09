@@ -18,7 +18,6 @@ in
     gtk.enable = true;
     hyprland.enable = true;
     wpaperd.enable = true;
-    eww.enable = true;
     mako.enable = true;
     river.enable = true;
     kanshi.enable = true;
