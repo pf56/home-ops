@@ -73,6 +73,8 @@ in
               "${mod} Right" = "focus-view right";
               "${mod} Up" = "focus-view up";
               "${mod} Down" = "focus-view down";
+              "${mod} Page_Up" = "focus-view next";
+              "${mod} Page_Down" = "focus-view previous";
 
               "${mod}+Shift Left" = "swap left";
               "${mod}+Shift Right" = "swap right";
@@ -98,6 +100,7 @@ in
               "${mod} D" = "spawn wofi";
 
               "${mod} R" = "enter-mode float";
+              "${mod} T" = "send-layout-cmd wideriver '--layout-toggle'";
             };
 
             float = {
@@ -148,6 +151,7 @@ in
       extraConfig = ''
         ${pkgs.wideriver}/bin/wideriver \
             --layout left \
+            --layout-alt monocle \
             --stack dwindle \
             --inner-gaps 5 \
             --smart-gaps \
