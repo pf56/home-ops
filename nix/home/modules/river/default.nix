@@ -91,6 +91,7 @@ in
 
               "${mod} F" = "zoom";
               "${mod}+Shift F" = "toggle-fullscreen";
+              "${mod}+Alt F" = "toggle-float";
               "${mod}+Shift Q" = "close";
 
               "${mod} Return" = "spawn ghostty";
@@ -120,7 +121,16 @@ in
           };
 
           rule-add = {
-            "ssd" = { };
+            "-app-id" = {
+              "'librewolf'" = {
+                "-title" = {
+                  "'Picture-in-Picture'" = [
+                    "float"
+                    "dimensions 711 400"
+                  ];
+                };
+              };
+            };
           };
 
           focus-follows-cursor = "normal";
