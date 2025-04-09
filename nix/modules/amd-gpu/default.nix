@@ -18,7 +18,9 @@ in
       {
         environment.systemPackages = with pkgs; [
           clinfo
+          glxinfo
           radeontop
+          vulkan-tools
         ];
 
 
