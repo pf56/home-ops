@@ -93,7 +93,7 @@ in
 
               "${mod} F" = "zoom";
               "${mod}+Shift F" = "toggle-fullscreen";
-              "${mod}+Alt F" = "toggle-float";
+              "${mod}+Shift Space" = "toggle-float";
               "${mod}+Shift Q" = "close";
 
               "${mod} Return" = "spawn ghostty";
@@ -101,6 +101,7 @@ in
 
               "${mod} R" = "enter-mode float";
               "${mod} T" = "send-layout-cmd wideriver '--layout-toggle'";
+              "${mod}+Shift T" = "spawn 'pkill -SIGUSR1 waybar'";
             };
 
             float = {
