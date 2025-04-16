@@ -25,6 +25,7 @@ in
       vfio-steam
       vintagestory
       heroic
+      vkdevicechooser
     ];
 
     nixpkgs.config.permittedInsecurePackages = [
