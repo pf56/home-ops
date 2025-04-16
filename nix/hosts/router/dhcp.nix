@@ -133,8 +133,8 @@ in
 
             reservations = [
               {
-                # HL2250DN
-                hw-address = "00:1b:a9:d1:0a:eb";
+                # printer
+                hw-address = "94:dd:f8:22:ba:be";
                 ip-address = "10.0.20.2";
               }
               {
