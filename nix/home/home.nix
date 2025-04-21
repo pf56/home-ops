@@ -38,8 +38,6 @@ in
     kubectl
     talosctl
     talhelper.packages.${pkgs.system}.default
-    fluxcd
-    pulumi
     dotnet-sdk
   ];
 

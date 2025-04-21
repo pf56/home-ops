@@ -33,7 +33,6 @@
     amdGpu.enable = true;
     pipewire.enable = true;
     wireshark.enable = true;
-    hyprland.enable = true;
     yubikey.enable = true;
     gaming.enable = true;
     vfio.enable = true;
@@ -101,7 +100,7 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    configPackages = with pkgs; [ xdg-desktop-portal-gtk xdg-desktop-portal-wlr ];
   };
 
   networking.firewall = {

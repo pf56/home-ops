@@ -7,8 +7,6 @@ in
 {
   imports = [
     nix-colors.homeManagerModules.default
-    ../gtk.nix
-    ../sway.nix
     ../utilities-desktop.nix
   ];
 
@@ -16,7 +14,6 @@ in
 
   modules = {
     gtk.enable = true;
-    hyprland.enable = true;
     wpaperd.enable = true;
     mako.enable = true;
     river.enable = true;
