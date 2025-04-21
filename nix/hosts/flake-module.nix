@@ -115,7 +115,6 @@ in
           modules = [
             ./pizza/configuration.nix
             self.homeConfigurations."pfriedrich@home"
-            inputs.chaotic.nixosModules.default
           ];
         };
   };
