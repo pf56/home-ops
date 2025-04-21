@@ -36,6 +36,7 @@
     yubikey.enable = true;
     gaming.enable = true;
     vfio.enable = true;
+    greetd.enable = true;
   };
 
   # users
