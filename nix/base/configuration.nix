@@ -49,6 +49,7 @@
 
       substituters = [ "https://ghostty.cachix.org" ];
       trusted-public-keys = [
+        "pizza.internal.paulfriedrich.me:/8ZeJy7jCNTZtVq0a/by4XTGVp7QZS9nPzfDeJ+TvIA="
         "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
       ];
     };

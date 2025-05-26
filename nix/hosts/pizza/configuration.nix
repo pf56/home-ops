@@ -125,7 +125,7 @@
     package = pkgs.nixVersions.stable;
 
     settings = {
-      #secret-key-files = /home/pfriedrich/.keys/priv-key.pem;
+      secret-key-files = /var/cache-priv-key.pem;
       auto-optimise-store = true;
       substituters = [ "https://ghostty.cachix.org" ];
       trusted-public-keys = [
