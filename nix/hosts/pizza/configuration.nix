@@ -143,6 +143,18 @@
     '';
   };
 
+  sops = {
+    defaultSopsFile = ../../secrets/${config.networking.hostName}.yaml;
+
+    age = {
+      keyFile = "/var/lib/sops-nix/key.txt";
+      generateKey = true;
+    };
+
+    secrets = {
+    };
+  };
+
   system.stateVersion = "24.11";
 }
 

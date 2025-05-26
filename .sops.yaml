@@ -1,5 +1,6 @@
 keys:
   - &pfriedrich age1jxmmkdzm0gas4z03q6mnzcv5exs7wlxjxrp8qzh0eujzqk8wvvyqk3qcjy
+  - &pizza age1cmg6pcuqq4vxwa9f3dqhj4wnqjqgsdscjlufqvxdj4es0rn5lpxqenc7vf
   - &e595 age1yudlqm69y6jl6vy45fvl8u0kfzp9f7fzrmh5n98muxlj5j6weutq9ckk2e
   - &tailscale01 age16w0xprw344h2f388jcdj4xydd8evjgrchz9uqmq552cf4v65fg3q44p67j
   - &nomadserver01 age15v6yvntsk9zfmlghkpuspncx2g6p065nqj8zejgau0dcq6ntxfus4pr0ta
@@ -20,6 +21,11 @@ creation_rules:
       - age:
         - *pfriedrich
         - *e595
+  - path_regex: secrets/pizza\.yaml$
+    key_groups:
+      - age:
+        - *pfriedrich
+        - *pizza
   - path_regex: secrets/tailscale01\.yaml$
     key_groups:
       - age:
