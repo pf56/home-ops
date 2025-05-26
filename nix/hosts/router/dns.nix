@@ -5,13 +5,12 @@ let
 in
 {
   networking = {
-    nameservers = [ wellKnowns.dns ];
+    nameservers = [ wellKnowns.dns "9.9.9.9" ];
   };
 
   services.resolved = {
     enable = true;
     domains = [ "internal.paulfriedrich.me" "~." ];
-    fallbackDns = [ ];
 
     extraConfig = ''
       DNSStubListenerExtra=${vlans.mgmt.gateway}

@@ -109,7 +109,7 @@ in
 
   lollypops.deployment = {
     local-evaluation = false;
-    ssh.host = lib.mkForce "192.168.178.37";
+    ssh.host = lib.mkForce "10.0.20.1";
   };
 
   system.stateVersion = "24.11";
