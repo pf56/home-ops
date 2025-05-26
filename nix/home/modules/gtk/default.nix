@@ -32,5 +32,12 @@ in
         name = "Nordic-cursors";
       };
     };
+
+    home.pointerCursor = {
+      enable = true;
+      package = pkgs.nordic;
+      name = "Nordic-cursors";
+      gtk.enable = true;
+    };
   };
 }
