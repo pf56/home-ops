@@ -23,6 +23,10 @@
         tool = "bc";
       };
 
+      pull = {
+        rebase = true;
+      };
+
       difftool = {
         bc = {
           trustExitCode = true;
