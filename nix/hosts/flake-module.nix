@@ -87,22 +87,6 @@ in
       modules = [ ./router/configuration.nix ];
     };
 
-    e595 =
-      let
-        inputs' = {
-          nixpkgs = inputs.nixpkgs-unstable;
-          home-manager = inputs.home-manager-unstable;
-        };
-      in
-      buildDefaultSystem inputs'
-        {
-          modules = [
-            ./e595/configuration.nix
-            self.homeConfigurations."pfriedrich@home"
-          ];
-        };
-
-
     pizza =
       let
         inputs' = {
