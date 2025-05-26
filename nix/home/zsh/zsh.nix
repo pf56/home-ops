@@ -16,12 +16,9 @@
 
     shellAliases = {
       l = "ls -l";
-      la = "ls -a";
-      lla = "ls -la";
-      lt = "ls --tree";
-    } // lib.optionalAttrs (config.programs.lsd.enable) { ls = "lsd"; };
+    };
 
-    initExtra = lib.concatLines ([
+    initContent = lib.concatLines ([
       ''
         # highlight the selected entry
         zstyle ':completion:*' menu select
