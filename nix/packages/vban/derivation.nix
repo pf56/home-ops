@@ -1,4 +1,10 @@
-{ lib, stdenv, fetchFromGitHub, pkgs, ... }:
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  pkgs,
+  ...
+}:
 
 stdenv.mkDerivation rec {
   pname = "vban";

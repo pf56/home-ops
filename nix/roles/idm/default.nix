@@ -1,6 +1,13 @@
-{ lib, pkgs, config, modulesPath, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  modulesPath,
+  ...
+}:
 with lib;
-let cfg = config.roles.idm;
+let
+  cfg = config.roles.idm;
 in
 {
   options = {
@@ -12,10 +19,13 @@ in
       };
 
       nginx = mkOption {
-        type = types.nullOr (types.submodule
-          (import (modulesPath + "/services/web-servers/nginx/vhost-options.nix") {
-            inherit config lib;
-          }));
+        type = types.nullOr (
+          types.submodule (
+            import (modulesPath + "/services/web-servers/nginx/vhost-options.nix") {
+              inherit config lib;
+            }
+          )
+        );
         default = null;
       };
 
@@ -38,10 +48,13 @@ in
       };
 
       proxyNginx = mkOption {
-        type = types.nullOr (types.submodule
-          (import (modulesPath + "/services/web-servers/nginx/vhost-options.nix") {
-            inherit config lib;
-          }));
+        type = types.nullOr (
+          types.submodule (
+            import (modulesPath + "/services/web-servers/nginx/vhost-options.nix") {
+              inherit config lib;
+            }
+          )
+        );
         default = null;
       };
     };
@@ -134,7 +147,13 @@ in
       ];
     };
 
-    users.groups."${cfg.certGroup}".members = [ "kanidm" "nginx" ];
-    users.groups."${cfg.proxyCertGroup}".members = [ "oauth2-proxy" "nginx" ];
+    users.groups."${cfg.certGroup}".members = [
+      "kanidm"
+      "nginx"
+    ];
+    users.groups."${cfg.proxyCertGroup}".members = [
+      "oauth2-proxy"
+      "nginx"
+    ];
   };
 }

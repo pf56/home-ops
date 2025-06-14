@@ -1,4 +1,10 @@
-{ config, pkgs, lib, routerConfig, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  routerConfig,
+  ...
+}:
 
 let
   inherit (routerConfig) interfaces vlans wellKnowns;

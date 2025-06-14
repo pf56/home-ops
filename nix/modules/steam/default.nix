@@ -1,4 +1,10 @@
-{ config, pkgs, lib, options, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  options,
+  ...
+}:
 
 with lib;
 let
@@ -6,11 +12,10 @@ let
 in
 {
   options.modules.steam = {
-    enable = mkOption
-      {
-        default = false;
-        type = types.bool;
-      };
+    enable = mkOption {
+      default = false;
+      type = types.bool;
+    };
   };
 
   config = mkIf cfg.enable {

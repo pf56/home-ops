@@ -1,17 +1,25 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../base/configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../base/configuration.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "monitoring";
-  networking.firewall.allowedTCPPorts = [ 80 443 1514 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+    1514
+  ];
   networking.firewall.allowedUDPPorts = [ 443 ];
 
   services.prometheus.exporters = {
@@ -21,7 +29,6 @@
       enabledCollectors = [ "systemd" ];
     };
   };
-
 
   roles.monitoring = {
     dashboard = {
@@ -41,23 +48,29 @@
       scrapeConfigs = [
         {
           job_name = "monitoring.internal.paulfriedrich.me";
-          static_configs = [{
-            targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ];
-          }];
+          static_configs = [
+            {
+              targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ];
+            }
+          ];
         }
         {
           job_name = "vyos01.internal.paulfriedrich.me";
           scrape_interval = "15s";
-          static_configs = [{
-            targets = [ "10.0.60.1:9273" ];
-          }];
+          static_configs = [
+            {
+              targets = [ "10.0.60.1:9273" ];
+            }
+          ];
         }
         {
           job_name = "router.vultr.internal.paulfriedrich.me";
           scrape_interval = "15s";
-          static_configs = [{
-            targets = [ "router.vultr.internal.paulfriedrich.me:9273" ];
-          }];
+          static_configs = [
+            {
+              targets = [ "router.vultr.internal.paulfriedrich.me:9273" ];
+            }
+          ];
         }
       ];
     };
@@ -81,10 +94,12 @@
             };
           };
 
-          relabel_configs = [{
-            source_labels = [ "__journal__systemd_unit" ];
-            target_label = "unit";
-          }];
+          relabel_configs = [
+            {
+              source_labels = [ "__journal__systemd_unit" ];
+              target_label = "unit";
+            }
+          ];
         }
         {
           job_name = "syslog";

@@ -1,6 +1,13 @@
-{ lib, pkgs, config, modulesPath, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  modulesPath,
+  ...
+}:
 with lib;
-let cfg = config.roles.monitoring.dashboard;
+let
+  cfg = config.roles.monitoring.dashboard;
 in
 {
   options = {
@@ -16,10 +23,13 @@ in
       };
 
       nginx = mkOption {
-        type = types.nullOr (types.submodule
-          (import (modulesPath + "/services/web-servers/nginx/vhost-options.nix") {
-            inherit config lib;
-          }));
+        type = types.nullOr (
+          types.submodule (
+            import (modulesPath + "/services/web-servers/nginx/vhost-options.nix") {
+              inherit config lib;
+            }
+          )
+        );
         default = null;
       };
     };

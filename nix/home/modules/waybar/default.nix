@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -6,11 +11,10 @@ let
 in
 {
   options.modules.waybar = {
-    enable = mkOption
-      {
-        default = false;
-        type = types.bool;
-      };
+    enable = mkOption {
+      default = false;
+      type = types.bool;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -119,11 +123,11 @@ in
           font-family: SauceCodePro NFM Medium;
           font-size: 13px;
         }
-        
+
         window#waybar {
           background-color: #${config.colorScheme.palette.base00};
         }
-        
+
         #tags button {
           margin: 0;
           padding: 0;
@@ -132,15 +136,15 @@ in
           border-radius: 0;
           color: #${config.colorScheme.palette.base04};
         }
-        
+
         #tags button.focused {
           background-color: #${config.colorScheme.palette.base01};
         }
-        
+
         #tags button.occupied {
           color: #${config.colorScheme.palette.base06};
         }
-        
+
         #tags button.urgent {
           color: orange;
         }

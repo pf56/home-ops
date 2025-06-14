@@ -1,4 +1,10 @@
-{ pkgs, config, lib, inputs, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  inputs,
+  ...
+}:
 
 let
   ghostty = inputs.ghostty;
@@ -42,7 +48,10 @@ in
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "inode/directory" = [ "thunar.desktop" "nnn.desktop" ];
+      "inode/directory" = [
+        "thunar.desktop"
+        "nnn.desktop"
+      ];
 
       "text/html" = "librewolf.desktop";
       "x-scheme-handler/http" = "librewolf.desktop";

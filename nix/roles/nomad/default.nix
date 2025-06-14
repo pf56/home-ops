@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.roles.nomad;
+let
+  cfg = config.roles.nomad;
 in
 {
   options = {
@@ -94,21 +100,24 @@ in
 
     systemd.services.nomad =
       let
-        supplementaryGroups = cfg.supplementaryGroups
-          ++ (lib.optionals (cfg.docker)) [ "docker" ];
+        supplementaryGroups = cfg.supplementaryGroups ++ (lib.optionals (cfg.docker)) [ "docker" ];
       in
       mkIf (cfg.supplementaryGroups != null) {
-        serviceConfig.SupplementaryGroups = pkgs.lib.mkForce (pkgs.lib.concatStringsSep " " supplementaryGroups);
+        serviceConfig.SupplementaryGroups = pkgs.lib.mkForce (
+          pkgs.lib.concatStringsSep " " supplementaryGroups
+        );
       };
 
     networking.firewall = {
       enable = true;
-      allowedTCPPorts = [
-        4647 # RPC
-        4648 # Serf WAN
-      ] ++ (lib.optionals (cfg.webUi) [
-        4646 # HTTP / web ui
-      ]);
+      allowedTCPPorts =
+        [
+          4647 # RPC
+          4648 # Serf WAN
+        ]
+        ++ (lib.optionals (cfg.webUi) [
+          4646 # HTTP / web ui
+        ]);
 
       allowedTCPPortRanges = [
         {

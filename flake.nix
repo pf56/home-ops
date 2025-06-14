@@ -2,12 +2,12 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-25.05;
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    nixos-wsl.url = github:nix-community/NixOS-WSL/main;
-    sops-nix.url = github:Mic92/sops-nix;
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = github:nix-community/home-manager/release-25.05;
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager-unstable.url = "github:nix-community/home-manager";
     home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -21,19 +21,36 @@
     ghostty.url = "github:ghostty-org/ghostty";
   };
 
-  outputs = inputs@{ self, flake-parts, nixpkgs, sops-nix, lollypops, nixos-generators, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; }
-      {
-        imports = [
-          ./nix/hosts/flake-module.nix
-        ];
+  outputs =
+    inputs@{
+      self,
+      flake-parts,
+      nixpkgs,
+      sops-nix,
+      lollypops,
+      nixos-generators,
+      ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        ./nix/hosts/flake-module.nix
+      ];
 
-        systems = [ "x86_64-linux" ];
+      systems = [ "x86_64-linux" ];
 
-        flake.homeConfigurations = import ./nix/home/profiles { inherit inputs; };
-        flake.overlays.default = import ./nix/overlays;
+      flake.homeConfigurations = import ./nix/home/profiles { inherit inputs; };
+      flake.overlays.default = import ./nix/overlays;
 
-        perSystem = { config, self', inputs', pkgs, system, ... }: {
+      perSystem =
+        {
+          config,
+          self',
+          inputs',
+          pkgs,
+          system,
+          ...
+        }:
+        {
           apps = {
             default = self'.apps.lollypops;
             lollypops = inputs'.lollypops.apps.default {
@@ -53,7 +70,7 @@
             };
           };
 
-          formatter = pkgs.nixpkgs-fmt;
+          formatter = pkgs.nixfmt-tree;
         };
-      };
+    };
 }

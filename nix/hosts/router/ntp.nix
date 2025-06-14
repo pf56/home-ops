@@ -1,4 +1,9 @@
-{ pkgs, lib, routerConfig, ... }:
+{
+  pkgs,
+  lib,
+  routerConfig,
+  ...
+}:
 
 let
   inherit (routerConfig) vlans;

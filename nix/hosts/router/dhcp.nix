@@ -1,25 +1,29 @@
-{ pkgs, lib, routerConfig, ... }:
+{
+  pkgs,
+  lib,
+  routerConfig,
+  ...
+}:
 
 let
   inherit (routerConfig) vlans;
 
   dhcpV4ControlSocket = "/run/kea/dhcpv4";
 
-  getLeases = pkgs.writeShellScriptBin "get-dhcp-leases"
-    ''
-      set -euo pipefail
+  getLeases = pkgs.writeShellScriptBin "get-dhcp-leases" ''
+    set -euo pipefail
 
-      GET_LEASES=$(cat <<-END
-        {
-          "command": "lease4-get-all"
-        }
-      END
-      )
+    GET_LEASES=$(cat <<-END
+      {
+        "command": "lease4-get-all"
+      }
+    END
+    )
 
-      LEASES=$(echo $GET_LEASES | ${pkgs.socat}/bin/socat UNIX-CONNECT:${dhcpV4ControlSocket} -)
+    LEASES=$(echo $GET_LEASES | ${pkgs.socat}/bin/socat UNIX-CONNECT:${dhcpV4ControlSocket} -)
 
-      echo $LEASES | ${pkgs.jq}/bin/jq -r '["HOST", "IP", "MAC"], ["----", "----", "----"], (.arguments.leases.[] | [.hostname, ."ip-address", ."hw-address"]) | @tsv' - | column -ts $'\t'
-    '';
+    echo $LEASES | ${pkgs.jq}/bin/jq -r '["HOST", "IP", "MAC"], ["----", "----", "----"], (.arguments.leases.[] | [.hostname, ."ip-address", ."hw-address"]) | @tsv' - | column -ts $'\t'
+  '';
 in
 {
   networking = {

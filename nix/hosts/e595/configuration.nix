@@ -2,13 +2,20 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lollypops, talhelper, profiles, modules, ... }:
+{
+  config,
+  pkgs,
+  lollypops,
+  talhelper,
+  profiles,
+  modules,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   # general stuff
   networking.hostName = "e595";
@@ -42,7 +49,15 @@
   users.users.pfriedrich = {
     isNormalUser = true;
     home = "/home/pfriedrich";
-    extraGroups = [ "wheel" "networkmanager" "scanner" "lp" "libvirtd" "wireshark" "input" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "scanner"
+      "lp"
+      "libvirtd"
+      "wireshark"
+      "input"
+    ];
     shell = pkgs.zsh;
   };
 
@@ -79,14 +94,20 @@
   services.zfs.autoSnapshot.enable = true;
 
   services.dbus.enable = true;
-  services.dbus.packages = with pkgs; [ gcr dconf ];
+  services.dbus.packages = with pkgs; [
+    gcr
+    dconf
+  ];
 
   services.pcscd.enable = true;
 
   # enable scanner/printer
   hardware.sane.enable = true;
   services.printing.enable = true;
-  services.printing.drivers = [ pkgs.brgenml1lpr pkgs.brgenml1cupswrapper ];
+  services.printing.drivers = [
+    pkgs.brgenml1lpr
+    pkgs.brgenml1cupswrapper
+  ];
 
   services = {
     kanidm = {
@@ -214,4 +235,3 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
 }
-

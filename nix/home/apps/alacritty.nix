@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   programs.alacritty = {
@@ -7,11 +12,24 @@
     settings = {
 
       # Source Code Pro (via Nerd Fonts)
-      font = let fontname = "SauceCodePro Nerd Font Mono"; in {
-        normal = { family = fontname; style = "Medium"; };
-        bold = { family = fontname; style = "Bold"; };
-        italic = { family = fontname; style = "Light"; };
-      };
+      font =
+        let
+          fontname = "SauceCodePro Nerd Font Mono";
+        in
+        {
+          normal = {
+            family = fontname;
+            style = "Medium";
+          };
+          bold = {
+            family = fontname;
+            style = "Bold";
+          };
+          italic = {
+            family = fontname;
+            style = "Light";
+          };
+        };
 
       # Nord color theme
       colors = {

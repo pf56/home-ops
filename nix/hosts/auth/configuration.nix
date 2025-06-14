@@ -1,17 +1,25 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../base/configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../base/configuration.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "auth";
-  networking.firewall.allowedTCPPorts = [ 80 443 636 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+    636
+  ];
   networking.firewall.allowedUDPPorts = [ 443 ];
 
   roles = {

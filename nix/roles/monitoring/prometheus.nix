@@ -1,6 +1,13 @@
-{ lib, pkgs, config, modulesPath, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  modulesPath,
+  ...
+}:
 with lib;
-let cfg = config.roles.monitoring.prometheus;
+let
+  cfg = config.roles.monitoring.prometheus;
 in
 {
   options = {

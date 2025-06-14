@@ -1,6 +1,13 @@
-{ lib, pkgs, config, modulesPath, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  modulesPath,
+  ...
+}:
 with lib;
-let cfg = config.roles.monitoring.loki;
+let
+  cfg = config.roles.monitoring.loki;
 in
 {
   options = {
@@ -50,16 +57,18 @@ in
         };
 
         schema_config = {
-          configs = [{
-            from = "2023-10-01";
-            store = "boltdb-shipper";
-            object_store = "filesystem";
-            schema = "v11";
-            index = {
-              prefix = "index_";
-              period = "24h";
-            };
-          }];
+          configs = [
+            {
+              from = "2023-10-01";
+              store = "boltdb-shipper";
+              object_store = "filesystem";
+              schema = "v11";
+              index = {
+                prefix = "index_";
+                period = "24h";
+              };
+            }
+          ];
         };
 
         storage_config = {

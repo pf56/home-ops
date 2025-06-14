@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.roles.nameserver;
+let
+  cfg = config.roles.nameserver;
 in
 {
   options = {
@@ -56,7 +62,10 @@ in
       };
     };
 
-    networking.firewall.allowedTCPPorts = [ 53 179 ];
+    networking.firewall.allowedTCPPorts = [
+      53
+      179
+    ];
     networking.firewall.allowedUDPPorts = [ 53 ];
 
     services.frr = {
@@ -94,7 +103,10 @@ in
         };
 
         groups.upstream = {
-          resolvers = [ "cloudflare-dot" "google-udp" ];
+          resolvers = [
+            "cloudflare-dot"
+            "google-udp"
+          ];
           type = "fail-rotate";
         };
 
@@ -138,7 +150,10 @@ in
 
       settings = {
         server = {
-          listen = [ "127.0.0.1@5300" "::1@5300" ];
+          listen = [
+            "127.0.0.1@5300"
+            "::1@5300"
+          ];
         };
 
         log = [

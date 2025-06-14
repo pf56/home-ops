@@ -1,6 +1,13 @@
-{ lib, pkgs, config, modulesPath, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  modulesPath,
+  ...
+}:
 with lib;
-let cfg = config.roles.monitoring.promtail;
+let
+  cfg = config.roles.monitoring.promtail;
 in
 {
   options = {
@@ -26,9 +33,11 @@ in
           filename = "/tmp/positions.yaml";
         };
 
-        clients = mkIf (config.roles.monitoring.loki.enable) [{
-          url = "http://127.0.0.1:${toString config.roles.monitoring.loki.port}/loki/api/v1/push";
-        }];
+        clients = mkIf (config.roles.monitoring.loki.enable) [
+          {
+            url = "http://127.0.0.1:${toString config.roles.monitoring.loki.port}/loki/api/v1/push";
+          }
+        ];
 
         scrape_configs = cfg.scrapeConfigs;
       };

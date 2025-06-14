@@ -2,14 +2,18 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -43,7 +47,15 @@
   users.users.pfriedrich = {
     isNormalUser = true;
     home = "/home/pfriedrich";
-    extraGroups = [ "wheel" "networkmanager" "scanner" "lp" "libvirtd" "wireshark" "input" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "scanner"
+      "lp"
+      "libvirtd"
+      "wireshark"
+      "input"
+    ];
     shell = pkgs.zsh;
   };
 
@@ -71,7 +83,10 @@
   };
 
   services.dbus.enable = true;
-  services.dbus.packages = with pkgs; [ gcr dconf ];
+  services.dbus.packages = with pkgs; [
+    gcr
+    dconf
+  ];
 
   services.pcscd.enable = true;
 
@@ -89,19 +104,22 @@
       wants = [ "graphical-session.target" ];
       after = [ "graphical-session.target" ];
       serviceConfig = {
-          Type = "simple";
-          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-          Restart = "on-failure";
-          RestartSec = 1;
-          TimeoutStopSec = 10;
-        };
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
     };
   };
 
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    configPackages = with pkgs; [ xdg-desktop-portal-gtk xdg-desktop-portal-wlr ];
+    configPackages = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+    ];
   };
 
   networking.firewall = {
@@ -157,4 +175,3 @@
 
   system.stateVersion = "24.11";
 }
-

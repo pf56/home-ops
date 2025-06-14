@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   boot.growPartition = true;
@@ -44,7 +49,10 @@
   nix = {
     # trust packages built on a different machine
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       auto-optimise-store = true;
 
       substituters = [ "https://ghostty.cachix.org" ];

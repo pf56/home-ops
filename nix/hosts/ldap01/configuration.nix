@@ -1,11 +1,15 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../base/configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../base/configuration.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -33,7 +37,10 @@
         ];
 
         "olcDatabase=mdb".attrs = {
-          objectClass = [ "olcDatabaseConfig" "olcMdbConfig" ];
+          objectClass = [
+            "olcDatabaseConfig"
+            "olcMdbConfig"
+          ];
           olcDatabase = "mdb";
           olcDbDirectory = "/var/lib/openldap/data";
           olcSuffix = "dc=paulfriedrich,dc=me";
@@ -41,16 +48,18 @@
           #olcRootPW.path = config.sops.secrets.openldap-rootpw.path;
           olcRootPW = "secret";
           olcAccess = [
-            ''to attrs=userPassword
-                by self write 
-                by anonymous auth
-                by dn.base="cn=Manager,dc=paulfriedrich,dc=me" write
-                by * none
             ''
-            ''to *
-                by self write
-                by dn.base="cn=Manager,dc=paulfriedrich,dc=me" write
-                by * read
+              to attrs=userPassword
+                              by self write 
+                              by anonymous auth
+                              by dn.base="cn=Manager,dc=paulfriedrich,dc=me" write
+                              by * none
+            ''
+            ''
+              to *
+                              by self write
+                              by dn.base="cn=Manager,dc=paulfriedrich,dc=me" write
+                              by * read
             ''
           ];
         };

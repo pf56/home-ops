@@ -1,16 +1,27 @@
-{ pkgs, lib, routerConfig, ... }:
+{
+  pkgs,
+  lib,
+  routerConfig,
+  ...
+}:
 
 let
   inherit (routerConfig) vlans wellKnowns;
 in
 {
   networking = {
-    nameservers = [ wellKnowns.dns "9.9.9.9" ];
+    nameservers = [
+      wellKnowns.dns
+      "9.9.9.9"
+    ];
   };
 
   services.resolved = {
     enable = true;
-    domains = [ "internal.paulfriedrich.me" "~." ];
+    domains = [
+      "internal.paulfriedrich.me"
+      "~."
+    ];
 
     extraConfig = ''
       DNSStubListenerExtra=${vlans.mgmt.gateway}

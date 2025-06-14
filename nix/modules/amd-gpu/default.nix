@@ -1,4 +1,10 @@
-{ config, pkgs, lib, options, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  options,
+  ...
+}:
 
 with lib;
 let
@@ -6,50 +12,48 @@ let
 in
 {
   options.modules.amdGpu = {
-    enable = mkOption
-      {
-        default = false;
-        type = types.bool;
-      };
+    enable = mkOption {
+      default = false;
+      type = types.bool;
+    };
   };
 
-  config =
-    mkIf cfg.enable
+  config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      clinfo
+      glxinfo
+      radeontop
+      vulkan-tools
+    ];
+
+    hardware =
       {
-        environment.systemPackages = with pkgs; [
-          clinfo
-          glxinfo
-          radeontop
-          vulkan-tools
-        ];
+        graphics = {
+          enable = true;
+          enable32Bit = true;
 
-        hardware = {
-          graphics = {
-            enable = true;
-            enable32Bit = true;
+          extraPackages = with pkgs; [
+            vaapiVdpau
+            libvdpau-va-gl
+          ];
 
-            extraPackages = with pkgs; [
-              vaapiVdpau
-              libvdpau-va-gl
-            ];
-
-            extraPackages32 = with pkgs; [
-              vaapiVdpau
-              libvdpau-va-gl
-            ];
-          };
-
-          amdgpu.initrd.enable = true;
-          amdgpu.amdvlk.enable = true;
-        }
-        // optionalAttrs(builtins.hasAttr "overdrive" options.hardware.amdgpu) {
-          amdgpu.overdrive.enable = true;
+          extraPackages32 = with pkgs; [
+            vaapiVdpau
+            libvdpau-va-gl
+          ];
         };
 
-        programs = {
-          corectrl = {
-            enable = true;
-          };
-        };
+        amdgpu.initrd.enable = true;
+        amdgpu.amdvlk.enable = true;
+      }
+      // optionalAttrs (builtins.hasAttr "overdrive" options.hardware.amdgpu) {
+        amdgpu.overdrive.enable = true;
       };
+
+    programs = {
+      corectrl = {
+        enable = true;
+      };
+    };
+  };
 }

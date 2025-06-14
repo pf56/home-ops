@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.roles.keycloak;
+let
+  cfg = config.roles.keycloak;
 in
 {
   options = {

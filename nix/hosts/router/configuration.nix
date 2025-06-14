@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }@inputs:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}@inputs:
 
 let
   interfaces = {
@@ -66,18 +71,17 @@ let
   };
 in
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../base/configuration.nix
-      (import ./interfaces.nix (inputs // { inherit routerConfig; }))
-      (import ./firewall.nix (inputs // { inherit routerConfig; }))
-      (import ./dhcp.nix (inputs // { inherit routerConfig; }))
-      (import ./dns.nix (inputs // { inherit routerConfig; }))
-      (import ./ntp.nix (inputs // { inherit routerConfig; }))
-      (import ./bgp.nix (inputs // { inherit routerConfig; }))
-      (import ./tailscale.nix (inputs // { inherit routerConfig; }))
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../base/configuration.nix
+    (import ./interfaces.nix (inputs // { inherit routerConfig; }))
+    (import ./firewall.nix (inputs // { inherit routerConfig; }))
+    (import ./dhcp.nix (inputs // { inherit routerConfig; }))
+    (import ./dns.nix (inputs // { inherit routerConfig; }))
+    (import ./ntp.nix (inputs // { inherit routerConfig; }))
+    (import ./bgp.nix (inputs // { inherit routerConfig; }))
+    (import ./tailscale.nix (inputs // { inherit routerConfig; }))
+  ];
 
   boot = {
     loader = {

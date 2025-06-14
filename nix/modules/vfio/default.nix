@@ -1,4 +1,10 @@
-{ config, pkgs, lib, options, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  options,
+  ...
+}:
 
 with lib;
 let
@@ -49,15 +55,18 @@ let
 in
 {
   options.modules.vfio = {
-    enable = mkOption
-      {
-        default = false;
-        type = types.bool;
-      };
+    enable = mkOption {
+      default = false;
+      type = types.bool;
+    };
   };
 
   config = mkIf cfg.enable {
-    boot.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" ];
+    boot.kernelModules = [
+      "vfio_pci"
+      "vfio"
+      "vfio_iommu_type1"
+    ];
     boot.kernelParams = [ "amd_iommu=on" ];
 
     programs.virt-manager.enable = true;

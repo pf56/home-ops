@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -6,11 +11,10 @@ let
 in
 {
   options.modules.openscad = {
-    enable = mkOption
-      {
-        default = false;
-        type = types.bool;
-      };
+    enable = mkOption {
+      default = false;
+      type = types.bool;
+    };
   };
 
   config = mkIf cfg.enable {

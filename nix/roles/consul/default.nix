@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.roles.consul;
+let
+  cfg = config.roles.consul;
 in
 {
   options = {
@@ -84,16 +90,18 @@ in
 
     networking.firewall = {
       enable = true;
-      allowedTCPPorts = [
-        8300 # RPC
-        8301 # LAN Serf
-        8302 # WAN Serf
-        #8502  # gRPC
-        8600 # DNS
-      ] ++ (lib.optionals (cfg.webUi) [
-        8500 # HTTP / web ui
-        #8501  # HTTPS / web ui
-      ]);
+      allowedTCPPorts =
+        [
+          8300 # RPC
+          8301 # LAN Serf
+          8302 # WAN Serf
+          #8502  # gRPC
+          8600 # DNS
+        ]
+        ++ (lib.optionals (cfg.webUi) [
+          8500 # HTTP / web ui
+          #8501  # HTTPS / web ui
+        ]);
 
       allowedTCPPortRanges = [
         {
