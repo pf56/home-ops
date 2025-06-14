@@ -41,12 +41,14 @@ in
 
           amdgpu.initrd.enable = true;
           amdgpu.amdvlk.enable = true;
+        }
+        // optionalAttrs(builtins.hasAttr "overdrive" options.hardware.amdgpu) {
+          amdgpu.overdrive.enable = true;
         };
 
         programs = {
           corectrl = {
             enable = true;
-            gpuOverclock.enable = true;
           };
         };
       };
