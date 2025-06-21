@@ -58,5 +58,6 @@ omada					IN	CNAME	traefik
 
 cilium-gateway			IN	A		172.16.61.2
 netbox					IN	CNAME	cilium-gateway
+vaultwarden				IN	CNAME	cilium-gateway
 
 k3s-server-01			IN	A		10.0.60.16
