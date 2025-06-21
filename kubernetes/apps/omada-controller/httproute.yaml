@@ -1,25 +1,53 @@
+#---
+#apiVersion: gateway.networking.k8s.io/v1
+#kind: HTTPRoute
+#metadata:
+#  name: omada-controller-https
+#spec:
+#  parentRefs:
+#    - group: gateway.networking.k8s.io
+#      kind: Gateway
+#      name: cilium-gateway
+#      namespace: cilium
+#      sectionName: https
+#  hostnames:
+#    - "omada.internal.paulfriedrich.me"
+#  rules:
+#    - matches:
+#        - path:
+#            type: PathPrefix
+#            value: "/"
+#      backendRefs:
+#        - group: ''
+#          kind: Service
+#          name: omada-controller
+#          port: 80
+#          weight: 1
+#
+# Cilium doesn't support BackendTLSPolicy yet.
+# Omada requires upstream TLS connection.
+#
 ---
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
 metadata:
   name: omada-controller-https
 spec:
-  parentRefs:
-    - group: gateway.networking.k8s.io
-      kind: Gateway
-      name: cilium-gateway
-      namespace: cilium
-      sectionName: https
-  hostnames:
-    - "omada.internal.paulfriedrich.me"
-  rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: "/"
-      backendRefs:
-        - group: ''
-          kind: Service
-          name: omada-controller
-          port: 80
-          weight: 1
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`omada.internal.paulfriedrich.me`)
+      priority: 10
+      services:
+        - name: omada-controller
+          port: 443
+          serversTransport: omada-servers-transport
+  tls: {}
+---
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: omada-servers-transport
+spec:
+  insecureSkipVerify: true

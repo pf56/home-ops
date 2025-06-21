@@ -54,9 +54,9 @@ radarr					IN	CNAME	traefik
 jellyfin				IN	CNAME	traefik
 paperless				IN	CNAME	traefik
 argocd					IN	CNAME	traefik
+omada					IN	CNAME	traefik
 
 cilium-gateway			IN	A		172.16.61.2
 netbox					IN	CNAME	cilium-gateway
-omada					IN	CNAME	cilium-gateway
 
 k3s-server-01			IN	A		10.0.60.16
