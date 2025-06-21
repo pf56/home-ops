@@ -1,6 +1,6 @@
 dependencies:
 - name: volsync
   repository: https://backube.github.io/helm-charts/
-  version: 0.11.0
-digest: sha256:904b1d2509c05399788233459a5699041eb4c64721156d531fef01ea4155fb09
-generated: "2025-03-02T16:01:55.21878672+01:00"
+  version: 0.12.1
+digest: sha256:dd1f32ef6a95bca6d20da7b077df83a6b7b877e5855199c7e99d196469e6d95b
+generated: "2025-06-21T12:52:02.540206497+02:00"
