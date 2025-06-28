@@ -8,6 +8,11 @@
 with lib;
 let
   cfg = config.modules.gaming;
+
+  vfio-lutris = pkgs.writeShellScriptBin "vfio-lutris" ''
+    export SUDO_ASKPASS=${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass
+    sudo -A -g passthru -E lutris
+  '';
 in
 {
   options.modules.gaming = {
@@ -18,6 +23,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.packages = [
+      vfio-lutris
+    ];
+
     programs = {
       mangohud = {
         enable = true;
@@ -52,6 +61,18 @@ in
           toggle_hud = "Shift_R+F12";
           toggle_logging = "Shift_L+F2";
         };
+      };
+
+      lutris = {
+        enable = true;
+        extraPackages = with pkgs; [
+          gamemode
+          mangohud
+          winetricks
+          gamescope
+          libnghttp2
+          wineWow64Packages.full
+        ];
       };
     };
   };
