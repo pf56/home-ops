@@ -109,6 +109,11 @@ in
                 hw-address = "50:eb:f6:b6:7f:f8";
                 ip-address = "10.0.10.2";
               }
+              {
+                # MikroTik CSS610-8G-2S+
+                hw-address = "2c:c8:1b:40:32:3d";
+                ip-address = "10.0.10.3";
+              }
             ];
           }
           {
