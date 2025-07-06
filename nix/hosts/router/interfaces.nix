@@ -18,11 +18,33 @@ in
     wait-online.anyInterface = true;
 
     netdevs = {
+      "10-dslite" = {
+        netdevConfig = {
+          Kind = "ip6tnl";
+          Name = interfaces.dslite.name;
+        };
+
+        tunnelConfig = {
+          Mode = "ipip6";
+          Local = "dhcp6";
+          Remote = "2a01:41e3:ffff:cafe:face::4"; # aftr.fra.purtel.com
+        };
+      };
+
       "20-br-lan" = {
         netdevConfig = {
           Kind = "bridge";
           Name = "br-lan";
         };
+      };
+
+      "20-vlan7" = {
+        netdevConfig = {
+          Kind = "vlan";
+          Name = vlans.isp.name;
+        };
+
+        vlanConfig.Id = vlans.isp.id;
       };
 
       "20-vlan10" = {
@@ -80,6 +102,64 @@ in
           UseDNS = false;
           UseNTP = false;
         };
+
+        vlan = [
+          vlans.isp.name
+        ];
+      };
+
+      "30-vlan7" = {
+        matchConfig.Name = vlans.isp.name;
+
+        networkConfig = {
+          Description = "ISP";
+        };
+      };
+
+      "30-ppp0" = {
+        matchConfig.Name = interfaces.ppp.name;
+
+        networkConfig = {
+          DHCP = true;
+          KeepConfiguration = "static";
+
+          IPv6Forwarding = true;
+          IPv6AcceptRA = true;
+          DHCPPrefixDelegation = true;
+
+          Tunnel = interfaces.dslite.name;
+        };
+
+        routes = [
+          { Destination = "::/0"; }
+        ];
+
+        dhcpV6Config = {
+          WithoutRA = "solicit";
+          RequestOptions = "64"; # AFTR-Name
+          PrefixDelegationHint = "::/56";
+
+          UseDNS = false;
+          UseNTP = false;
+          UseHostname = false;
+          UseDomains = false;
+        };
+
+        ipv6AcceptRAConfig = {
+          DHCPv6Client = "always";
+        };
+      };
+
+      "30-dslite" = {
+        matchConfig.Name = interfaces.dslite.name;
+
+        networkConfig = {
+          IPv4Forwarding = true;
+        };
+
+        routes = [
+          { Destination = "0.0.0.0/0"; }
+        ];
       };
 
       "30-lan1" = {
@@ -148,9 +228,11 @@ in
         networkConfig = {
           Description = "OFFICE";
           DHCP = false;
-          IPv6AcceptRA = false;
           IPv4Forwarding = true;
           IPv6Forwarding = true;
+          IPv6AcceptRA = false;
+          IPv6SendRA = true;
+          DHCPPrefixDelegation = true;
         };
 
         address = [
@@ -180,9 +262,11 @@ in
         networkConfig = {
           Description = "SERVER";
           DHCP = false;
-          IPv6AcceptRA = false;
           IPv4Forwarding = true;
           IPv6Forwarding = true;
+          IPv6AcceptRA = false;
+          IPv6SendRA = true;
+          DHCPPrefixDelegation = true;
         };
 
         address = [

@@ -11,6 +11,14 @@ let
       name = "enp1s0";
     };
 
+    ppp = {
+      name = "ppp0";
+    };
+
+    dslite = {
+      name = "dslite";
+    };
+
     lan1 = {
       name = "enp2s0";
     };
@@ -29,6 +37,11 @@ let
   };
 
   vlans = {
+    isp = {
+      id = 7;
+      name = "vlan7";
+    };
+
     mgmt = {
       id = 10;
       name = "vlan10";
@@ -81,6 +94,7 @@ in
     (import ./ntp.nix (inputs // { inherit routerConfig; }))
     (import ./bgp.nix (inputs // { inherit routerConfig; }))
     (import ./tailscale.nix (inputs // { inherit routerConfig; }))
+    (import ./ppp.nix (inputs // { inherit routerConfig; }))
   ];
 
   boot = {
@@ -101,7 +115,9 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    dhcpm
     dig
+    ndisc6
     tcpdump
   ];
 
@@ -109,7 +125,10 @@ in
     hostName = "router";
   };
 
-  sops.secrets = { };
+  sops.secrets = {
+    pppoe-username = { };
+    pppoe-password = { };
+  };
 
   lollypops.deployment = {
     local-evaluation = false;

@@ -53,6 +53,9 @@ in
           chain INPUT {
             type filter hook input priority filter; policy drop;
 
+            # clamp mss
+            tcp flags syn tcp option maxseg size set 1404
+
             # allow established/related, drop invalid
             ct state vmap { established : accept, related : accept, invalid : drop }
 
@@ -65,15 +68,22 @@ in
 
             iif lo accept
             iifname ${interfaces.wan.name} jump WAN-LOCAL
+            iifname ${interfaces.ppp.name} jump WAN-LOCAL
+            iifname ${interfaces.dslite.name} jump WAN-LOCAL
             iifname ${interfaces.tailscale.name} jump TAILSCALE-LOCAL
             iifname ${vlans.mgmt.name} jump MGMT-LOCAL
             iifname ${vlans.office.name} jump OFFICE-LOCAL
             iifname ${vlans.iot.name} jump IOT-LOCAL
             iifname ${vlans.server.name} jump SERVER-LOCAL
+
+            log prefix "nftables-drop input: " drop
           }
 
           chain FORWARD {
             type filter hook forward priority filter; policy drop;
+
+            # clamp mss
+            tcp flags syn tcp option maxseg size set 1404
 
             ip protocol { tcp, udp } ct state { established } flow offload @f
 
@@ -85,10 +95,14 @@ in
             meta l4proto ipv6-icmp accept
 
             oifname ${interfaces.wan.name} jump ZONE_WAN
+            oifname ${interfaces.ppp.name} jump ZONE_WAN
+            oifname ${interfaces.dslite.name} jump ZONE_WAN
             oifname ${vlans.mgmt.name} jump ZONE_MGMT
             oifname ${vlans.office.name} jump ZONE_OFFICE
             oifname ${vlans.iot.name} jump ZONE_IOT
             oifname ${vlans.server.name} jump ZONE_SERVER
+
+            log prefix "nftables-drop forward: " drop
           }
 
           chain OUTPUT {
@@ -106,7 +120,11 @@ in
 
             oif lo accept
             oifname ${interfaces.wan.name} accept
+            oifname ${interfaces.ppp.name} accept
+            oifname ${interfaces.dslite.name} accept
             oifname ${vlans.server.name} jump LOCAL-SERVER
+
+            log prefix "nftables-drop output: " drop
           }
 
           chain ZONE_WAN {
@@ -146,7 +164,7 @@ in
           }
 
           chain WAN-LOCAL {
-            tcp dport 22 accept comment "Allow SSH"
+            udp sport 547 udp dport 546 accept comment "Allow DHCPv6"
             counter drop
           }
 
