@@ -143,7 +143,7 @@ in
             reservations = [
               {
                 # printer
-                hw-address = "94:dd:f8:22:ba:be";
+                hw-address = "e8:65:38:e3:82:76";
                 ip-address = "10.0.20.2";
               }
               {
