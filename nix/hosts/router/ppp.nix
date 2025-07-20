@@ -35,6 +35,27 @@ in
     "ppp/chap-secrets".source = config.sops.templates."pppoe-chap-secrets".path;
   };
 
+  # restart pppd every night because the ISP forcefully disconnects after 24h
+  systemd.timers."restart-pppd" = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*-*-* 4:00:00 Europe/Berlin";
+      Unit = "restart-pppd.service";
+    };
+  };
+
+  systemd.services."restart-pppd" = {
+    script = ''
+      set -eu
+      ${pkgs.systemd}/bin/systemctl restart pppd-isp
+    '';
+
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
+
   sops.templates = {
     "pppoe-peers-isp".content = ''
       plugin pppoe.so
