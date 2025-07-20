@@ -31,6 +31,8 @@ in
       vintagestory
       heroic
       vkdevicechooser
+
+      wowup-cf
     ];
 
     nixpkgs.config.permittedInsecurePackages = [
