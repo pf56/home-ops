@@ -55,6 +55,7 @@
       "libvirtd"
       "wireshark"
       "input"
+      config.programs.ydotool.group
     ];
     shell = pkgs.zsh;
   };
@@ -72,6 +73,7 @@
 
   programs.dconf.enable = true;
   programs.zsh.enable = true;
+  programs.ydotool.enable = true;
 
   # Select internationalisation properties.
   i18n = {
