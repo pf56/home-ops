@@ -1,18 +1,24 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 {
+  inputs,
+  flake,
   config,
-  lib,
   pkgs,
   ...
 }:
 
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
+
+    inputs.sops-nix.nixosModules.sops
+
+    flake.nixosModules.amd-gpu
+    flake.nixosModules.pipewire
+    flake.nixosModules.wireshark
+    flake.nixosModules.yubikey
+    flake.nixosModules.gaming
+    flake.nixosModules.vfio
+    flake.nixosModules.greetd
   ];
 
   # Use the systemd-boot EFI boot loader.

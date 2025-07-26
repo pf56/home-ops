@@ -2,13 +2,17 @@
   config,
   pkgs,
   lib,
+  inputs,
+  flake,
   ...
 }:
 
 {
   imports = [
     ./hardware-configuration.nix
-    ../../base/configuration.nix
+    inputs.sops-nix.nixosModules.sops
+    flake.nixosModules.host-base
+    flake.nixosModules.monitoring
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -147,7 +151,6 @@
     recommendedProxySettings = true;
     recommendedOptimisation = true;
     recommendedGzipSettings = true;
-    recommendedZstdSettings = true;
     recommendedBrotliSettings = true;
   };
 

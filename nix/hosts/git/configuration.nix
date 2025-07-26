@@ -2,13 +2,16 @@
   config,
   pkgs,
   lib,
+  inputs,
+  flake,
   ...
 }:
 
 {
   imports = [
     ./hardware-configuration.nix
-    ../../base/configuration.nix
+    flake.nixosModules.host-base
+    inputs.sops-nix.nixosModules.sops
   ];
 
   boot.loader.systemd-boot.enable = true;

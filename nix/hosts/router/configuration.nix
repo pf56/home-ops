@@ -2,8 +2,10 @@
   config,
   pkgs,
   lib,
+  flake,
+  inputs,
   ...
-}@inputs:
+}@args:
 
 let
   interfaces = {
@@ -86,15 +88,16 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../base/configuration.nix
-    (import ./interfaces.nix (inputs // { inherit routerConfig; }))
-    (import ./firewall.nix (inputs // { inherit routerConfig; }))
-    (import ./dhcp.nix (inputs // { inherit routerConfig; }))
-    (import ./dns.nix (inputs // { inherit routerConfig; }))
-    (import ./ntp.nix (inputs // { inherit routerConfig; }))
-    (import ./bgp.nix (inputs // { inherit routerConfig; }))
-    (import ./tailscale.nix (inputs // { inherit routerConfig; }))
-    (import ./ppp.nix (inputs // { inherit routerConfig; }))
+    inputs.sops-nix.nixosModules.sops
+    flake.nixosModules.host-base
+    (import ./interfaces.nix (args // { inherit routerConfig; }))
+    (import ./firewall.nix (args // { inherit routerConfig; }))
+    (import ./dhcp.nix (args // { inherit routerConfig; }))
+    (import ./dns.nix (args // { inherit routerConfig; }))
+    (import ./ntp.nix (args // { inherit routerConfig; }))
+    (import ./bgp.nix (args // { inherit routerConfig; }))
+    (import ./tailscale.nix (args // { inherit routerConfig; }))
+    (import ./ppp.nix (args // { inherit routerConfig; }))
   ];
 
   boot = {
