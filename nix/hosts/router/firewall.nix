@@ -265,6 +265,7 @@ in
             ip saddr 10.0.40.4 accept comment "Allow Bosch Smart Home Controller"
             ip saddr 10.0.40.5 accept comment "Allow Zenfone 8"
             ip saddr 10.0.40.6 accept comment "Allow LR4"
+            ip saddr 10.0.40.7 accept comment "Allow Roomba"
             drop comment "Drop everything else"
           }
 

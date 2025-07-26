@@ -208,6 +208,11 @@ in
                 hw-address = "c8:f0:9e:76:9f:38";
                 ip-address = "10.0.40.6";
               }
+              {
+                # Roomba
+                hw-address = "4c:b9:ea:07:3f:de";
+                ip-address = "10.0.40.7";
+              }
             ];
           }
           {
