@@ -90,6 +90,8 @@
     ];
   };
 
+  services.fwupd.enable = true;
+
   services.dbus.enable = true;
   services.dbus.packages = with pkgs; [
     gcr
