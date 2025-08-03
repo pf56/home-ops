@@ -145,6 +145,41 @@
     #checkReversePath = "loose"; # for tailscale
   };
 
+  services.restic.backups.pizza = {
+    repositoryFile = config.sops.secrets.restic_repo.path;
+    passwordFile = config.sops.secrets.restic_password.path;
+    initialize = true;
+
+    paths = [
+      "/home"
+      "/var/lib"
+    ];
+
+    exclude = [
+      "/home/*/.cache"
+      "/home/pfriedrich/Games"
+      "/steam"
+      "/var/cache"
+    ];
+
+    timerConfig = {
+      OnCalendar = "02:00";
+      Persistent = true;
+      RandomizedDelaySec = "2h";
+    };
+
+    pruneOpts = [
+      "--keep-daily 7"
+      "--keep-weekly 4"
+      "--keep-monthly 12"
+      "--keep-yearly 15"
+    ];
+
+    checkOpts = [
+      "--with-cache"
+    ];
+  };
+
   virtualisation.vmVariant = {
     users.users.pfriedrich.password = "foo";
   };
@@ -181,6 +216,8 @@
     };
 
     secrets = {
+      restic_repo = { };
+      restic_password = { };
     };
   };
 
