@@ -3,12 +3,13 @@
   pkgs,
   lib,
   inputs,
+  flake,
   ...
 }:
 
 {
   imports = [
-    inputs.lollypops.nixosModules.default
+    flake.nixosModules.lollypops-base
   ];
 
   boot.growPartition = true;
@@ -38,12 +39,6 @@
 
   networking.firewall = {
     enable = lib.mkDefault true;
-  };
-
-  lollypops.deployment = {
-    ssh.host = lib.mkDefault "${config.networking.hostName}.internal.paulfriedrich.me";
-    ssh.user = lib.mkDefault "pfriedrich";
-    sudo.enable = lib.mkDefault true;
   };
 
   sops = {

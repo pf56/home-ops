@@ -12,6 +12,7 @@
 
     inputs.sops-nix.nixosModules.sops
 
+    flake.nixosModules.lollypops-base
     flake.nixosModules.amd-gpu
     flake.nixosModules.pipewire
     flake.nixosModules.wireshark
