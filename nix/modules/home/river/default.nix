@@ -153,6 +153,10 @@ in
           };
         };
 
+      extraSessionVariables = {
+        XDG_CURRENT_DESKTOP = "river";
+      };
+
       extraConfig = ''
         ${pkgs.wideriver}/bin/wideriver \
             --layout left \

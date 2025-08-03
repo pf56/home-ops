@@ -55,6 +55,23 @@ in
     };
   };
 
+  xdg.portal = {
+    enable = true;
+
+    config = {
+      river = {
+        default = [ "gtk" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+      };
+    };
+
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+    ];
+  };
+
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {

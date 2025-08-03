@@ -124,14 +124,10 @@
     };
   };
 
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    configPackages = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
-    ];
-  };
+  environment.pathsToLink = [
+    "/share/xdg-desktop-portal"
+    "/share/applications"
+  ];
 
   networking.firewall = {
     enable = true;
