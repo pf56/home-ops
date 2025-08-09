@@ -153,6 +153,7 @@
       "/home/pfriedrich/Games"
       "/steam"
       "/var/cache"
+      "/var/lib/libvirt/images"
     ];
 
     timerConfig = {
