@@ -25,6 +25,7 @@
   home.packages = with pkgs; [
     bcompare
     discord
+    discover-overlay
     firefox
     jetbrains.rider
     k9s

@@ -106,6 +106,11 @@ in
               "${mod} R" = "enter-mode float";
               "${mod} T" = "send-layout-cmd wideriver '--layout-toggle'";
               "${mod}+Shift T" = "spawn 'pkill -SIGUSR1 waybar'";
+
+              "Control F9" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --mute'";
+              "Control+Shift F9" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --unmute'";
+              "Control F10" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --deaf'";
+              "Control+Shift F10" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --undeaf'";
             };
 
             float = {
