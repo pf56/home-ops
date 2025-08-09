@@ -89,7 +89,7 @@ in
   imports = [
     ./hardware-configuration.nix
     inputs.sops-nix.nixosModules.sops
-    flake.nixosModules.host-base
+    flake.nixosModules.server-base
     (import ./interfaces.nix (args // { inherit routerConfig; }))
     (import ./firewall.nix (args // { inherit routerConfig; }))
     (import ./dhcp.nix (args // { inherit routerConfig; }))

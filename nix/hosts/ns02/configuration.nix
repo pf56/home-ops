@@ -11,7 +11,7 @@
   imports = [
     ./hardware-configuration.nix
     inputs.sops-nix.nixosModules.sops
-    flake.nixosModules.host-base
+    flake.nixosModules.server-base
     flake.nixosModules.nameserver
   ];
 

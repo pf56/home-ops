@@ -10,7 +10,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    flake.nixosModules.host-base
+    flake.nixosModules.server-base
     inputs.sops-nix.nixosModules.sops
   ];
 
