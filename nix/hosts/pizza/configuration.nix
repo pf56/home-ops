@@ -59,7 +59,6 @@
       "networkmanager"
       "scanner"
       "lp"
-      "libvirtd"
       "wireshark"
       "input"
       config.programs.ydotool.group
@@ -104,8 +103,6 @@
   # enable scanner/printer
   hardware.sane.enable = true;
   services.printing.enable = true;
-
-  virtualisation.libvirtd.enable = true;
 
   security.polkit.enable = true;
   systemd = {
