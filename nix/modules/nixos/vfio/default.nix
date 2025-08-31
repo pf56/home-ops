@@ -76,6 +76,10 @@ in
         enable = true;
         qemu = {
           swtpm.enable = true;
+
+          ovmf.enable = true;
+          ovmf.packages = [ pkgs.OVMFFull.fd ];
+
           verbatimConfig = ''
             cgroup_device_acl = [
               "/dev/null", "/dev/full", "/dev/zero",
@@ -92,6 +96,48 @@ in
 
       spiceUSBRedirection.enable = true;
     };
+
+    systemd.tmpfiles.rules =
+      let
+        firmware = pkgs.writeTextDir "firmware/sec-boot-with-ms-keys.json" ''
+          {
+            "description": "OVMF UEFI firmware",
+            "features": [
+              "verbose-dynamic",
+              "enrolled-keys",
+              "acpi-s3",
+              "secure-boot",
+              "requires-smm"
+            ],
+            "interface-types": [
+              "uefi"
+            ],
+            "mapping": {
+              "device": "flash",
+              "executable": {
+                "filename": "/run/libvirt/nix-ovmf/OVMF_CODE.ms.fd",
+                "format": "raw"
+              },
+              "nvram-template": {
+                "filename": "/run/libvirt/nix-ovmf/OVMF_VARS.ms.fd",
+                "format": "raw"
+              }
+            },
+            "tags": [],
+            "targets": [
+              {
+                "architecture": "x86_64",
+                "machines": [
+                  "pc-q35-*"
+                ]
+              }
+            ]
+          }
+        '';
+      in
+      [
+        "L+ /var/lib/qemu/firmware - - - - ${firmware}/firmware"
+      ];
 
     users.users.pfriedrich.extraGroups = [ "libvirtd" ];
 
