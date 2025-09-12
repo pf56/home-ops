@@ -20,6 +20,7 @@ in
   config = mkIf cfg.enable {
     wayland.windowManager.river = {
       enable = true;
+      package = pkgs.river-classic;
 
       settings =
         let

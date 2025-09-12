@@ -22,7 +22,7 @@ in
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --remember --time --cmd ${pkgs.river}/bin/river";
+          command = "${pkgs.tuigreet}/bin/tuigreet --remember --time --cmd ${pkgs.river-classic}/bin/river";
           user = "greeter";
         };
       };
