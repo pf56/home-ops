@@ -101,7 +101,7 @@ in
               "${mod}+Shift Space" = "toggle-float";
               "${mod}+Shift Q" = "close";
 
-              "${mod} Return" = "spawn ghostty";
+              "${mod} Return" = "spawn alacritty";
               "${mod} D" = "spawn wofi";
 
               "${mod} R" = "enter-mode float";

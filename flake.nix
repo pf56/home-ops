@@ -24,7 +24,6 @@
     talhelper.url = "github:budimanjojo/talhelper";
     flake-parts.url = "github:hercules-ci/flake-parts";
     nix-colors.url = "github:misterio77/nix-colors";
-    ghostty.url = "github:ghostty-org/ghostty";
   };
 
   outputs =
