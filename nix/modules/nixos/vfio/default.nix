@@ -77,9 +77,6 @@ in
         qemu = {
           swtpm.enable = true;
 
-          ovmf.enable = true;
-          ovmf.packages = [ pkgs.OVMFFull.fd ];
-
           verbatimConfig = ''
             cgroup_device_acl = [
               "/dev/null", "/dev/full", "/dev/zero",
