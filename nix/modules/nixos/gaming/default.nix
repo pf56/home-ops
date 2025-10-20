@@ -36,6 +36,9 @@ in
       vintagestory
       heroic
       vkdevicechooser
+      lsfg-vk
+      lsfg-vk-ui
+      protonplus
 
       wowup-cf
     ];
