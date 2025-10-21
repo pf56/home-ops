@@ -20,6 +20,7 @@
     flake.nixosModules.gaming
     flake.nixosModules.vfio
     flake.nixosModules.greetd
+    flake.nixosModules.openrgb
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -48,6 +49,7 @@
     gaming.enable = true;
     vfio.enable = true;
     greetd.enable = true;
+    openrgb.enable = true;
   };
 
   # users
