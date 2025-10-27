@@ -2,15 +2,18 @@
 {
   programs.git = {
     enable = true;
-    userName = "Paul Friedrich";
-    userEmail = "mail" + "@" + "paulfriedrich.me";
 
     signing = {
       key = "mail" + "@" + "paulfriedrich.me";
       signByDefault = true;
     };
 
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Paul Friedrich";
+        email = "mail" + "@" + "paulfriedrich.me";
+      };
+
       init = {
         defaultBranch = "main";
       };
