@@ -10,5 +10,6 @@
     evince
     grim
     slurp
+    xclip
   ];
 }
