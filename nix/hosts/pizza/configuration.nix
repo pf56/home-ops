@@ -18,7 +18,6 @@
     flake.nixosModules.wireshark
     flake.nixosModules.yubikey
     flake.nixosModules.gaming
-    flake.nixosModules.vfio
     flake.nixosModules.greetd
     flake.nixosModules.openrgb
     flake.nixosModules.kdeconnect
@@ -48,7 +47,6 @@
     wireshark.enable = true;
     yubikey.enable = true;
     gaming.enable = true;
-    vfio.enable = true;
     greetd.enable = true;
     openrgb.enable = true;
     kdeconnect.enable = true;
@@ -180,6 +178,18 @@
 
   virtualisation.vmVariant = {
     users.users.pfriedrich.password = "foo";
+  };
+
+  specialisation = {
+    vfio.configuration = {
+      system.nixos.tags = [ "with-vfio" ];
+
+      imports = [
+        flake.nixosModules.vfio
+      ];
+
+      modules.vfio.enable = true;
+    };
   };
 
   nixpkgs.config.allowUnfree = true;
