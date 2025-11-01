@@ -24,7 +24,9 @@
   # packages
   home.packages = with pkgs; [
     bcompare
-    discord
+    (discord-canary.override (old: rec {
+      withVencord = true;
+    }))
     discover-overlay
     firefox
     jetbrains.rider
