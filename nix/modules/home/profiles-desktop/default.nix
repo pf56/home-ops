@@ -24,6 +24,7 @@ in
     flake.homeModules.waybar
     flake.homeModules.gaming
     flake.homeModules.vfio
+    flake.homeModules.bongocat
   ];
 
   config = lib.mkMerge [
@@ -39,6 +40,7 @@ in
         kanshi.enable = true;
         waybar.enable = true;
         gaming.enable = true;
+        bongocat.enable = true;
       };
 
       home.packages = with pkgs; [
