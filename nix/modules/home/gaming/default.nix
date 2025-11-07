@@ -31,6 +31,8 @@ in
       mangohud = {
         enable = true;
         settings = {
+          offset_y = 30; # don't overlap with steam fps counter
+
           gpu_stats = true;
           gpu_temp = true;
           gpu_core_clock = true;
