@@ -21,7 +21,7 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       clinfo
-      glxinfo
+      mesa-demos
       radeontop
       vulkan-tools
     ];
@@ -32,12 +32,12 @@ in
         enable32Bit = true;
 
         extraPackages = with pkgs; [
-          vaapiVdpau
+          libva-vdpau-driver
           libvdpau-va-gl
         ];
 
         extraPackages32 = with pkgs; [
-          vaapiVdpau
+          libva-vdpau-driver
           libvdpau-va-gl
         ];
       };
