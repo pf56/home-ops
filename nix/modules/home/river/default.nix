@@ -108,10 +108,12 @@ in
               "${mod} T" = "send-layout-cmd wideriver '--layout-toggle'";
               "${mod}+Shift T" = "spawn 'pkill -SIGUSR1 waybar'";
 
-              "Control F9" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --mute'";
-              "Control+Shift F9" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --unmute'";
-              "Control F10" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --deaf'";
-              "Control+Shift F10" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --undeaf'";
+              "None+Control F9" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --toggle-mute'";
+              "None+Control F10" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --toggle-deaf'";
+              "None+Control F11" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --show'";
+              "None+Control+Shift F11" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --hide'";
+
+              "None Print" = "spawn '${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp -d)\" - | ${pkgs.wl-clipboard}/bin/wl-copy'";
             };
 
             float = {
