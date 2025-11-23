@@ -21,6 +21,7 @@
     flake.nixosModules.greetd
     flake.nixosModules.openrgb
     flake.nixosModules.kdeconnect
+    flake.nixosModules.obs
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -50,6 +51,7 @@
     greetd.enable = true;
     openrgb.enable = true;
     kdeconnect.enable = true;
+    obs.enable = true;
   };
 
   # users
