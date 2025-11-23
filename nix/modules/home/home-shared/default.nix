@@ -24,7 +24,7 @@
   # packages
   home.packages = with pkgs; [
     bcompare
-    (discord-canary.override (old: rec {
+    (discord.override (old: rec {
       withVencord = true;
     }))
     discover-overlay
