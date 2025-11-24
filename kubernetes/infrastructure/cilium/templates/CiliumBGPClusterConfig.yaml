@@ -1,0 +1,18 @@
+apiVersion: cilium.io/v2
+kind: CiliumBGPClusterConfig
+metadata:
+  name: cilium-bgp
+spec:
+  nodeSelector:
+    matchLabels:
+      paulfriedrich.me/peering: "yes"
+  bgpInstances:
+  - name: "cilium"
+    localASN: 4200060005
+    peers:
+    - name: "router"
+      peerASN: 4200060001
+      peerAddress: 10.0.60.1
+      peerConfigRef:
+        name: "cilium-peer"
+      
