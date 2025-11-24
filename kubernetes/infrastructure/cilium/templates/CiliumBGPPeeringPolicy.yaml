@@ -1,0 +1,16 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPPeeringPolicy
+metadata:
+  name: vyos01
+spec:
+  nodeSelector:
+    matchLabels:
+      paulfriedrich.me/peering: "yes"
+  virtualRouters:
+    - localASN: 4200060005
+      neighbors:
+        - peerASN: 4200060001
+          peerAddress: 10.0.60.1/32
+      serviceSelector:
+        matchExpressions:
+          - { key: somekey, operator: NotIn, values: [ 'never-used-value' ] }
