@@ -2,6 +2,9 @@ node-man:
   csiDriver:
     name: org.democratic-csi.node-manual
   controller:
+    driver:
+      image:
+        tag: next@sha256:5b607d63a270330b4cdaa70ae961fc1484f0dda3d164d940e69e1faa213682fd
     externalAttacher:
       enabled: true
     externalProvisioner:
@@ -11,11 +14,15 @@ node-man:
     externalSnapshotter:
       enabled: false
   driver:
+    image:
+      tag: next@sha256:5b607d63a270330b4cdaa70ae961fc1484f0dda3d164d940e69e1faa213682fd
     config:
       driver: node-manual
   node:
     hostPID: true
     driver:
+      image:
+        tag: next@sha256:5b607d63a270330b4cdaa70ae961fc1484f0dda3d164d940e69e1faa213682fd
       extraEnv:
         - name: ISCSIADM_HOST_STRATEGY
           value: nsenter

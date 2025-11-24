@@ -1,4 +1,8 @@
 fn-iscsi:
+    controller:
+        driver:
+            image:
+                tag: ENC[AES256_GCM,data:1VN/DPtYovTHAInb+9exIFyThXJdgYtfY4VzZojOkAyreWZb8c8j+WfaC9i5Xxj/uj96DPrOcVXqQhL6UiEQ5qV+OGEvrmXUE1twQg==,iv:uSv9dVtIzMTeMkxQK6jAg01bxfVJJ89HPoqWa7xeg1s=,tag:4m+K8LZ+H+PcfB8pdIgk1A==,type:str]
     node:
         hostPID: ENC[AES256_GCM,data:VTF5Cg==,iv:/CiuVGgDvgA4jrzrA4pnnhNUCrtGqHHdcg5fJwX16MI=,tag:n33LilDjrUlBk8hSA3EdAw==,type:bool]
         driver:
@@ -9,6 +13,8 @@ fn-iscsi:
                   value: ENC[AES256_GCM,data:f+3aV1U90DCiv7IacsWHR4zuozmKyiod,iv:ja6v8vnduV6t20Wrt+Mxe5Xyr2/diiw5PLYjeeSxits=,tag:l9x5QedUzhh/psL0XXVR/Q==,type:str]
             iscsiDirHostPath: ENC[AES256_GCM,data:URaCs2/yhfj/3A==,iv:LpdT4vsbPOlkpn67Ux/8VoG694u1KKU+fuvxWRNN3Yg=,tag:TmGaEncmlu/Mv3CU/Wf+dA==,type:str]
             iscsiDirHostPathType: ""
+            image:
+                tag: ENC[AES256_GCM,data:7JJfa3UzyPlpE3Dl3jk1DAtKENjFrE5YBlIE9rRgWV6Nz0AexsLizn5UbcXOPvU1lnLUEnT8FYRE4U7VmSam+oEqa11Gqw8HrIVF6w==,iv:vwwDv/rEkoLkrFixrAV2EYcbWXlKimRh9duY8ytfqZA=,tag:DiNuuOl3gdd+IeFdfdCBlw==,type:str]
     csiDriver:
         name: ENC[AES256_GCM,data:XyIBVCZxFqw12VfjSJ7AWBMwbf6vC9yvMR7fKzzVqDHVStTO,iv:Uo+P9IOsK7sGMzgUFat81pvb+xq/gTNmbLKsxjJjUMg=,tag:PQRELbCERjM1xaulsbTQdA==,type:str]
     storageClasses:
@@ -32,6 +38,8 @@ fn-iscsi:
           parameters:
             detachedSnapshots: ENC[AES256_GCM,data:GwAqWA==,iv:jE4QRe1ykcuMFaZVX4+8nEgS/pNdDVPC7Dw8zNH81Hc=,tag:8+bdo6LMs1NvlTQeiVr2PA==,type:bool]
     driver:
+        image:
+            tag: ENC[AES256_GCM,data:PYVTf0i5O66LYtYZYloBZ/I3oi1yXjzUOG2885bTPqXzjw1ZsGQIb0lPM6W2T7bzjZGvBaOPC74IoBw+WbBj4lIjo856MyZWe83tuw==,iv:qclmBVaJ73hNXjwcTQeCASHMSc5lTE3kwZMRMwxaa8E=,tag:UirfTMvSfeeEC8ouoaFPNg==,type:str]
         config:
             driver: ENC[AES256_GCM,data:XI8etdxxM//AdhUMI1LauRk=,iv:KzI7YyLbHh61lNPqSmegdJ8HZ/ErF4Wl/OhMUmhPtvo=,tag:H+vgbAaikDbh9eCk4iJojQ==,type:str]
             httpConnection:
@@ -81,7 +89,7 @@ sops:
             NzZNUkd2ZXAwMnBxZ3RKV1AzTWxYd28KQ1akKhHQUJwfrXL0QRo8xTLhq8XM2nQr
             6pqUp2FX2chPSMdFLRZo/hKsVFaG4p6UMZS0awZqtqERhg/I9tgkkg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-06-15T08:54:26Z"
-    mac: ENC[AES256_GCM,data:qWip1dD2ZbASH53PH/CBPYX85HUx1xj55zqE4Os/UCEZMaOM0nuXupgNHo50sxiRUS+JQ9BuOoDvb7XeG4QwjiholCBN9TfpS5ZFMG2HAbf+45M8S9pUL9UYM77ChaNV9CcqC+pz5QrZXHYP6xJwUzJLibPCcPUIcYjTBEbJrNg=,iv:wViC4k8qiPW5xv7+DyTE20ynsnIRCyrcQcMEZr8wPSY=,tag:QIr+mzQf5uUJzbKDB9XYmw==,type:str]
+    lastmodified: "2025-11-24T17:48:12Z"
+    mac: ENC[AES256_GCM,data:EkovLdU7B/XJPPVmWvPoW2axbkh+85FDm1eBY/qmuXTNz7RyDJvlq3gCSFAXRSj+ZI7ze81WvFNXTUS+0wl26VfyKmhnmiE+zECU6stfqs/46Hun1W/Ag2SmW4xYDThtpk76/35zjkfnr1gllUZ0tQsaCq647CpCeKq9F9262Mw=,iv:kYhzfEuVZ3yioLLCU8OJoPo/N35vwhxFZvRsaYRaFZE=,tag:Jeg8KvqYxY1/LylUtgnAww==,type:str]
     unencrypted_suffix: _unencrypted
-    version: 3.10.2
+    version: 3.11.0
