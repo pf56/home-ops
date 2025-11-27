@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: sealed-secrets
 resources:
   - namespace.yaml
-  - https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.30.0/controller.yaml
+  - https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.33.1/controller.yaml
