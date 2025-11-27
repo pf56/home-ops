@@ -10,4 +10,4 @@ resources:
 
 images:
   - name: mbentley/omada-controller
-    newTag: "5.15.24.17-chromium"
+    newTag: "6.0.0.24"

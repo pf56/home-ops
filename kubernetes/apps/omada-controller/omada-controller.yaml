@@ -42,6 +42,10 @@ spec:
       port: 29816
       protocol: TCP
       targetPort: rtty
+    - name: device-monitor
+      port: 29817
+      protocol: TCP
+      targetPort: device-monitor
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -86,6 +90,8 @@ spec:
             value: "29815"
           - name: PORT_RTTY
             value: "29816"
+          - name: PORT_DEVICE_MONITOR
+            value: "29817"
         ports:
           - containerPort: 80
             name: http
@@ -110,6 +116,9 @@ spec:
             protocol: TCP
           - containerPort: 29816
             name: rtty
+            protocol: TCP
+          - containerPort: 29817
+            name: device-monitor
             protocol: TCP
         volumeMounts:
           - name: data
