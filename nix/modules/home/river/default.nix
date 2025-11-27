@@ -113,7 +113,8 @@ in
               "None+Control F11" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --show'";
               "None+Control+Shift F11" = "spawn '${pkgs.discover-overlay}/bin/discover-overlay --rpc --hide'";
 
-              "None Print" = "spawn '${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp -d)\" - | ${pkgs.wl-clipboard}/bin/wl-copy'";
+              "None Print" =
+                "spawn '${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp -d)\" - | ${pkgs.wl-clipboard}/bin/wl-copy'";
             };
 
             float = {

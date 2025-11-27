@@ -49,6 +49,9 @@ in
       "dotnet-runtime-7.0.20" # vintage story
     ];
 
-    modules.steam.enable = true;
+    modules = {
+      star-citizen.enable = true;
+      steam.enable = true;
+    };
   };
 }

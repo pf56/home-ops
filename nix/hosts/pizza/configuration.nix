@@ -9,19 +9,8 @@
 {
   imports = [
     ./hardware-configuration.nix
-
     inputs.sops-nix.nixosModules.sops
-
     flake.nixosModules.host-base
-    flake.nixosModules.amd-gpu
-    flake.nixosModules.pipewire
-    flake.nixosModules.wireshark
-    flake.nixosModules.yubikey
-    flake.nixosModules.gaming
-    flake.nixosModules.greetd
-    flake.nixosModules.openrgb
-    flake.nixosModules.kdeconnect
-    flake.nixosModules.obs
   ];
 
   # Use the systemd-boot EFI boot loader.
