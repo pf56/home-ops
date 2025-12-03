@@ -13,7 +13,7 @@ let
 in
 {
   imports = [
-    inputs.nix-citizen.nixosModules.StarCitizen
+    inputs.nix-citizen.nixosModules.default
   ];
 
   options.modules.star-citizen = {
@@ -29,9 +29,8 @@ in
       trusted-public-keys = [ "nix-citizen.cachix.org-1:lPMkWc2X8XD4/7YPEEwXKKBg+SVbYTVrAaLA2wQTKCo=" ];
     };
 
-    nix-citizen.starCitizen = {
+    programs.rsi-launcher = {
       enable = true;
-      package = perSystem.nix-citizen.star-citizen;
     };
   };
 }
