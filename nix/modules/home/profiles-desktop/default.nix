@@ -17,6 +17,7 @@ in
 
     flake.homeModules.utilities-desktop
     flake.homeModules.gtk
+    flake.homeModules.qt
     flake.homeModules.wpaperd
     flake.homeModules.mako
     flake.homeModules.river
@@ -34,6 +35,7 @@ in
 
       modules = {
         gtk.enable = true;
+        qt.enable = true;
         wpaperd.enable = true;
         mako.enable = true;
         river.enable = true;
