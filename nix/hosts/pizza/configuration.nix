@@ -93,6 +93,10 @@
 
   services.pcscd.enable = true;
 
+  services.bcachefs.autoScrub = {
+    enable = true;
+  };
+
   # enable scanner/printer
   hardware.sane.enable = true;
   services.printing.enable = true;
