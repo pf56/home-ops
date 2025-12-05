@@ -97,6 +97,11 @@
     enable = true;
   };
 
+  services.angrr = {
+    enable = true;
+    period = "2weeks";
+  };
+
   # enable scanner/printer
   hardware.sane.enable = true;
   services.printing.enable = true;
