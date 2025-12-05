@@ -33,14 +33,18 @@
 
   modules = {
     amdGpu.enable = true;
+    gaming.enable = true;
+    greetd.enable = true;
+    kdeconnect.enable = true;
+    nvme-rs = {
+      enable = true;
+      smtpPasswordFile = config.sops.secrets.smtp_password.path;
+    };
+    openrgb.enable = true;
+    obs.enable = true;
     pipewire.enable = true;
     wireshark.enable = true;
     yubikey.enable = true;
-    gaming.enable = true;
-    greetd.enable = true;
-    openrgb.enable = true;
-    kdeconnect.enable = true;
-    obs.enable = true;
   };
 
   # users
@@ -226,6 +230,7 @@
     secrets = {
       restic_repo = { };
       restic_password = { };
+      smtp_password = { };
     };
   };
 

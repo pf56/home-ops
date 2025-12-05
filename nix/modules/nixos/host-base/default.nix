@@ -14,6 +14,7 @@
     flake.nixosModules.greetd
     flake.nixosModules.kdeconnect
     flake.nixosModules.lollypops-base
+    flake.nixosModules.nvme-rs
     flake.nixosModules.obs
     flake.nixosModules.openrgb
     flake.nixosModules.pipewire
