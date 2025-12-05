@@ -4,7 +4,7 @@
     enable = true;
 
     signing = {
-      key = "mail" + "@" + "paulfriedrich.me";
+      key = "65C3EFA544FFF2240FE10EBCBFC5854A6C3CD894";
       signByDefault = true;
     };
 
