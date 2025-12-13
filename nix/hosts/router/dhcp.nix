@@ -290,10 +290,23 @@ in
                 hw-address = "00:a0:98:11:85:19";
                 ip-address = "10.0.60.18";
               }
+              {
+                # monitoring
+                hw-address = "00:a0:98:6b:82:02";
+                ip-address = "10.0.60.19";
+              }
             ];
           }
         ];
       };
     };
+  };
+
+  services.prometheus.exporters.kea = {
+    enable = true;
+    listenAddress = vlans.server.gateway;
+    targets = [
+      dhcpV4ControlSocket
+    ];
   };
 }

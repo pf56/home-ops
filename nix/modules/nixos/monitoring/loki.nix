@@ -18,6 +18,11 @@ in
         type = types.number;
         default = 3100;
       };
+
+      grpcPort = mkOption {
+        type = types.number;
+        default = 9095;
+      };
     };
   };
 
@@ -29,22 +34,24 @@ in
         auth_enabled = false;
         server = {
           http_listen_port = cfg.port;
-          grpc_listen_port = 9095;
+          grpc_listen_port = cfg.grpcPort;
         };
 
         common = {
-          instance_addr = "127.0.0.1";
           path_prefix = "/var/lib/loki";
+          replication_factor = 1;
+
+          ring = {
+            instance_addr = "127.0.0.1";
+            kvstore = {
+              store = "inmemory";
+            };
+          };
+
           storage = {
             filesystem = {
               chunks_directory = "/var/lib/loki/chunks";
               rules_directory = "/var/lib/loki/rules";
-            };
-          };
-          replication_factor = 1;
-          ring = {
-            kvstore = {
-              store = "inmemory";
             };
           };
         };
@@ -59,10 +66,10 @@ in
         schema_config = {
           configs = [
             {
-              from = "2023-10-01";
-              store = "boltdb-shipper";
+              from = "2025-12-01";
+              store = "tsdb";
               object_store = "filesystem";
-              schema = "v11";
+              schema = "v13";
               index = {
                 prefix = "index_";
                 period = "24h";
@@ -72,11 +79,10 @@ in
         };
 
         storage_config = {
-          boltdb_shipper = {
-            active_index_directory = "/var/lib/loki/boltdb-shipper-active";
-            cache_location = "/var/lib/loki/boltdb-shipper-cache";
+          tsdb_shipper = {
+            active_index_directory = "/var/lib/loki/tsdb-index";
+            cache_location = "/var/lib/loki/tsdb-cache";
             cache_ttl = "24h";
-            shared_store = "filesystem";
           };
         };
       };

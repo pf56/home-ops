@@ -44,6 +44,10 @@ in
             ${wellKnowns.dns}
           }
 
+          define MONITORING = {
+            10.0.60.19
+          }
+
           flowtable f {
             hook ingress priority 0;
             devices = { ${interfaces.wan.name}, ${interfaces.lan1.name}, ${interfaces.lan2.name}, ${interfaces.lan3.name} }
@@ -189,6 +193,7 @@ in
             ip daddr $NAMESERVERS meta l4proto { tcp, udp } th dport 53 accept comment "Allow DNS"
             ip daddr $NAMESERVERS tcp dport 179 accept comment "Allow BGP with DNS"
             ip daddr $TALOS_WORKERS tcp dport 179 accept comment "Allow BGP with Talos"
+            ip daddr $MONITORING tcp dport 9090 accept comment "Allow Prometheus export"
             counter drop
           }
 
@@ -212,6 +217,7 @@ in
           chain OFFICE-SERVER {
             tcp dport 22 accept comment "Allow SSH"
             ip daddr 10.0.60.8 accept comment "Allow Git"
+            ip daddr $MONITORING accept comment "Allow Monitoring"
 
             ip daddr 10.0.60.5 tcp dport 6443 accept comment "Allow Kubernetes API"
             ip daddr $TALOS_NODES tcp dport 50000 accept comment "Allow Talos control plane"
@@ -248,6 +254,7 @@ in
             udp dport 67 udp sport 68 accept comment "Allow DHCP"
             udp dport 123 accept comment "Allow NTP"
             tcp dport 179 accept comment "Allow BGP"
+            tcp dport 9547 ip saddr $MONITORING accept comment "Allow Prometheus Kea exporter"
           }
 
           chain SERVER-MGMT {

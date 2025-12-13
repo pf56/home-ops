@@ -8,11 +8,13 @@
 }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-    inputs.sops-nix.nixosModules.sops
+  imports = with inputs; [
+    disko.nixosModules.disko
+    ./disk-config.nix
+    nixos-facter-modules.nixosModules.facter
+    { config.facter.reportPath = ./facter.json; }
+    sops-nix.nixosModules.sops
     flake.nixosModules.server-base
-    flake.nixosModules.monitoring
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -23,29 +25,49 @@
     80
     443
     1514
+    9090
   ];
   networking.firewall.allowedUDPPorts = [ 443 ];
 
-  services.prometheus.exporters = {
-    node = {
-      enable = true;
-      port = 9100;
-      enabledCollectors = [ "systemd" ];
-    };
-  };
-
   roles.monitoring = {
-    dashboard = {
-      enable = true;
-      domain = "dashboard.internal.paulfriedrich.me";
-      nginx = {
-        forceSSL = true;
-        quic = true;
+    dashboard =
+      let
+        grafanaDashboardsLib = inputs.grafana-dashboards.lib { inherit pkgs; };
+      in
+      {
+        enable = true;
+        domain = "dashboard.internal.paulfriedrich.me";
 
-        enableACME = true;
-        acmeRoot = null;
+        nginx = {
+          forceSSL = true;
+          quic = true;
+
+          enableACME = true;
+          acmeRoot = null;
+        };
+
+        dashboards = [
+          (grafanaDashboardsLib.dashboardEntry {
+            name = "node-exporter-full";
+            path = grafanaDashboardsLib.fetchDashboard {
+              name = "node-exporter-full";
+              hash = "sha256-5Wk9SD7jaLBtSzYBnTuwANt9LAkAq6ddu7bRO/CGP38=";
+              id = 1860;
+              version = 42;
+            };
+          }).options.path
+          (grafanaDashboardsLib.dashboardEntry {
+            name = "kea-dhcp";
+            path = grafanaDashboardsLib.fetchDashboard {
+              name = "kea-dhcp";
+              hash = "sha256-hLygasxxeEVi45gD3QQQUcmCZdqu3rgKB/dSSFpLpDM=";
+              id = 12688;
+              version = 4;
+            };
+            transformations = grafanaDashboardsLib.fillTemplating [{ key = "DS_PROMETHEUS"; value = "PBFA97CFB590B2093"; } ];
+          }).options.path
+        ];
       };
-    };
 
     prometheus = {
       enable = true;
@@ -54,25 +76,16 @@
           job_name = "monitoring.internal.paulfriedrich.me";
           static_configs = [
             {
-              targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ];
+              targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ];
             }
           ];
         }
         {
-          job_name = "vyos01.internal.paulfriedrich.me";
-          scrape_interval = "15s";
+          # Kea exporter
+          job_name = "router.internal.paulfriedrich.me";
           static_configs = [
             {
-              targets = [ "10.0.60.1:9273" ];
-            }
-          ];
-        }
-        {
-          job_name = "router.vultr.internal.paulfriedrich.me";
-          scrape_interval = "15s";
-          static_configs = [
-            {
-              targets = [ "router.vultr.internal.paulfriedrich.me:9273" ];
+              targets = [ "10.0.60.1:9547" ];
             }
           ];
         }
@@ -83,71 +96,15 @@
       enable = true;
     };
 
-    promtail = {
+    alloy = {
       enable = true;
-
-      scrapeConfigs = [
-        {
-          job_name = "journal";
-
-          journal = {
-            max_age = "12h";
-            labels = {
-              job = "systemd-journal";
-              host = "monitoring";
-            };
-          };
-
-          relabel_configs = [
-            {
-              source_labels = [ "__journal__systemd_unit" ];
-              target_label = "unit";
-            }
-          ];
-        }
-        {
-          job_name = "syslog";
-          syslog = {
-            listen_address = "0.0.0.0:1514";
-            labels = {
-              job = "syslog";
-            };
-          };
-          relabel_configs = [
-            {
-              source_labels = [ "__syslog_message_hostname" ];
-              target_label = "host";
-            }
-            {
-              source_labels = [ "__syslog_message_hostname" ];
-              target_label = "hostname";
-            }
-            {
-              source_labels = [ "__syslog_message_severity" ];
-              target_label = "level";
-            }
-            {
-              source_labels = [ "__syslog_message_app_name" ];
-              target_label = "application";
-            }
-            {
-              source_labels = [ "__syslog_message_facility" ];
-              target_label = "facility";
-            }
-            {
-              source_labels = [ "__syslog_connection_hostname" ];
-              target_label = "connection_hostname";
-            }
-          ];
-        }
-      ];
+      lokiBaseUrl = "http://localhost:${toString config.roles.monitoring.loki.port}";
+      prometheusBaseUrl = "http://localhost:${toString config.roles.monitoring.prometheus.port}";
     };
   };
 
   services.nginx = {
     enable = true;
-    package = pkgs.nginxQuic;
-
     recommendedProxySettings = true;
     recommendedOptimisation = true;
     recommendedGzipSettings = true;
@@ -168,6 +125,5 @@
     };
   };
 
-  lollypops.deployment.local-evaluation = true;
-  system.stateVersion = "23.05";
+  system.stateVersion = "25.11";
 }

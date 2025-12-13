@@ -9,6 +9,7 @@
 
 {
   imports = [
+    inputs.sops-nix.nixosModules.sops
     flake.nixosModules.amd-gpu
     flake.nixosModules.gaming
     flake.nixosModules.greetd

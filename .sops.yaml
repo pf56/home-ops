@@ -10,7 +10,7 @@ keys:
   - &storage age1cft5ex8pc5hn75f4dyraad4qr25lcsnvtac3ss3nv29n5slxepqqqckkn9
   - &stepca age135rrse02t76trsm53za7jg9teuwt9e4mqvamyalkudhyydgh6e9qfe8xcw
   - &flux age1qkxcnuwjvme9667c763xpxjedfyxjpgl09msty80esrf3fuj45cqeh9v6q
-  - &monitoring age1k23ghcwa5rx37yf34pgpe482wjeyr6vvkacyl38n778hkf00fuascvcx3a
+  - &monitoring age120j46q075nm34cnaa56z6yqh90wpm44j8vswnytz6xy0yngnqsusfx3uru
   - &keycloak age1a4yxrvrqms4vdwpqefmh4rtznc2wcuj96vdpfpzygy49atnqp9kqgf0qu8
   - &auth age1nkjs7c87566zwyafgjrtsg4z4efklm4zqz3ylruqys2hjluhweqqgwqeur
   - &argocd age18spf8ku8hn2yc6g7v3tlh8859chmxkv952lr52ppwknzwl7eh58sq9yu56

@@ -27,9 +27,12 @@
     sops-nix.url = "github:Mic92/sops-nix";
     lollypops.url = "github:pinpox/lollypops";
     talhelper.url = "github:budimanjojo/talhelper";
+    disko.url = "github:nix-community/disko/latest";
     flake-parts.url = "github:hercules-ci/flake-parts";
     nix-colors.url = "github:misterio77/nix-colors";
     nix-gaming.url = "github:fufexan/nix-gaming";
+    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
+    grafana-dashboards.url = "github:blackheaven/grafana-dashboards.nix";
   };
 
   outputs =

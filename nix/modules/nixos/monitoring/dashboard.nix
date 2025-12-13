@@ -8,6 +8,13 @@
 with lib;
 let
   cfg = config.roles.monitoring.dashboard;
+  cfgPrometheus = config.roles.monitoring.prometheus;
+  cfgLoki = config.roles.monitoring.loki;
+
+  dashboardDir = pkgs.symlinkJoin {
+    name = "grafana-dashboards";
+    paths = cfg.dashboards;
+  };
 in
 {
   options = {
@@ -19,6 +26,14 @@ in
         default = "dashboard.internal.paulfriedrich.me";
         description = mdDoc ''
           The domain of the dashboard.
+        '';
+      };
+
+      dashboards = mkOption {
+        type = types.listOf types.path;
+        default = [ ];
+        description = mdDoc ''
+          List of paths to dashboards in JSON format.
         '';
       };
 
@@ -44,6 +59,41 @@ in
           domain = cfg.domain;
           http_addr = "127.0.0.1";
           http_port = 3000;
+        };
+      };
+
+      provision = {
+        enable = true;
+        dashboards.settings.providers = [
+          {
+            name = "dashboards";
+            options = {
+              path = dashboardDir;
+              foldersFromFilesStructure = true;
+            };
+          }
+        ];
+
+        datasources.settings = {
+          prune = true;
+          datasources =
+            lib.optionals cfgPrometheus.enable [
+              {
+                name = "Prometheus";
+                type = "prometheus";
+                url = "http://localhost:${toString cfgPrometheus.port}";
+                isDefault = true;
+                editable = false;
+              }
+            ]
+            ++ lib.optionals cfgLoki.enable [
+              {
+                name = "Loki";
+                type = "loki";
+                url = "http://localhost:${toString cfgLoki.port}";
+                editable = false;
+              }
+            ];
         };
       };
     };

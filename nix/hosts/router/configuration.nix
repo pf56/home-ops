@@ -128,6 +128,10 @@ in
     hostName = "router";
   };
 
+  roles.monitoring.alloy = {
+    enable = true;
+  };
+
   sops.secrets = {
     pppoe-username = { };
     pppoe-password = { };
