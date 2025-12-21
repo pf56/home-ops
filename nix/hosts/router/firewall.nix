@@ -84,7 +84,7 @@ in
             iifname ${vlans.iot.name} jump IOT-LOCAL
             iifname ${vlans.server.name} jump SERVER-LOCAL
 
-            log prefix "nftables-drop input: " drop
+            log prefix "nftables-input drop: " drop
           }
 
           chain FORWARD {
@@ -110,7 +110,7 @@ in
             oifname ${vlans.iot.name} jump ZONE_IOT
             oifname ${vlans.server.name} jump ZONE_SERVER
 
-            log prefix "nftables-drop forward: " drop
+            log prefix "nftables-forward drop: " drop
           }
 
           chain OUTPUT {
@@ -133,7 +133,7 @@ in
             oifname ${vlans.server.name} jump LOCAL-SERVER
             oifname ${interfaces.tailscale.name} jump LOCAL-TAILSCALE
 
-            log prefix "nftables-drop output: " drop
+            log prefix "nftables-output drop: " drop
           }
 
           chain ZONE_WAN {

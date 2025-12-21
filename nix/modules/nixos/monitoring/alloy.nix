@@ -73,7 +73,7 @@ in
       }
 
       loki.source.journal "journal" {
-        forward_to = [loki.write.monitoring.receiver]
+        forward_to = [loki.process.journal.receiver]
         relabel_rules = loki.relabel.journal.rules
         labels = {
           "job" = "systemd-journal",
@@ -87,22 +87,41 @@ in
           source_labels = ["__journal__systemd_unit"]
           target_label  = "unit"
         }
+
         rule {
           source_labels = ["__journal__boot_id"]
           target_label  = "boot_id"
         }
+
         rule {
           source_labels = ["__journal__transport"]
           target_label  = "transport"
         }
+
         rule {
           source_labels = ["__journal_priority_keyword"]
           target_label  = "level"
         }
+
         rule {
           source_labels = ["__journal__hostname"]
           target_label  = "instance"
         }
+      }
+
+      loki.process "journal" {
+        // nftables
+        stage.match {
+          selector = "{job=\"systemd-journal\",transport=\"kernel\"} |= \"nftables-\""
+
+          stage.static_labels {
+            values = {
+              unit = "nftables",
+            }
+          }
+        }
+
+        forward_to = [loki.write.monitoring.receiver]
       }
 
       prometheus.exporter.unix "node" { }
