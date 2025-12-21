@@ -102,7 +102,30 @@
 
   services.angrr = {
     enable = true;
-    period = "2weeks";
+
+    settings = {
+      temporary-root-policies = {
+        direnv = {
+          path-regex = "/\\.direnv/";
+          period = "14d";
+        };
+
+        result = {
+          path-regex = "/result[^/]*$";
+          period = "3d";
+        };
+      };
+
+      profile-policies.user = {
+        enable = false;
+        profile-paths = [ ];
+      };
+
+      profile-policies.system = {
+        enable = false;
+        profile-paths = [ ];
+      };
+    };
   };
 
   # enable scanner/printer
