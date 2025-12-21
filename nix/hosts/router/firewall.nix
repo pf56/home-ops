@@ -48,6 +48,10 @@ in
             10.0.60.19
           }
 
+          define TS_QUAD100 = {
+            100.100.100.100
+          }
+
           flowtable f {
             hook ingress priority 0;
             devices = { ${interfaces.wan.name}, ${interfaces.lan1.name}, ${interfaces.lan2.name}, ${interfaces.lan3.name} }
@@ -127,6 +131,7 @@ in
             oifname ${interfaces.ppp.name} accept
             oifname ${interfaces.dslite.name} accept
             oifname ${vlans.server.name} jump LOCAL-SERVER
+            oifname ${interfaces.tailscale.name} jump LOCAL-TAILSCALE
 
             log prefix "nftables-drop output: " drop
           }
@@ -195,6 +200,11 @@ in
             ip daddr $TALOS_WORKERS tcp dport 179 accept comment "Allow BGP with Talos"
             ip daddr $MONITORING tcp dport 3100 accept comment "Allow Alloy export"
             ip daddr $MONITORING tcp dport 9090 accept comment "Allow Prometheus export"
+            counter drop
+          }
+
+          chain LOCAL-TAILSCALE {
+            ip daddr $TS_QUAD100 meta l4proto { tcp, udp } th dport 53 accept comment "Allow DNS"
             counter drop
           }
 
