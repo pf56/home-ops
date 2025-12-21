@@ -193,6 +193,7 @@ in
             ip daddr $NAMESERVERS meta l4proto { tcp, udp } th dport 53 accept comment "Allow DNS"
             ip daddr $NAMESERVERS tcp dport 179 accept comment "Allow BGP with DNS"
             ip daddr $TALOS_WORKERS tcp dport 179 accept comment "Allow BGP with Talos"
+            ip daddr $MONITORING tcp dport 3100 accept comment "Allow Alloy export"
             ip daddr $MONITORING tcp dport 9090 accept comment "Allow Prometheus export"
             counter drop
           }

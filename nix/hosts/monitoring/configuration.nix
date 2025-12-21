@@ -25,6 +25,7 @@
     80
     443
     1514
+    3100
     9090
   ];
   networking.firewall.allowedUDPPorts = [ 443 ];
@@ -64,7 +65,12 @@
               id = 12688;
               version = 4;
             };
-            transformations = grafanaDashboardsLib.fillTemplating [{ key = "DS_PROMETHEUS"; value = "PBFA97CFB590B2093"; } ];
+            transformations = grafanaDashboardsLib.fillTemplating [
+              {
+                key = "DS_PROMETHEUS";
+                value = "PBFA97CFB590B2093";
+              }
+            ];
           }).options.path
         ];
       };
