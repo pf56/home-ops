@@ -41,13 +41,10 @@ in
         lsfg-vk-ui
         protonplus
 
+        prismlauncher
         wowup-cf
       ]
       ++ (lib.optional (builtins.elem "vfio" config.system.nixos.tags) [ vfio-steam ]);
-
-    nixpkgs.config.permittedInsecurePackages = [
-      "dotnet-runtime-7.0.20" # vintage story
-    ];
 
     modules = {
       star-citizen.enable = true;
