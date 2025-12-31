@@ -119,3 +119,4 @@ worker:
     - "@./patches/install-cilium-worker.yaml"
     - "@./patches/enable-peering.yaml"
     - "@./patches/dns-config.yaml"
+    - "@./patches/enable-user-namespaces.yaml"
