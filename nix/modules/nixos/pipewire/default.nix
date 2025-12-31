@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 
@@ -10,6 +11,10 @@ let
   cfg = config.modules.pipewire;
 in
 {
+  imports = [
+    inputs.nix-gaming.nixosModules.pipewireLowLatency
+  ];
+
   options.modules.pipewire = {
     enable = mkOption {
       default = false;
@@ -25,6 +30,10 @@ in
       alsa.enable = true;
       pulse.enable = true;
       jack.enable = true;
+
+      lowLatency = {
+        enable = true;
+      };
     };
 
     environment.systemPackages = with pkgs; [
