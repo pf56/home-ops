@@ -49,37 +49,9 @@ spec:
           - name: EULA
             value: "TRUE"
           - name: TYPE
-            value: "CUSTOM"
-          - name: GENERIC_PACKS
-            value: "GT_New_Horizons_2.8.4_Server_Java_17-25"
-          - name: GENERIC_PACKS_SUFFIX
-            value: ".zip"
-          - name: GENERIC_PACKS_PREFIX
-            value: "https://downloads.gtnewhorizons.com/ServerPacks/"
-          - name: SKIP_GENERIC_PACK_UPDATE_CHECK
-            value: "true"
+            value: "GTNH"
           - name: MEMORY
             value: "6G"
-          - name: JVM_OPTS
-            value: "-Dfml.readTimeout=180 @java9args.txt"
-          - name: CUSTOM_SERVER
-            value: "https://github.com/GTNewHorizons/lwjgl3ify/releases/download/3.0.2/lwjgl3ify-3.0.2-forgePatches.jar"
-          - name: MOTD
-            value: "GT:New Horizons 2.8.0"
-          - name: DIFFICULTY
-            value: "hard"
-          - name: ENABLE_COMMAND_BLOCK
-            value: "true"
-          - name: SPAWN_PROTECTION
-            value: "1"
-          - name: VIEW_DISTANCE
-            value: "8"
-          - name: MODE
-            value: "0"
-          - name: LEVEL_TYPE
-            value: "rwg"
-          - name: ALLOW_FLIGHT
-            value: "TRUE"
           - name: WHITELIST_FILE
             value: "/secrets/whitelist/whitelist.json"
         ports:
