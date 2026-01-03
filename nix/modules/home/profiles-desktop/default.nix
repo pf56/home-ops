@@ -47,8 +47,8 @@ in
 
       home.packages = with pkgs; [
         wlr-randr
-        xfce.thunar
-        xfce.thunar-archive-plugin
+        thunar
+        thunar-archive-plugin
       ];
 
       programs.librewolf = {
