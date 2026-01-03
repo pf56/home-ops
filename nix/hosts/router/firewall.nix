@@ -233,6 +233,7 @@ in
             ip daddr 10.0.60.5 tcp dport 6443 accept comment "Allow Kubernetes API"
             ip daddr $TALOS_NODES tcp dport 50000 accept comment "Allow Talos control plane"
             ip daddr 172.16.61.0/24 tcp dport { 80, 443 } accept comment "Allow Cilium LB"
+            ip daddr 172.16.61.4 tcp dport { 25565 } accept comment "Allow Minecraft"
           }
 
           chain OFFICE-IOT {
