@@ -28,6 +28,7 @@
         ssh.host = lib.mkDefault "${config.networking.hostName}.internal.paulfriedrich.me";
         ssh.user = lib.mkDefault "pfriedrich";
         sudo.enable = lib.mkDefault true;
+        local-evaluation = lib.mkDefault true;
       };
     };
   }
