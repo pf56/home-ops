@@ -1,0 +1,13 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: whitelist
+  namespace: gtnh
+spec:
+  encryptedData:
+    whitelist.json: AgA8u/tW5vJlkWQSSjUa6gDGkLWka5cCvQPhKljGOgxVUXf0AtqaMqdZlc/qyPbG8rqhnWMcpiF7mJr66SVU/kkLQaZNkc/EP+OAf+ILQ/6B3DGKhgPjaEI/cKDbMapvEVcy/MbTQiXgpfM7Sstjl/D8hnR7Od9RV/vvV/LNjXoXf535MDpIVgKqw81XKz4lW32rZmy9do7xfl76Cy/tFnqxC1IHHdC8DuFtpvvWm2dAoMcxyEmlEqs8CmfTKBWJSv8dlEi25w29Wu8snuj6RIv1l9WmVlaBBdk8xS2I2D3lRDbtuaRxHmqV9wQ78upGFqFKOHq8o5dPZe3T0uVJ7Bw5HmaebimkN5xNSguOyiATkVtpUyNHyczqUvDhpwQd+ggLl8g0adCdghiAKv1PLpFWP192oP6vA9M8c6X0f0jRaFDfT1nTEjFgJFoSzdBWiWJLWq66ISD2t+wmeIUIBBTljYTW76RL/VGD8nV3PPGwYtXi6XyFFsWn+shUte8g0kjfCVAAuWJby/m1oT8xb4aOfP0Iz80FA7fC/4tV/6o8qGCtLT/OkRyyGJ4wTGgHWYfUBClip1pmxcryEwRzlZwPvJJsi1ysdqcKtWuNVtwx+VWtlhrfSFi6HykdU00X65LnY/i9ZCYLGwPlS/JN1zR1yYieSz8qy+M6zN5a/Jjjnynz4ffl6HAKOYREpdNVP8UrNN3zOlfWFhzCo9wZMuaf8IwNZixuMLCqC9OJPKDHm4ZNIIP09uK3XiPyJhLNy6txXUE7hjKms40LK+KIWdAjNI+53WOa/sXzQIgtW6rNMQGFbL0=
+  template:
+    metadata:
+      name: whitelist
+      namespace: gtnh
