@@ -69,6 +69,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.60.1
+    patches:
+      - "@./patches/longhorn-worker01.yaml"
 
   - hostname: talosworker02
     ipAddress: 10.0.60.10
@@ -85,6 +87,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.60.1
+    patches:
+      - "@./patches/longhorn-worker02.yaml"
 
   - hostname: talosworker03
     ipAddress: 10.0.60.13
@@ -101,6 +105,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.60.1
+    patches:
+      - "@./patches/longhorn-worker03.yaml"
 
 controlPlane:
   patches:
@@ -115,8 +121,10 @@ worker:
       systemExtensions:
           officialExtensions:
               - siderolabs/iscsi-tools
+              - siderolabs/util-linux-tools
   patches:
     - "@./patches/install-cilium-worker.yaml"
     - "@./patches/enable-peering.yaml"
     - "@./patches/dns-config.yaml"
     - "@./patches/enable-user-namespaces.yaml"
+    - "@./patches/longhorn-common.yaml"
