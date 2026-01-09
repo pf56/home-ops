@@ -3,7 +3,8 @@
   "namespace": "longhorn-system",
   "syncPolicy": {
     "syncOptions": [
-      "CreateNamespace=true"
+      "CreateNamespace=true",
+      "ServerSideApply=true"
     ],
     "managedNamespaceMetadata": {
       "labels": [
