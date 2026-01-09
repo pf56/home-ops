@@ -16,7 +16,7 @@ spec:
       monthly: 12
       yearly: 1
     copyMethod: Snapshot
-    volumeSnapshotClassName: freenas-api-iscsi-csi
+    volumeSnapshotClassName: longhorn
     moverSecurityContext:
       fsGroup: 1001
       fsGroupChangePolicy: "OnRootMismatch"
