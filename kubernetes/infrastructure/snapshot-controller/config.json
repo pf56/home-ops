@@ -1,0 +1,10 @@
+{
+  "name": "snapshot-controller",
+  "namespace": "snapshot-controller",
+  "syncPolicy": {
+    "syncOptions": [
+      "CreateNamespace=true",
+      "ServerSideApply=true"
+    ]
+  }
+}

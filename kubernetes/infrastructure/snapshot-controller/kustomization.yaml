@@ -1,0 +1,9 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: snapshot-controller
+resources:
+  - namespace.yaml
+  # v8.4.0
+  - client/config/crd
+  - deploy/kubernetes/snapshot-controller

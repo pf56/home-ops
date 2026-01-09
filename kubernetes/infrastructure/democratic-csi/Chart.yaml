@@ -2,9 +2,6 @@ apiVersion: v2
 name: democratic-csi
 version: 1.0.0
 dependencies:
-  - name: snapshot-controller
-    version: 0.3.0
-    repository: https://democratic-csi.github.io/charts/
   - name: democratic-csi
     alias: node-man
     version: 0.15.0

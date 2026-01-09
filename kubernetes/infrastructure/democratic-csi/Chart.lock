@@ -1,12 +1,9 @@
 dependencies:
-- name: snapshot-controller
-  repository: https://democratic-csi.github.io/charts/
-  version: 0.3.0
 - name: democratic-csi
   repository: https://democratic-csi.github.io/charts/
   version: 0.15.0
 - name: democratic-csi
   repository: https://democratic-csi.github.io/charts/
   version: 0.15.0
-digest: sha256:c38c440cb0df2e022d712f9a407c1a822498116768ea42d0ba1875820483b792
-generated: "2025-06-15T12:58:51.593139518+02:00"
+digest: sha256:5bacaef0a8871521b8c5458cd1b1a2b49e788baf2ac77da85e1e97c74d7f9dc1
+generated: "2026-01-09T16:12:07.928188478+01:00"
