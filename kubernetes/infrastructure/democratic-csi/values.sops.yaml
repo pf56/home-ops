@@ -19,7 +19,7 @@ fn-iscsi:
         name: ENC[AES256_GCM,data:XyIBVCZxFqw12VfjSJ7AWBMwbf6vC9yvMR7fKzzVqDHVStTO,iv:Uo+P9IOsK7sGMzgUFat81pvb+xq/gTNmbLKsxjJjUMg=,tag:PQRELbCERjM1xaulsbTQdA==,type:str]
     storageClasses:
         - name: ENC[AES256_GCM,data:Lw4OFLu2rVyqUUOHiGVLMowhVMSq,iv:woewgeXhZm3F5xjfKWQV9AKhoeeD3NO5DROehtb5Jsg=,tag:c+qpOCCZY0prwX/p3jUsAg==,type:str]
-          defaultClass: ENC[AES256_GCM,data:sh+Beg==,iv:j/fb6KtYNHcyML9xSS0hclkBQ3L8MW9PirBq52Y5DvQ=,tag:qILafp/HI/IRz0PGrQwGCg==,type:bool]
+          defaultClass: ENC[AES256_GCM,data:6e1hfnw=,iv:Xgar/w2vAXyg1CRmq0r8P7F504SyLQv3aqcSY02aVjU=,tag:HEhI1Pi0OyVcNVeSS2kbvQ==,type:bool]
           reclaimPolicy: ENC[AES256_GCM,data:DxvUButz,iv:e6vfxZSIgsDlmAC/8DTjpxvFeb+8399AJ7lUd+7vooE=,tag:+lmVDaFqiahCkIGUY/gjcA==,type:str]
           volumeBindingMode: ENC[AES256_GCM,data:tDgSgReogbHF,iv:5UWTcI48gLEjNgmNgOTL0hFu05UlBaUq16bvYA3Wd9M=,tag:m4bJHFt3aMQI2RZKPCh6Jw==,type:str]
           allowVolumeExpansion: ENC[AES256_GCM,data:IDhGbA==,iv:xrvf6GO+Wg6YJE9rlqrC1e2LpDLZqsT5qoo18YNE0wk=,tag:Xmjo4OogVo7NQvMkO9M6/w==,type:bool]
@@ -89,7 +89,7 @@ sops:
             NzZNUkd2ZXAwMnBxZ3RKV1AzTWxYd28KQ1akKhHQUJwfrXL0QRo8xTLhq8XM2nQr
             6pqUp2FX2chPSMdFLRZo/hKsVFaG4p6UMZS0awZqtqERhg/I9tgkkg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-11-24T17:48:12Z"
-    mac: ENC[AES256_GCM,data:EkovLdU7B/XJPPVmWvPoW2axbkh+85FDm1eBY/qmuXTNz7RyDJvlq3gCSFAXRSj+ZI7ze81WvFNXTUS+0wl26VfyKmhnmiE+zECU6stfqs/46Hun1W/Ag2SmW4xYDThtpk76/35zjkfnr1gllUZ0tQsaCq647CpCeKq9F9262Mw=,iv:kYhzfEuVZ3yioLLCU8OJoPo/N35vwhxFZvRsaYRaFZE=,tag:Jeg8KvqYxY1/LylUtgnAww==,type:str]
+    lastmodified: "2026-01-09T14:51:30Z"
+    mac: ENC[AES256_GCM,data:dDujCidNFpwtREz1pp131g+FhOPK88z2b003AKuURsmBJIBH4Hz73AXfBDIoueDBGneK7vyBswjfOh1+YY0WZQdJRmMjqhdLcODTLt3kAcx/o5T8ZdUW7QS05QbEeGOOppFdpV65JR3WZM6sEjkcsu1gXCKhuKJgH0PJ5WxCXrI=,iv:gGnpkDiHV5sJTJt18/nrM2i+VCfU7MKAnUAXNJkKN8c=,tag:AvC2UuST/JWKuO6Dyasikg==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.11.0
