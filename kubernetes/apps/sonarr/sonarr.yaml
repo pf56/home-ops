@@ -60,7 +60,9 @@ spec:
           persistentVolumeClaim:
             claimName: pvc-sonarr-tv
   volumeClaimTemplates:
-  - metadata:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
       name: data
       namespace: sonarr
     spec:
