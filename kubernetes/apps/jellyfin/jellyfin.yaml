@@ -57,12 +57,14 @@ spec:
           persistentVolumeClaim:
             claimName: pvc-jellyfin-movies
   volumeClaimTemplates:
-  - metadata:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
       name: data
       namespace: jellyfin
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "freenas-api-iscsi-csi"
+      storageClassName: longhorn
       resources:
         requests:
           storage: 16Gi
