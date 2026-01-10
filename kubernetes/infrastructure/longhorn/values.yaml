@@ -3,5 +3,7 @@ longhorn:
     jobEnabled: false
   defaultSettings:
     defaultDataPath: "/var/mnt/longhorn"
+    storageOverProvisioningPercentage: 500
+    storageMinimalAvailablePercentage: 10
   persistence:
     defaultClassReplicaCount: 2
