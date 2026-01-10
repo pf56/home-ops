@@ -13,19 +13,21 @@ let
 in
 {
   imports = [
-    nix-colors.homeManagerModules.default
-
-    flake.homeModules.utilities-desktop
-    flake.homeModules.gtk
-    flake.homeModules.qt
-    flake.homeModules.wpaperd
-    flake.homeModules.mako
-    flake.homeModules.river
-    flake.homeModules.kanshi
-    flake.homeModules.waybar
-    flake.homeModules.gaming
-    flake.homeModules.vfio
     flake.homeModules.bongocat
+    flake.homeModules.gaming
+    flake.homeModules.gtk
+    flake.homeModules.kanshi
+    flake.homeModules.librewolf
+    flake.homeModules.mako
+    flake.homeModules.qt
+    flake.homeModules.river
+    flake.homeModules.thunar
+    flake.homeModules.utilities-desktop
+    flake.homeModules.vfio
+    flake.homeModules.waybar
+    flake.homeModules.wpaperd
+
+    nix-colors.homeManagerModules.default
   ];
 
   config = lib.mkMerge [
@@ -34,31 +36,23 @@ in
       colorScheme = nix-colors.colorSchemes.nord;
 
       modules = {
-        gtk.enable = true;
-        qt.enable = true;
-        wpaperd.enable = true;
-        mako.enable = true;
-        river.enable = true;
-        kanshi.enable = true;
-        waybar.enable = true;
-        gaming.enable = true;
         bongocat.enable = true;
+        gaming.enable = true;
+        gtk.enable = true;
+        kanshi.enable = true;
+        librewolf.enable = true;
+        mako.enable = true;
+        qt.enable = true;
+        river.enable = true;
+        thunar.enable = true;
+        waybar.enable = true;
+        wpaperd.enable = true;
       };
 
       home.packages = with pkgs; [
         wlr-randr
-        thunar
-        thunar-archive-plugin
+        flatpak
       ];
-
-      programs.librewolf = {
-        enable = true;
-        settings = {
-          "identity.fxaccounts.enabled" = true;
-          "privacy.clearOnShutdown.history" = false;
-          "middlemouse.paste" = false;
-        };
-      };
 
       xdg =
         let
