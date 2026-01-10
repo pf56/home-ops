@@ -65,7 +65,7 @@ spec:
       namespace: radarr
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "freenas-api-iscsi-csi"
+      storageClassName: longhorn
       resources:
         requests:
           storage: 8Gi
