@@ -31,6 +31,7 @@ spec:
       labels:
         app: vaultwarden
     spec:
+      hostUsers: false
       containers:
       - name: vaultwarden
         image: ghcr.io/dani-garcia/vaultwarden
@@ -52,7 +53,7 @@ spec:
       namespace: vaultwarden
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "freenas-api-iscsi-csi"
+      storageClassName: longhorn
       resources:
         requests:
           storage: 8Gi
