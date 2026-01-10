@@ -47,7 +47,7 @@ in
       ++ (lib.optional (builtins.elem "vfio" config.system.nixos.tags) [ vfio-steam ]);
 
     modules = {
-      star-citizen.enable = true;
+      star-citizen.enable = false;
       steam.enable = true;
     };
   };
