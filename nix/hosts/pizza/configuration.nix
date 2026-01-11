@@ -206,18 +206,6 @@
     users.users.pfriedrich.password = "foo";
   };
 
-  specialisation = {
-    vfio.configuration = {
-      system.nixos.tags = [ "with-vfio" ];
-
-      imports = [
-        flake.nixosModules.vfio
-      ];
-
-      modules.vfio.enable = true;
-    };
-  };
-
   nixpkgs.config.allowUnfree = true;
   nix = {
     package = pkgs.nixVersions.stable;
