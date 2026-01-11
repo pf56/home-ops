@@ -20,12 +20,6 @@ in
   config = mkIf cfg.enable {
     services.wpaperd = {
       enable = true;
-
-      settings = {
-        default = {
-          path = ./wallpapers/wild.png;
-        };
-      };
     };
   };
 }

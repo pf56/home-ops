@@ -14,8 +14,6 @@
     enable = true;
 
     settings = {
-      theme = "nord";
-
       keys.normal = {
         c = "change_selection_noyank";
         d = "delete_selection_noyank";

@@ -8,9 +8,6 @@
   ...
 }:
 
-let
-  nix-colors = inputs.nix-colors;
-in
 {
   imports = [
     flake.homeModules.bongocat
@@ -19,6 +16,7 @@ in
     flake.homeModules.kanshi
     flake.homeModules.librewolf
     flake.homeModules.mako
+    flake.homeModules.niri
     flake.homeModules.qt
     flake.homeModules.river
     flake.homeModules.thunar
@@ -26,24 +24,61 @@ in
     flake.homeModules.vfio
     flake.homeModules.waybar
     flake.homeModules.wpaperd
-
-    nix-colors.homeManagerModules.default
   ];
 
   config = lib.mkMerge [
     ({
 
-      colorScheme = nix-colors.colorSchemes.nord;
+      stylix = {
+        enable = true;
+        base16Scheme = nixosConfig.stylix.base16Scheme;
+        image = ./wallpapers/wild.png;
+
+        cursor = {
+          name = "Nordic-cursors";
+          package = pkgs.nordic;
+          size = 24;
+        };
+
+        fonts = {
+          serif = {
+            package = pkgs.noto-fonts;
+            name = "Noto Serif";
+          };
+
+          sansSerif = {
+            package = pkgs.noto-fonts;
+            name = "Noto Sans";
+          };
+
+          monospace = {
+            package = pkgs.jetbrains-mono;
+            name = "JetBrainsMono";
+          };
+
+          emoji = {
+            package = pkgs.noto-fonts-color-emoji;
+            name = "Noto Color Emoji";
+          };
+        };
+
+        icons = {
+          enable = true;
+          dark = "Nordzy";
+          package = pkgs.nordzy-icon-theme;
+        };
+
+        targets.mangohud.enable = false;
+        targets.librewolf.enable = false;
+      };
 
       modules = {
         bongocat.enable = true;
         gaming.enable = true;
-        gtk.enable = true;
-        kanshi.enable = true;
         librewolf.enable = true;
         mako.enable = true;
-        qt.enable = true;
-        river.enable = true;
+        niri.enable = true;
+        #river.enable = true;
         thunar.enable = true;
         waybar.enable = true;
         wpaperd.enable = true;
@@ -94,6 +129,7 @@ in
 
             extraPortals = with pkgs; [
               xdg-desktop-portal-gtk
+              xdg-desktop-portal-gnome
               xdg-desktop-portal-wlr
             ];
           };

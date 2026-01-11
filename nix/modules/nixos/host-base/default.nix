@@ -10,6 +10,7 @@
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
+    inputs.stylix.nixosModules.stylix
     flake.nixosModules.amd-gpu
     flake.nixosModules.gaming
     flake.nixosModules.greetd
@@ -27,4 +28,9 @@
       nix.nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
     }
   ];
+
+  stylix = {
+    enable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+  };
 }

@@ -10,6 +10,7 @@
   imports = [
     ./hardware-configuration.nix
     flake.nixosModules.host-base
+    flake.nixosModules.niri
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -35,6 +36,7 @@
     gaming.enable = true;
     greetd.enable = true;
     kdeconnect.enable = true;
+    niri.enable = true;
     nvme-rs = {
       enable = true;
       smtpPasswordFile = config.sops.secrets.smtp_password.path;

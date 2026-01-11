@@ -29,12 +29,11 @@ in
           spacing = 10;
 
           modules-left = [
-            "river/tags"
-            "river/mode"
+            "niri/workspaces"
           ];
 
           modules-center = [
-            "river/window"
+            "niri/window"
           ];
 
           modules-right = [
@@ -45,34 +44,6 @@ in
             "tray"
             "clock"
           ];
-
-          "river/tags" = {
-            num-tags = 9;
-
-            set-tags = [
-              1
-              2
-              4
-              8
-              16
-              32
-              64
-              128
-              256
-            ];
-
-            toggle-tags = [
-              1
-              2
-              4
-              8
-              16
-              32
-              64
-              128
-              256
-            ];
-          };
 
           cpu = {
             format = " {usage}%";
@@ -119,34 +90,25 @@ in
       };
 
       style = ''
-        * {
-          font-family: SauceCodePro NFM Medium;
-          font-size: 13px;
+        .modules-left, .modules-center, .modules-right {
+          margin-top: 5px;
         }
 
-        window#waybar {
-          background-color: #${config.colorScheme.palette.base00};
+        .modules-left {
+          margin-left: 5px;
         }
 
-        #tags button {
-          margin: 0;
-          padding: 0;
-          min-width: 30px;
-
+        .modules-left #workspaces button {
+          padding: 2px;
+          min-width: 28px;
+          border: none;
           border-radius: 0;
-          color: #${config.colorScheme.palette.base04};
         }
 
-        #tags button.focused {
-          background-color: #${config.colorScheme.palette.base01};
-        }
-
-        #tags button.occupied {
-          color: #${config.colorScheme.palette.base06};
-        }
-
-        #tags button.urgent {
-          color: orange;
+        .modules-left #workspaces button.active,
+        .modules-left #workspaces button.focused {
+          background-color: @base01;
+          border-bottom: none;
         }
       '';
     };
