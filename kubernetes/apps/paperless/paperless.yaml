@@ -72,7 +72,7 @@ spec:
       namespace: paperless
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "freenas-api-iscsi-csi"
+      storageClassName: longhorn
       resources:
         requests:
-          storage: 32Gi
+          storage: 8Gi
