@@ -22,8 +22,14 @@ in
       settings = {
         prefer-no-csd = true;
         screenshot-path = "~/Pictures/Screenshots/Screenshot-%Y-%m-%d-%H-%M-%S.png";
+        xwayland-satellite.path = getExe pkgs.xwayland-satellite-unstable;
 
         input = {
+          focus-follows-mouse = {
+            enable = true;
+            max-scroll-amount = "0%";
+          };
+
           keyboard = {
             xkb = {
               layout = "eu";
@@ -122,30 +128,41 @@ in
           "Mod+Shift+8".action.move-column-to-workspace = 8;
           "Mod+Shift+9".action.move-column-to-workspace = 9;
 
+          "Mod+W".action.toggle-column-tabbed-display = { };
           "Mod+Comma".action.consume-window-into-column = { };
           "Mod+Period".action.expel-window-from-column = { };
 
           "Mod+R".action.switch-preset-column-width = { };
           "Mod+Shift+R".action.reset-window-height = { };
-          "Mod+F".action.maximize-column = { };
-          "Mod+Shift+F".action.fullscreen-window = { };
           "Mod+C".action.center-column = { };
+          "Mod+Shift+Space".action.toggle-window-floating = { };
 
           "Mod+Minus".action.set-column-width = "-10%";
           "Mod+Equal".action.set-column-width = "+10%";
-
           "Mod+Shift+Minus".action.set-window-height = "-10%";
           "Mod+Shift+Equal".action.set-window-height = "+10%";
+
+          "Mod+F".action.maximize-column = { };
+          "Mod+Shift+F".action.expand-column-to-available-width = { };
+          "Mod+Ctrl+F".action.fullscreen-window = { };
+          "Mod+Ctrl+Shift+F".action.toggle-windowed-fullscreen = { };
 
           "Print".action.screenshot = { };
           "Ctrl+Print".action.screenshot-screen = { };
           "Alt+Print".action.screenshot-window = { };
 
-          "Mod+Shift+P".action.power-off-monitors = { };
+          "Mod+P".action.set-dynamic-cast-window = { };
+          "Mod+Shift+P".action.set-dynamic-cast-monitor = { };
+          "Mod+Ctrl+P".action.clear-dynamic-cast-target = { };
 
           "Super+L".action.spawn = "swaylock";
           "Mod+Return".action.spawn = "alacritty";
           "Mod+D".action.spawn = "wofi";
+
+          "Ctrl+F9".action.spawn-sh = "${pkgs.discover-overlay}/bin/discover-overlay --rpc --toggle-mute";
+          "Ctrl+F10".action.spawn-sh = "${pkgs.discover-overlay}/bin/discover-overlay --rpc --toggle-deaf";
+          "Ctrl+F11".action.spawn-sh = "${pkgs.discover-overlay}/bin/discover-overlay --rpc --show";
+          "Ctrl+Shift+F11".action.spawn-sh = "${pkgs.discover-overlay}/bin/discover-overlay --rpc --hide";
 
           "Mod+O" = {
             action.toggle-overview = { };
@@ -196,6 +213,10 @@ in
           disable-primary = true;
         };
 
+        gestures = {
+          hot-corners.enable = false;
+        };
+
         layer-rules = [
           {
             matches = [ { namespace = "^wpaperd-DP-1$"; } ];
@@ -212,6 +233,19 @@ in
         ];
 
         window-rules = [
+          {
+            matches = [ { is-window-cast-target = true; } ];
+            focus-ring = {
+              enable = true;
+              active.color = "#f38ba8";
+              inactive.color = "#7d0d2d";
+            };
+
+            border = {
+              enable = true;
+              inactive.color = "#7d0d2d";
+            };
+          }
           {
             matches = [
               {
