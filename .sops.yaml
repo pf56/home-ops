@@ -15,6 +15,7 @@ keys:
   - &auth age1nkjs7c87566zwyafgjrtsg4z4efklm4zqz3ylruqys2hjluhweqqgwqeur
   - &argocd age18spf8ku8hn2yc6g7v3tlh8859chmxkv952lr52ppwknzwl7eh58sq9yu56
   - &router age1l0q0y5e7exct4esytcqwj24qthnspnd2zhk3m3gr4ffhr8nsh96qk7ut79
+  - &infisical age1f0rlnchzfzvaqwapqpkmf4auh305fgc5aupvwjlkuum9vnfcralscc50k2
 creation_rules:
   - path_regex: secrets/e595\.yaml$
     key_groups:
@@ -73,6 +74,11 @@ creation_rules:
       - age:
         - *pfriedrich
         - *router
+  - path_regex: nix/secrets/infisical\.yaml$
+    key_groups:
+      - age:
+        - *pfriedrich
+        - *infisical
   - path_regex: kubernetes/talos/talsecret.sops.yaml
     key_groups:
       - age:

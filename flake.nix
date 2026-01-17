@@ -38,6 +38,7 @@
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
     grafana-dashboards.url = "github:blackheaven/grafana-dashboards.nix";
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
   };
 
   outputs =

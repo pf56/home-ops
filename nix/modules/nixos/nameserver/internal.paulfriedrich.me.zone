@@ -30,8 +30,7 @@ homeassistant			IN	A		10.0.40.3
 
 ; SERVER
 ldap01					IN	A		10.0.60.2
-stepca					IN	A		10.0.60.4
-ca						IN	CNAME	stepca
+infisical				IN	A		10.0.60.4
 kube					IN	A		10.0.60.5
 tailscale01				IN	A		10.0.60.6
 taloscontrolplane01		IN	A		10.0.60.7

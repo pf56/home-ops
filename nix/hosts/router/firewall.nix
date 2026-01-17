@@ -48,6 +48,10 @@ in
             10.0.60.19
           }
 
+          define INFISICAL = {
+            10.0.60.4
+          }
+
           define TS_QUAD100 = {
             100.100.100.100
           }
@@ -229,6 +233,7 @@ in
             tcp dport 22 accept comment "Allow SSH"
             ip daddr 10.0.60.8 accept comment "Allow Git"
             ip daddr $MONITORING accept comment "Allow Monitoring"
+            ip daddr $INFISICAL accept comment "Allow Infisical"
 
             ip daddr 10.0.60.5 tcp dport 6443 accept comment "Allow Kubernetes API"
             ip daddr $TALOS_NODES tcp dport 50000 accept comment "Allow Talos control plane"

@@ -246,6 +246,10 @@ in
                 ip-address = "10.0.60.3";
               }
               {
+                hw-address = "00:a0:98:52:8e:68";
+                ip-address = "10.0.60.4";
+              }
+              {
                 # Talos control plane
                 hw-address = "ff:ff:ff:ff:ff:ff";
                 ip-address = "10.0.60.5";

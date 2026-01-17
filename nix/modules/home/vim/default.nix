@@ -9,6 +9,6 @@
   programs.vim = {
     enable = true;
 
-    extraConfig = '''';
+    extraConfig = "";
   };
 }

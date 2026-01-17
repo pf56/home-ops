@@ -25,7 +25,7 @@ in
 
   environment.etc = {
     # file needs to exist
-    "ppp/options".text = '''';
+    "ppp/options".text = "";
 
     "ppp/peers/isp" = {
       source = lib.mkForce config.sops.templates."pppoe-peers-isp".path;
