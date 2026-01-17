@@ -1,0 +1,10 @@
+{
+  "name": "infisical",
+  "namespace": "infisical-operator-system",
+  "syncPolicy": {
+    "syncOptions": [
+      "CreateNamespace=true",
+      "ServerSideApply=true"
+    ]
+  }
+}
