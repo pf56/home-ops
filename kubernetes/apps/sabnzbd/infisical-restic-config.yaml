@@ -1,19 +1,20 @@
 apiVersion: secrets.infisical.com/v1alpha1
 kind: InfisicalSecret
 metadata:
-  name: infisical-secret
+  name: infisical-restic-config
 spec:
   authentication:
     universalAuth:
       secretsScope:
         projectSlug: sabnzbd-n-m21
         envSlug: dev
-        secretsPath: "/"
+        secretsPath: "/restic"
       credentialsRef:
         secretName: infisical-credentials
         secretNamespace: sabnzbd
 
   managedKubeSecretReferences:
-    - secretName: sabnzbd-secrets
+    - secretName: restic-config
       secretNamespace: sabnzbd
+      secretType: Opaque
       creationPolicy: "Owner"
