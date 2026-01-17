@@ -10,3 +10,4 @@ resources:
   - ingress.yaml
   - restic-credentials.sealed.yaml
   - backup.yaml
+  - infisical.yaml
