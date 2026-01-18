@@ -1,0 +1,20 @@
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-config
+spec:
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: gtnh-z-si-9
+        envSlug: dev
+        secretsPath: "/"
+      credentialsRef:
+        secretName: infisical-credentials
+        secretNamespace: gtnh
+
+  managedKubeSecretReferences:
+    - secretName: gtnh-secrets
+      secretNamespace: gtnh
+      secretType: Opaque
+      creationPolicy: "Owner"

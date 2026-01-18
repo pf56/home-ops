@@ -5,4 +5,4 @@ namespace: gtnh
 resources:
   - ../../base
   - gtnh.yaml
-  - whitelist.sealed.yaml
+  - infisical-config.yaml

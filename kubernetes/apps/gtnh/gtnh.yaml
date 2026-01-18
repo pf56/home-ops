@@ -54,7 +54,7 @@ spec:
           - name: MEMORY
             value: "6G"
           - name: WHITELIST_FILE
-            value: "/secrets/whitelist/whitelist.json"
+            value: "/secrets/whitelist.json"
         ports:
           - containerPort: 25565
             name: mc
@@ -67,8 +67,8 @@ spec:
         volumeMounts:
           - name: data
             mountPath: /data
-          - name: whitelist
-            mountPath: /secrets/whitelist
+          - name: gtnh-secrets
+            mountPath: /secrets
             readOnly: true
         securityContext:
           readOnlyRootFilesystem: true
@@ -77,9 +77,9 @@ spec:
             drop:
               - ALL
       volumes:
-        - name: whitelist
+        - name: gtnh-secrets
           secret:
-            secretName: whitelist
+            secretName: gtnh-secrets
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim
