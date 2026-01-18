@@ -1,0 +1,20 @@
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-restic-config
+spec:
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: radarr-f8-km
+        envSlug: dev
+        secretsPath: "/restic"
+      credentialsRef:
+        secretName: infisical-credentials
+        secretNamespace: radarr
+
+  managedKubeSecretReferences:
+    - secretName: restic-config
+      secretNamespace: radarr
+      secretType: Opaque
+      creationPolicy: "Owner"
