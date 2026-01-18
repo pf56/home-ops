@@ -157,7 +157,7 @@ in
 
           "Super+L".action.spawn = "swaylock";
           "Mod+Return".action.spawn = "alacritty";
-          "Mod+D".action.spawn = "wofi";
+          "Mod+D".action.spawn = "fuzzel";
 
           "Ctrl+F9".action.spawn-sh = "${pkgs.discover-overlay}/bin/discover-overlay --rpc --toggle-mute";
           "Ctrl+F10".action.spawn-sh = "${pkgs.discover-overlay}/bin/discover-overlay --rpc --toggle-deaf";

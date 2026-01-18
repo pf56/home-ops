@@ -11,6 +11,7 @@
 {
   imports = [
     flake.homeModules.bongocat
+    flake.homeModules.fuzzel
     flake.homeModules.gaming
     flake.homeModules.gtk
     flake.homeModules.kanshi
@@ -74,6 +75,7 @@
 
       modules = {
         bongocat.enable = true;
+        fuzzel.enable = true;
         gaming.enable = true;
         librewolf.enable = true;
         mako.enable = true;
