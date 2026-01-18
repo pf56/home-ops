@@ -1,0 +1,20 @@
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-restic-config
+spec:
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: paperless-l3ca
+        envSlug: dev
+        secretsPath: "/restic"
+      credentialsRef:
+        secretName: infisical-credentials
+        secretNamespace: paperless
+
+  managedKubeSecretReferences:
+    - secretName: restic-config
+      secretNamespace: paperless
+      secretType: Opaque
+      creationPolicy: "Owner"

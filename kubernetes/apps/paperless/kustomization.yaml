@@ -8,7 +8,7 @@ resources:
   - paperless.yaml
   - redis.yaml
   - ingress.yaml
-  - restic-credentials.sealed.yaml
+  - infisical-restic-config.yaml
   - backup.yaml
 
 images:
