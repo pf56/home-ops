@@ -85,8 +85,9 @@
       };
 
       home.packages = with pkgs; [
-        wlr-randr
         flatpak
+        swaylock
+        wlr-randr
       ];
 
       xdg =

@@ -29,8 +29,7 @@
     }))
     discover-overlay
     firefox
-    jetbrains.rider
-    k9s
+    sops
     terminator
     thunderbird
     trash-cli
@@ -48,10 +47,17 @@
     noto-fonts-cjk-sans
     noto-fonts-color-emoji
 
+    # kubernetes
+    argocd
+    k9s
     kubectl
+    kubernetes-helm
     talosctl
     perSystem.talhelper.default
+
+    # development
     dotnet-sdk
+    jetbrains.rider
   ];
 
   modules = {
