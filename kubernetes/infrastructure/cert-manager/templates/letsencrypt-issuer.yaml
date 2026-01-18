@@ -14,5 +14,5 @@ spec:
         cloudflare:
           email: cloudflare@mail.paulfriedrich.me
           apiTokenSecretRef:
-            key: api-token
-            name: cloudflare-api-token
+            key: cloudflare-api-token
+            name: cert-manager-secrets

@@ -1,0 +1,20 @@
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-restic-config
+spec:
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: cert-manager-tq-jt
+        envSlug: dev
+        secretsPath: "/"
+      credentialsRef:
+        secretName: infisical-credentials
+        secretNamespace: cert-manager
+
+  managedKubeSecretReferences:
+    - secretName: cert-manager-secrets
+      secretNamespace: cert-manager
+      secretType: Opaque
+      creationPolicy: "Owner"
