@@ -9,7 +9,7 @@ spec:
     schedule: "20 2 * * *"
   restic:
     pruneIntervalDays: 14
-    repository: restic-credentials
+    repository: restic-config
     retain:
       daily: 7
       weekly: 4

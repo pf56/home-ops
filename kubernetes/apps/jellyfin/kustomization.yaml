@@ -10,5 +10,5 @@ resources:
   - pvc-tv.yaml
   - jellyfin.yaml
   - ingress.yaml
-  - restic-credentials.sealed.yaml
+  - infisical-restic-config.yaml
   - backup.yaml
