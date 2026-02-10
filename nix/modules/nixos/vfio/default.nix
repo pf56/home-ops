@@ -10,18 +10,7 @@ with lib;
 let
   cfg = config.modules.vfio;
 
-  gpuVideoBusId = "pci_0000_03_00_0";
-  gpuAudioBusId = "pci_0000_03_00_1";
   memory = "32768";
-
-  scriptUnbindDevices = pkgs.writeShellScriptBin "vfio-unbind-devices" ''
-    modprobe vfio
-    modprobe vfio_iommu_type1
-    modprobe vfio_pci
-
-    echo '0000:03:00.0' > '/sys/bus/pci/drivers/amdgpu/unbind'
-    echo '0000:03:00.1' > '/sys/bus/pci/drivers/snd_hda_intel/unbind'
-  '';
 
   scriptAllocHugepages = pkgs.writeShellScriptBin "vfio-alloc-hugepages" ''
     ## Calculate number of hugepages to allocate from memory (in MB)
@@ -94,66 +83,12 @@ in
       spiceUSBRedirection.enable = true;
     };
 
-    systemd.tmpfiles.rules =
-      let
-        firmware = pkgs.writeTextDir "firmware/sec-boot-with-ms-keys.json" ''
-          {
-            "description": "OVMF UEFI firmware",
-            "features": [
-              "verbose-dynamic",
-              "enrolled-keys",
-              "acpi-s3",
-              "secure-boot",
-              "requires-smm"
-            ],
-            "interface-types": [
-              "uefi"
-            ],
-            "mapping": {
-              "device": "flash",
-              "executable": {
-                "filename": "/run/libvirt/nix-ovmf/OVMF_CODE.ms.fd",
-                "format": "raw"
-              },
-              "nvram-template": {
-                "filename": "/run/libvirt/nix-ovmf/OVMF_VARS.ms.fd",
-                "format": "raw"
-              }
-            },
-            "tags": [],
-            "targets": [
-              {
-                "architecture": "x86_64",
-                "machines": [
-                  "pc-q35-*"
-                ]
-              }
-            ]
-          }
-        '';
-      in
-      [
-        "L+ /var/lib/qemu/firmware - - - - ${firmware}/firmware"
-      ];
-
     users.users.pfriedrich.extraGroups = [ "libvirtd" ];
 
-    # prevent anything from using the GPU. Fixes dynamic bind/unbind of amdgpu.
     users.groups.passthru = { };
     services.udev.extraRules = ''
-      KERNEL=="card[0-9]", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", ATTRS{device}=="0x7550", GROUP="passthru", TAG="nothing", ENV{ID_SEAT}="none"
-      KERNEL=="renderD12[0-9]", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", ATTRS{device}=="0x7550", GROUP="passthru", MODE="0660"
       KERNEL=="kvmfr[0-9]", SUBSYSTEM=="kvmfr", OWNER="pfriedrich", GROUP="kvm", MODE="0660"
     '';
-
-    # access to GPU can be allowed by 'sudo -A -g passthru command'
-    security.sudo.extraRules = [
-      {
-        users = [ "pfriedrich" ];
-        runAs = "ALL:passthru";
-        commands = [ "ALL" ];
-      }
-    ];
 
     boot.extraModulePackages = with config.boot.kernelPackages; [ kvmfr ];
 
@@ -168,7 +103,6 @@ in
     };
 
     environment.systemPackages = with pkgs; [
-      scriptUnbindDevices
       scriptAllocHugepages
       scriptDeallocHugepages
       scream

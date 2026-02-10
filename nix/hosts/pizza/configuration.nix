@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     flake.nixosModules.host-base
     flake.nixosModules.niri
+    flake.nixosModules.vfio
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -44,6 +45,7 @@
     openrgb.enable = true;
     obs.enable = true;
     pipewire.enable = true;
+    vfio.enable = true;
     wireshark.enable = true;
     yubikey.enable = true;
   };

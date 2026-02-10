@@ -82,6 +82,7 @@
         niri.enable = true;
         #river.enable = true;
         thunar.enable = true;
+        vfio.enable = true;
         waybar.enable = true;
         wpaperd.enable = true;
       };
