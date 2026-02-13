@@ -19,7 +19,7 @@ in
     extraUpFlags = [
       "--advertise-tags=tag:router"
       "--advertise-exit-node"
-      "--advertise-routes=${vlans.iot.subnet},${vlans.server.subnet},${wellKnowns.dns}/32,172.16.61.0/24"
+      "--advertise-routes=${vlans.office.subnet},${vlans.iot.subnet},${vlans.server.subnet},${wellKnowns.dns}/32,172.16.61.0/24"
     ];
   };
 

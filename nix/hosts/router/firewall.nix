@@ -109,6 +109,7 @@ in
             oifname ${interfaces.wan.name} jump ZONE_WAN
             oifname ${interfaces.ppp.name} jump ZONE_WAN
             oifname ${interfaces.dslite.name} jump ZONE_WAN
+            oifname ${interfaces.tailscale.name} jump ZONE_TAILSCALE
             oifname ${vlans.mgmt.name} jump ZONE_MGMT
             oifname ${vlans.office.name} jump ZONE_OFFICE
             oifname ${vlans.iot.name} jump ZONE_IOT
@@ -176,6 +177,12 @@ in
             counter drop
           }
 
+          chain ZONE_TAILSCALE {
+            iifname ${vlans.office.name} jump OFFICE-TAILSCALE
+            iifname ${interfaces.tailscale.name} accept comment "Loopback"
+            counter drop
+          }
+
           chain WAN-LOCAL {
             udp sport 547 udp dport 546 accept comment "Allow DHCPv6"
             counter drop
@@ -190,6 +197,8 @@ in
             ip daddr 172.16.61.0/24 tcp dport { 80, 443 } accept comment "Allow Cilium LB"
             ip daddr 10.0.60.8 accept comment "Allow Git"
             ip daddr 10.0.60.15 accept comment "Allow Auth"
+            ip daddr $MONITORING tcp dport 3100 accept comment "Allow Alloy export"
+            ip daddr $MONITORING tcp dport 9090 accept comment "Allow Prometheus export"
             counter drop
           }
 
@@ -244,6 +253,10 @@ in
           chain OFFICE-IOT {
             ip daddr 10.0.40.3 tcp dport { 4357, 443 } accept comment "Allow Home Assistant"
             ip daddr 10.0.40.4 tcp dport { 8000, 8443, 8444, 8445, 8446 } accept comment "Allow Bosch SHC"
+          }
+
+          chain OFFICE-TAILSCALE {
+            tcp dport 22 accept comment "Allow SSH"
           }
 
           chain MGMT-WAN {
