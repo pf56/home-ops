@@ -1,0 +1,9 @@
+newt:
+  global:
+    metrics:
+      enabled: true
+  newtInstances:
+    - name: main-tunnel
+      enabled: true
+      auth:
+        existingSecretName: main-tunnel-auth

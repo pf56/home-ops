@@ -1,0 +1,10 @@
+{
+  "name": "newt",
+  "namespace": "newt",
+  "syncPolicy": {
+    "syncOptions": [
+      "CreateNamespace=true",
+      "ServerSideApply=true"
+    ]
+  }
+}

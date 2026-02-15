@@ -1,0 +1,20 @@
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-main-tunnel
+spec:
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: remote-lab-vd-9-i
+        envSlug: dev
+        secretsPath: "/homelab/main-tunnel"
+      credentialsRef:
+        secretName: infisical-credentials
+        secretNamespace: newt
+
+  managedKubeSecretReferences:
+    - secretName: main-tunnel-auth
+      secretNamespace: newt
+      secretType: Opaque
+      creationPolicy: "Owner"
