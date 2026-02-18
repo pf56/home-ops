@@ -18,17 +18,22 @@ in
 
   services.resolved = {
     enable = true;
-    domains = [
-      "internal.paulfriedrich.me"
-      "~."
-    ];
 
-    extraConfig = ''
-      DNSStubListenerExtra=${vlans.mgmt.gateway}
-      DNSStubListenerExtra=${vlans.office.gateway}
-      DNSStubListenerExtra=${vlans.iot.gateway}
-      DNSStubListenerExtra=${vlans.server.gateway}
-    '';
+    settings = {
+      Resolve = {
+        Domains = [
+          "internal.paulfriedrich.me"
+          "~."
+        ];
+
+        DNSStubListenerExtra = [
+          vlans.mgmt.gateway
+          vlans.office.gateway
+          vlans.iot.gateway
+          vlans.server.gateway
+        ];
+      };
+    };
   };
 
   services.avahi = {

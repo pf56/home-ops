@@ -54,7 +54,7 @@
 
     networks."10-wan" = {
       matchConfig.MACAddress = "92:00:07:31:66:a7";
-      
+
       address = [
         "46.225.120.169/32"
         "2a01:4f8:1c19:63d::1/64"
@@ -62,15 +62,18 @@
 
       routes = [
         { Gateway = "fe80::1"; }
-        { Gateway = "172.31.1.1"; GatewayOnLink = true; }
+        {
+          Gateway = "172.31.1.1";
+          GatewayOnLink = true;
+        }
       ];
 
       linkConfig.RequiredForOnline = "routable";
     };
-    
+
     networks."10-lan" = {
       matchConfig.MACAddress = "86:00:00:7b:03:c8";
-      
+
       address = [
         "10.0.1.1/32"
       ];
@@ -99,7 +102,6 @@
       flags = {
         disable_signup_without_invite = true;
         disable_user_create_org = true;
-        enable_integration_api = true;
       };
     };
   };
