@@ -5,6 +5,7 @@
   inputs,
   flake,
   modulesPath,
+  perSystem,
   ...
 }:
 
@@ -37,6 +38,8 @@
 
   services.tailscale = {
     enable = true;
+    package = perSystem.self.tailscale-cgnat;
+
     disableTaildrop = true;
     authKeyFile = config.sops.secrets.tailscale-auth.path;
     extraUpFlags = [
