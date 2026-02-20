@@ -1,0 +1,6 @@
+dependencies:
+- name: stunner
+  repository: https://l7mp.io/stunner
+  version: 1.1.0
+digest: sha256:d2248152d99bde0aa7e995136297b889e977669096d37d4f8f0f596dc65adf86
+generated: "2026-02-20T21:04:51.027052839+01:00"

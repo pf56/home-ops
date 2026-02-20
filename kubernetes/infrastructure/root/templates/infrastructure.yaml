@@ -45,3 +45,6 @@ spec:
               {{ $key }}: {{ $value }}
             {{ end }}
         {{- end }}`}}
+      source:
+        helm:
+          skipCrds: {{ `{{or .source.helm.skipCrds false }}` }}

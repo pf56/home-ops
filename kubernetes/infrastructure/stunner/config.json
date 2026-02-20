@@ -1,0 +1,15 @@
+{
+  "name": "stunner",
+  "namespace": "stunner-system",
+  "syncPolicy": {
+    "syncOptions": [
+      "CreateNamespace=true",
+      "ServerSideApply=true"
+    ]
+  },
+  "source": {
+    "helm": {
+      "skipCrds": true
+    }
+  }
+}
