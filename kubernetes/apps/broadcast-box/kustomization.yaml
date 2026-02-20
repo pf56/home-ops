@@ -4,3 +4,4 @@ kind: Kustomization
 namespace: broadcast-box
 resources:
   - broadcast-box.yaml
+  - stunner.yaml

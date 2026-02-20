@@ -15,7 +15,7 @@ spec:
       protocol: TCP
       targetPort: web
     - name: data
-      port: 8080
+      port: 3478
       protocol: UDP
       targetPort: data
 ---
@@ -35,20 +35,21 @@ spec:
       labels:
         app: broadcast-box
     spec:
-      hostNetwork: true
       containers:
       - name: broadcast-box
         image: seaduboi/broadcast-box
         env:
-          - name: INCLUDE_PUBLIC_IP_IN_NAT_1_TO_1_IP
-            value: "yes"
-          - name: STUN_SERVERS
-            value: "stun.l.google.com:19302|stun1.l.google.com:19302"
+          - name: NAT_1_TO_1_IP
+            value: "172.16.61.4"
+          - name: UDP_MUX_PORT
+            value: "3478"
+          - name: NETWORK_TEST_ON_START
+            value: "false"
         ports:
           - containerPort: 8080
             name: web
             protocol: TCP
-          - containerPort: 8080
+          - containerPort: 3478
             name: data
             protocol: UDP
         securityContext:
