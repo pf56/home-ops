@@ -44,5 +44,5 @@ spec:
     - name: udp-gateway
   rules:
     - backendRefs:
-        - name: broadcast-box
+        - name: livekit-server
           namespace: broadcast-box
