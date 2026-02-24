@@ -1,0 +1,20 @@
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-redis-config
+spec:
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: livekit-poi3
+        envSlug: dev
+        secretsPath: "/redis"
+      credentialsRef:
+        secretName: infisical-credentials
+        secretNamespace: livekit
+
+  managedKubeSecretReferences:
+    - secretName: redis-secrets
+      secretNamespace: livekit
+      secretType: Opaque
+      creationPolicy: "Owner"

@@ -1,0 +1,5 @@
+redis:
+  auth:
+    enabled: true
+    existingSecret: "redis-secrets"
+    existingSecretPasswordKey: "REDIS_PASSWORD"

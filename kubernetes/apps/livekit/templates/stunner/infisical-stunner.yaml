@@ -1,0 +1,25 @@
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-stunner-config
+spec:
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: livekit-poi3
+        envSlug: dev
+        secretsPath: "/stunner"
+      credentialsRef:
+        secretName: infisical-credentials
+        secretNamespace: livekit
+
+  managedKubeSecretReferences:
+    - secretName: stunner-secrets
+      secretNamespace: livekit
+      secretType: Opaque
+      creationPolicy: "Owner"
+      template:
+        data:
+          type: "static"
+          username: "{{ `{{ .STUNNER_USERNAME.Value }}` }}"
+          password: "{{ `{{ .STUNNER_PASSWORD.Value }}` }}"

@@ -1,0 +1,53 @@
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-livekit-config
+spec:
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: livekit-poi3
+        envSlug: dev
+        secretsPath: "/"
+        recursive: true
+      credentialsRef:
+        secretName: infisical-credentials
+        secretNamespace: livekit
+
+  managedKubeConfigMapReferences:
+    - configMapName: livekit-config
+      configMapNamespace: livekit
+      creationPolicy: "Owner"
+      template:
+        includeAllSecrets: false
+        data:
+          CONFIG: |
+            log_level: info
+            port: 7880
+
+            keys:
+              access_token: {{ `{{ .LIVEKIT_ACCESS_TOKEN.Value  }}`  }}
+
+            redis:
+              address: livekit-redis.livekit.svc.cluster.local:6379
+
+            rtc:
+              tcp_port: 7881
+              port_range_start: 50000
+              port_range_end: 60000
+              use_external_ip: false
+
+              stun_servers:
+                - {{ `{{ .STUNNER_IP.Value }}` }}:3478
+
+              turn_servers:
+                - host: {{ `{{ .STUNNER_IP.Value }}` }}
+                  port: 3478
+                  protocol: udp
+                  username: {{ `{{ .STUNNER_USER.Value }}` }}
+                  credential: {{ `{{ .STUNNER_PASSWORD.Value }}` }}
+
+            turn:
+              enabled: false
+              loadBalancerAnnotations: {}
+

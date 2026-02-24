@@ -1,0 +1,10 @@
+{
+  "name": "livekit",
+  "namespace": "livekit",
+  "syncPolicy": {
+    "syncOptions": [
+      "CreateNamespace=true",
+      "ServerSideApply=true"
+    ]
+  }
+}
