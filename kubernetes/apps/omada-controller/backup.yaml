@@ -1,0 +1,23 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: omada-controller-backup
+spec:
+  sourcePVC: data-omada-controller-0
+  trigger:
+    schedule: "30 2 * * *"
+  restic:
+    pruneIntervalDays: 14
+    repository: restic-config
+    retain:
+      daily: 7
+      weekly: 4
+      monthly: 12
+      yearly: 1
+    copyMethod: Snapshot
+    volumeSnapshotClassName: longhorn
+    moverSecurityContext:
+      runAsUser: 508
+      runAsGroup: 508
+
