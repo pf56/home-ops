@@ -6,6 +6,8 @@ resources:
   - ../../base
   - vaultwarden.yaml
   - httproute.yaml
+  - infisical-restic-config.yaml
+  - backup.yaml
 
 images:
   - name: ghcr.io/dani-garcia/vaultwarden

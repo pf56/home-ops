@@ -1,0 +1,20 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: vaultwarden-backup
+spec:
+  sourcePVC: data-vaultwarden-0
+  trigger:
+    schedule: "25 2 * * *"
+  restic:
+    pruneIntervalDays: 14
+    repository: restic-config
+    retain:
+      daily: 7
+      weekly: 4
+      monthly: 12
+      yearly: 1
+    copyMethod: Snapshot
+    volumeSnapshotClassName: longhorn
+
