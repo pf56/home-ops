@@ -1,0 +1,28 @@
+---
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-continuwuity-config
+spec:
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: continuwuity-rca-b
+        envSlug: dev
+        secretsPath: "/continuwuity"
+      credentialsRef:
+        secretName: infisical-credentials
+        secretNamespace: continuwuity
+
+  managedKubeSecretReferences:
+    - secretName: continuwuity-secrets
+      secretNamespace: continuwuity
+      secretType: Opaque
+      creationPolicy: "Owner"
+      template:
+        data:
+          type: "static"
+          SERVER_NAME: "{{ `{{ .CONTINUWUITY_SERVER_NAME.Value }}` }}"
+          WELL_KNOWN_SERVER: "{{ `{{ .CONTINUWUITY_WELL_KNOWN_SERVER.Value }}` }}"
+          WELL_KNOWN_CLIENT: "{{ `{{ .CONTINUWUITY_WELL_KNOWN_CLIENT.Value }}` }}"
+

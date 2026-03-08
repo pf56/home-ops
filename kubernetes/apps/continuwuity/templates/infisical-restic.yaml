@@ -1,0 +1,20 @@
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-restic-config
+spec:
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: continuwuity-rca-b
+        envSlug: dev
+        secretsPath: "/restic"
+      credentialsRef:
+        secretName: infisical-credentials
+        secretNamespace: continuwuity
+
+  managedKubeSecretReferences:
+    - secretName: restic-config
+      secretNamespace: continuwuity
+      secretType: Opaque
+      creationPolicy: "Owner"
