@@ -69,6 +69,43 @@
     '';
   };
 
+  services.postgresqlBackup = {
+    enable = true;
+    databases = [ "infisical" ];
+  };
+
+  systemd.services."postgresqlBackup-infisical".requires = [ "infisical-redis-backup.service" ];
+
+  systemd.services."infisical-redis-backup" =
+    let
+      script = pkgs.writeShellScriptBin "redis-backup" ''
+        #!/usr/bin/env bash
+        set -euo pipefail
+
+        BACKUP_DIR="${config.services.postgresqlBackup.location}"
+
+        if [ -e "$BACKUP_DIR/redis.rdb" ]; then
+          rm -f "$BACKUP_DIR/redis.rdb.prev"
+          mv "$BACKUP_DIR/redis.rdb" "$BACKUP_DIR/redis.rdb.prev"
+        fi
+
+        export REDISCLI_AUTH=$(< ${config.sops.secrets.redis-password.path})
+
+        echo "Backup up Redis data"
+        ${pkgs.redis}/bin/redis-cli \
+          -h 127.0.0.1 \
+          -p 6379 \
+          --rdb "$BACKUP_DIR/redis.rdb"
+      '';
+    in
+    {
+      description = "Redis Backup";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${script}/bin/redis-backup";
+      };
+    };
+
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
@@ -91,6 +128,33 @@
     upstreams.infisical.servers."localhost:8080" = { };
   };
 
+  services.restic.backups.infisical = {
+    repositoryFile = config.sops.secrets.restic-repo.path;
+    passwordFile = config.sops.secrets.restic-password.path;
+    initialize = true;
+
+    paths = [
+      "/var/backup"
+    ];
+
+    timerConfig = {
+      OnCalendar = "02:00";
+      Persistent = true;
+      RandomizedDelaySec = "2h";
+    };
+
+    pruneOpts = [
+      "--keep-daily 7"
+      "--keep-weekly 4"
+      "--keep-monthly 12"
+      "--keep-yearly 15"
+    ];
+
+    checkOpts = [
+      "--with-cache"
+    ];
+  };
+
   security.acme = {
     acceptTerms = true;
     defaults.email = "acme" + "@" + "mail" + ".paulfriedrich." + "me";
@@ -104,6 +168,8 @@
       infisical-config = { };
       redis-password = { };
       acme-credentials = { };
+      restic-repo = { };
+      restic-password = { };
     };
   };
 
