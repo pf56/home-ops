@@ -26,8 +26,5 @@ spec:
 
   - toServices:
     - k8sService:
-        serviceName: sonarr
-        namespace: sonarr
-    - k8sService:
-        serviceName: broadcast-box
-        namespace: broadcast-box
+        serviceName: continuwuity
+        namespace: continuwuity
