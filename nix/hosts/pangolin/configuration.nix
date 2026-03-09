@@ -56,7 +56,7 @@
     enable = true;
 
     networks."10-wan" = {
-      matchConfig.MACAddress = "92:00:07:31:66:a7";
+      matchConfig.MACAddress = "92:00:07:3e:82:0f";
 
       address = [
         "46.225.120.169/32"
