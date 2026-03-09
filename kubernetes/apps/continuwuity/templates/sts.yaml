@@ -61,7 +61,7 @@ spec:
             - name: CONTINUWUITY_ALLOW_FEDERATION
               value: "true"
             - name: CONTINUWUITY_TRUSTED_SERVERS
-              value: '["matrix.org"]'
+              value: '["tchncs.de", "matrix.org"]'
             - name: CONTINUWUITY_ADDRESS
               value: "0.0.0.0"
             - name: CONTINUWUITY_ROCKSDB_PARALLELISM_THREADS
