@@ -29,9 +29,11 @@
     22
     80
     443
+    3478
   ];
   networking.firewall.allowedUDPPorts = [
     config.services.tailscale.port
+    3478
     21820
     51820
   ];
@@ -105,12 +107,25 @@
       flags = {
         disable_signup_without_invite = true;
         disable_user_create_org = true;
+        allow_raw_resources = true;
       };
     };
   };
 
   services.traefik = {
     environmentFiles = [ config.sops.secrets.traefik-env.path ];
+
+    staticConfigOptions = {
+      entryPoints = {
+        tcp-3478 = {
+          address = ":3478/tcp";
+        };
+
+        udp-3478 = {
+          address = ":3478/udp";
+        };
+      };
+    };
   };
 
   security.acme = {

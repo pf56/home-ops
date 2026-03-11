@@ -44,7 +44,7 @@ spec:
                 - host: {{ `{{ .STUNNER_IP.Value }}` }}
                   port: 3478
                   protocol: udp
-                  username: {{ `{{ .STUNNER_USER.Value }}` }}
+                  username: {{ `{{ .STUNNER_USERNAME.Value }}` }}
                   credential: {{ `{{ .STUNNER_PASSWORD.Value }}` }}
 
             turn:

@@ -4,11 +4,8 @@ kind: Service
 metadata:
   name: livekit-server
   labels:
-    app.kubernetes.io/name: livekit-server
-    app.kubernetes.io/instance: livekit
-    app.kubernetes.io/version: "v1.8.0"
+    app: livekit-server
 spec:
-  type: LoadBalancer
   ports:
     - port: 80
       targetPort: 7880
@@ -19,5 +16,4 @@ spec:
       protocol: TCP
       name: rtc-tcp
   selector:
-    app.kubernetes.io/name: livekit-server
-    app.kubernetes.io/instance: livekit
+    app: livekit-server

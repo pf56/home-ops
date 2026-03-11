@@ -29,3 +29,21 @@ spec:
     - k8sService:
         serviceName: continuwuity
         namespace: continuwuity
+    - k8sService:
+        serviceName: livekit-server
+        namespace: livekit
+    - k8sService:
+        serviceName: lk-react
+        namespace: livekit
+
+  - toCIDR:
+        - 172.16.61.5/32
+    toPorts:
+      - ports:
+         - port: "3478"
+           protocol: ANY
+
+  - toEndpoints:
+    - matchLabels:
+       "k8s:io.kubernetes.pod.namespace": livekit
+       "app": stunner
