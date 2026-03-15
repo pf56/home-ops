@@ -14,6 +14,18 @@ spec:
         secretName: infisical-credentials
         secretNamespace: livekit
 
+  managedKubeSecretReferences:
+    - secretName: livekit-secrets
+      secretNamespace: livekit
+      creationPolicy: "Owner"
+      template:
+        includeAllSecrets: false
+        data:
+          LIVEKIT_URL: "{{ `{{ .LIVEKIT_URL.Value }}` }}"
+          LIVEKIT_MATRIX_KEY: "{{ `{{ .LIVEKIT_MATRIX_KEY.Value }}` }}"
+          LIVEKIT_MATRIX_TOKEN: "{{ `{{ .LIVEKIT_MATRIX_TOKEN.Value }}` }}"
+          LIVEKIT_FULL_ACCESS_HOMESERVERS: "{{ `{{ .LIVEKIT_FULL_ACCESS_HOMESERVERS }}` }}"
+
   managedKubeConfigMapReferences:
     - configMapName: livekit-config
       configMapNamespace: livekit
@@ -27,6 +39,7 @@ spec:
 
             keys:
               access_token: {{ `{{ .LIVEKIT_ACCESS_TOKEN.Value  }}`  }}
+              {{ `{{ .LIVEKIT_MATRIX_KEY.Value }}` }}: {{ `{{ .LIVEKIT_MATRIX_TOKEN.Value }}` }}
 
             redis:
               address: livekit-redis.livekit.svc.cluster.local:6379

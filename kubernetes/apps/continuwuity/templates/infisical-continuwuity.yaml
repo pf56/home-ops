@@ -25,4 +25,8 @@ spec:
           SERVER_NAME: "{{ `{{ .CONTINUWUITY_SERVER_NAME.Value }}` }}"
           WELL_KNOWN_SERVER: "{{ `{{ .CONTINUWUITY_WELL_KNOWN_SERVER.Value }}` }}"
           WELL_KNOWN_CLIENT: "{{ `{{ .CONTINUWUITY_WELL_KNOWN_CLIENT.Value }}` }}"
+          MATRIX_RTC_FOCI: |
+            [
+              { type = "livekit", livekit_service_url = "{{ `{{ .CONTINUWUITY_WELL_KNOWN_LIVEKIT_URL.Value }}` }}" }
+            ]
 

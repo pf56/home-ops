@@ -48,6 +48,11 @@ spec:
                 secretKeyRef:
                   name: continuwuity-secrets
                   key: WELL_KNOWN_CLIENT
+            - name: CONTINUWUITY_MATRIX_RTC__FOCI
+              valueFrom:
+                secretKeyRef:
+                  name: continuwuity-secrets
+                  key: MATRIX_RTC_FOCI
             - name: TOKIO_WORKER_THREADS
               value: "2"
             - name: CONTINUWUITY_DATABASE_PATH

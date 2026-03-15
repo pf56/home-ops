@@ -33,6 +33,9 @@ spec:
         serviceName: livekit-server
         namespace: livekit
     - k8sService:
+        serviceName: lk-jwt-service
+        namespace: livekit
+    - k8sService:
         serviceName: lk-react
         namespace: livekit
 
