@@ -2,9 +2,14 @@ newt:
   global:
     metrics:
       enabled: true
+    resources:
+      limits:
+        cpu: "2000m"
+        memory: "256Mi"
+        ephemeral-storage: "256Mi"
   newtInstances:
     - name: main-tunnel
       enabled: true
-      mtu: 1000
+      mtu: 1200
       auth:
         existingSecretName: main-tunnel-auth
