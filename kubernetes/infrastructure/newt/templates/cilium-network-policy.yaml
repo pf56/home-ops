@@ -30,6 +30,9 @@ spec:
         serviceName: continuwuity
         namespace: continuwuity
     - k8sService:
+        serviceName: copyparty
+        namespace: copyparty
+    - k8sService:
         serviceName: livekit-server
         namespace: livekit
     - k8sService:

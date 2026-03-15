@@ -1,0 +1,10 @@
+{
+  "name": "copyparty",
+  "namespace": "copyparty",
+  "syncPolicy": {
+    "syncOptions": [
+      "CreateNamespace=true",
+      "ServerSideApply=true"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+---
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-copyparty-config
+spec:
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: copyparty-tm-ep
+        envSlug: dev
+        secretsPath: "/copyparty"
+      credentialsRef:
+        secretName: infisical-credentials
+        secretNamespace: copyparty
