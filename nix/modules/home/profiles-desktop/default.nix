@@ -89,6 +89,7 @@
 
       home.packages = with pkgs; [
         flatpak
+        nautilus
         swaylock
         wlr-randr
       ];
@@ -124,8 +125,9 @@
             xdgOpenUsePortal = true;
 
             config = {
-              river = {
+              common = {
                 default = [ "gtk" ];
+                "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
                 "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
                 "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
               };
