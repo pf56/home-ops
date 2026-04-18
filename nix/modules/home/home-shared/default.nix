@@ -38,7 +38,7 @@
 
     # helix + language servers
     helix
-    nodePackages.yaml-language-server
+    yaml-language-server
     omnisharp-roslyn
 
     # fonts
