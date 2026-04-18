@@ -183,6 +183,8 @@
     exclude = [
       "/home/*/.cache"
       "/home/pfriedrich/Games"
+      "!/home/pfriedrich/Games/Heroic/Prefixes/default/Battle.net/drive_c/Program Files (x86)/World of Warcraft/_retail_/Interface"
+      "!/home/pfriedrich/Games/Heroic/Prefixes/default/Battle.net/drive_c/Program Files (x86)/World of Warcraft/_retail_/WTF"
       "/steam"
       "/var/cache"
       "/var/lib/libvirt/images"
