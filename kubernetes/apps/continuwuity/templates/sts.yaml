@@ -23,7 +23,7 @@ spec:
             value: "0"
       containers:
         - name: continuwuity
-          image: forgejo.ellis.link/continuwuation/continuwuity@sha256:bca159063481744e0221924a254f8893291264fe253f545cec40b0413794bc7e
+          image: forgejo.ellis.link/continuwuation/continuwuity@sha256:7d67d235e35a50718b0839e7278d6c43db05e1411f99d1d0c7a1e0faa006c250
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
