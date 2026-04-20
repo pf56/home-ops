@@ -1,0 +1,14 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: updater
+  namespace: argocd
+spec:
+  namespace: argocd
+  writeBackConfig:
+    method: "git"
+  applicationRefs:
+    - namePattern: "sonarr"
+      images:
+        - alias: "sonarr"
+          imageName: "lscr.io/linuxserver/sonarr:4.0.x"
