@@ -10,5 +10,5 @@ spec:
   project: default
   source:
     path: kubernetes/clusters/home-argo
-    repoURL: https://git.sr.ht/~pfriedrich/home-ops
-    targetRevision: HEAD
+    repoURL: git@git.sr.ht:~pfriedrich/home-ops
+    targetRevision: main

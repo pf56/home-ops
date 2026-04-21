@@ -7,13 +7,13 @@ spec:
   project: default
   source:
     path: kubernetes/infrastructure/root
-    repoURL: https://git.sr.ht/~pfriedrich/home-ops
+    repoURL: git@git.sr.ht:~pfriedrich/home-ops
     targetRevision: main
     helm:
       values: |
         spec:
           source:
-            repoURL: https://git.sr.ht/~pfriedrich/home-ops
+            repoURL: git@git.sr.ht:~pfriedrich/home-ops
             targetRevision: main
           destination:
             server: https://kubernetes.default.svc
