@@ -125,7 +125,7 @@
             xdgOpenUsePortal = true;
 
             config = {
-              common = {
+              preferred = {
                 default = [ "gtk" ];
                 "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
                 "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
