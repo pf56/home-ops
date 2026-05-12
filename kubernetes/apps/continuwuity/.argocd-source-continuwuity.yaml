@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: image.name
+    value: forgejo.ellis.link/continuwuation/continuwuity
+    forcestring: true
+  - name: image.tag
+    value: v0.5.9
+    forcestring: true
