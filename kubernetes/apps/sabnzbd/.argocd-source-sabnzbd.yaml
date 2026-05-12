@@ -1,0 +1,3 @@
+kustomize:
+  images:
+  - lscr.io/linuxserver/sabnzbd:4.5.5
