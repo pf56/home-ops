@@ -12,3 +12,15 @@ spec:
       images:
         - alias: "sonarr"
           imageName: "lscr.io/linuxserver/sonarr:4.0.x"
+    - namePattern: "radarr"
+      images:
+        - alias: "radarr"
+          imageName: "lscr.io/linuxserver/radarr:6.1.x"
+    - namePattern: "sabnzbd"
+      images:
+        - alias: "sabnzbd"
+          imageName: "lscr.io/linuxserver/sabnzbd:4.5.x"
+    - namePattern: "continuwuity"
+      images:
+        - alias: "continuwuity"
+          imageName: "forgejo.ellis.link/continuwuation/continuwuity:v0.5.x"
