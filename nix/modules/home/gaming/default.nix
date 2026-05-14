@@ -66,7 +66,7 @@ in
       };
 
       lutris = {
-        enable = true;
+        enable = false;
         extraPackages = with pkgs; [
           gamemode
           mangohud
