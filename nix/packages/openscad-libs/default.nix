@@ -1,14 +1,11 @@
 {
-  flake,
-  perSystem,
   pkgs,
-  pname,
   ...
 }:
 pkgs.symlinkJoin {
-  name = pname;
+  name = "openscad-libs";
   paths = [
-    perSystem.self.openscad-honeycomb
-    perSystem.self.openscad-round-anything
+    inputs.self.openscad-honeycomb
+    inputs.self.openscad-round-anything
   ];
 }

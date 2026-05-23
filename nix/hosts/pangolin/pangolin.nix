@@ -1,0 +1,145 @@
+{ den, inputs, ... }:
+{
+  den.aspects.pangolin = {
+    includes = [
+      (den.aspects.bootable { uefi = false; })
+      den.aspects.server-base
+    ];
+
+    nixos =
+      {
+        config,
+        lib,
+        modulesPath,
+        pkgs,
+        ...
+      }:
+      {
+        imports = [
+          (modulesPath + "/profiles/qemu-guest.nix")
+          ./_disk-config.nix
+          { config.facter.reportPath = ./facter.json; }
+        ];
+
+        networking.hostName = "pangolin";
+        networking.nftables.enable = true;
+        networking.firewall.trustedInterfaces = [ config.services.tailscale.interfaceName ];
+        networking.firewall.allowedTCPPorts = [
+          22
+          80
+          443
+          3478
+        ];
+        networking.firewall.allowedUDPPorts = [
+          config.services.tailscale.port
+          3478
+          21820
+          51820
+        ];
+
+        services.tailscale = {
+          enable = true;
+          package = pkgs.tailscale-cgnat;
+
+          disableTaildrop = true;
+          authKeyFile = config.sops.secrets.tailscale-auth.path;
+          extraUpFlags = [
+            "--accept-routes"
+          ];
+        };
+
+        systemd.services.tailscaled.serviceConfig.Environment = [
+          "TS_DEBUG_FIREWALL_MODE=nftables"
+        ];
+
+        networking.useDHCP = false;
+        systemd.network = {
+          enable = true;
+
+          networks."10-wan" = {
+            matchConfig.MACAddress = "92:00:07:3e:82:0f";
+
+            address = [
+              "46.225.120.169/32"
+              "2a01:4f8:1c19:63d::1/64"
+            ];
+
+            routes = [
+              { Gateway = "fe80::1"; }
+              {
+                Gateway = "172.31.1.1";
+                GatewayOnLink = true;
+              }
+            ];
+
+            linkConfig.RequiredForOnline = "routable";
+          };
+
+          networks."10-lan" = {
+            matchConfig.MACAddress = "86:00:00:7b:03:c8";
+
+            address = [
+              "10.0.1.1/32"
+            ];
+
+            routes = [
+              { Destination = "10.0.0.0/16"; }
+            ];
+
+            linkConfig.RequiredForOnline = "routable";
+          };
+        };
+
+        services.pangolin = {
+          enable = true;
+          baseDomain = "ext" + ".paulfriedrich." + "me";
+          dnsProvider = "cloudflare";
+          environmentFile = config.sops.secrets.pangolin-env.path;
+
+          settings = {
+            domains = {
+              domain1 = {
+                prefer_wildcard_cert = true;
+              };
+            };
+
+            flags = {
+              disable_signup_without_invite = true;
+              disable_user_create_org = true;
+              allow_raw_resources = true;
+            };
+          };
+        };
+
+        services.traefik = {
+          environmentFiles = [ config.sops.secrets.traefik-env.path ];
+
+          staticConfigOptions = {
+            entryPoints = {
+              tcp-3478 = {
+                address = ":3478/tcp";
+              };
+
+              udp-3478 = {
+                address = ":3478/udp";
+              };
+            };
+          };
+        };
+
+        security.acme = {
+          defaults.email = "acme" + "@" + "mail" + ".paulfriedrich." + "me";
+        };
+
+        sops = {
+          secrets = {
+            tailscale-auth = { };
+            "pangolin-env".restartUnits = [ "pangolin.service" ];
+            "traefik-env".restartUnits = [ "traefik.service" ];
+          };
+        };
+
+        system.stateVersion = "26.05";
+      };
+  };
+}

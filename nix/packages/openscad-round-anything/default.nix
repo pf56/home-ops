@@ -1,12 +1,10 @@
 {
-  perSystem,
   pkgs,
-  pname,
   ...
 }:
 
 pkgs.stdenv.mkDerivation rec {
-  inherit pname;
+  pname = "openscad-round-anything";
   version = "1.0.4";
 
   src = pkgs.fetchFromGitHub {

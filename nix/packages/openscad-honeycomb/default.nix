@@ -1,12 +1,10 @@
 {
-  perSystem,
   pkgs,
-  pname,
   ...
 }:
 
 pkgs.stdenv.mkDerivation rec {
-  inherit pname;
+  pname = "openscad-honeycomb";
   version = "dd1480b";
 
   src = pkgs.fetchFromGitHub {
