@@ -12,6 +12,12 @@ $ORIGIN internal.paulfriedrich.me.
 							NS		ns01.internal.paulfriedrich.me.
 							NS		ns02.internal.paulfriedrich.me. 
 
+; GATEWAY
+router					IN	A		10.0.20.1
+gw.mgmt					IN	A		10.0.10.1
+gw.office				IN	A		10.0.20.1
+gw.iot					IN	A		10.0.40.1
+gw.server				IN	A		10.0.60.1
 
 ; NS
 ns01					IN	A		10.0.60.17

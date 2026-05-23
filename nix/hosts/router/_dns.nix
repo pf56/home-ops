@@ -2,6 +2,7 @@
   pkgs,
   lib,
   routerConfig,
+  config,
   ...
 }:
 
@@ -9,9 +10,15 @@ let
   inherit (routerConfig) vlans wellKnowns;
 in
 {
+  roles.nameserver = {
+    enable = true;
+    enableBgpPeering = false;
+  };
+
   networking.nameservers = [
-    wellKnowns.dns
-    "9.9.9.9"
+    "127.0.0.1:${toString config.roles.nameserver.port}"
+    # wellKnowns.dns
+    # "9.9.9.9"
   ];
 
   services.resolved = {
@@ -24,11 +31,12 @@ in
           "~."
         ];
 
+        DNSStubListener = false;
         DNSStubListenerExtra = [
-          vlans.mgmt.gateway
-          vlans.office.gateway
-          vlans.iot.gateway
-          vlans.server.gateway
+          # vlans.mgmt.gateway
+          # vlans.office.gateway
+          # vlans.iot.gateway
+          # vlans.server.gateway
         ];
       };
     };

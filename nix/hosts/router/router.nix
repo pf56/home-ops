@@ -4,6 +4,7 @@
     includes = [
       den.aspects.bootable
       den.aspects.server-base
+      den.aspects.nameserver
     ];
 
     nixos =
