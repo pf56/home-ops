@@ -19,6 +19,7 @@
       den.aspects.kubernetes
       den.aspects.dotnet
       den.aspects.fonts
+      den.aspects.ai
       (den.aspects.vim { full = true; })
     ];
 
