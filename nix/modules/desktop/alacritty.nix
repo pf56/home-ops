@@ -1,16 +1,20 @@
-{ lib, ... }:
+{ ... }:
 {
   den.aspects.alacritty = {
-    nixos =
-      { pkgs, ... }:
-      {
-      };
-
     homeManager =
-      { pkgs, ... }:
+      { lib, config, ... }:
       {
         programs.alacritty = {
           enable = true;
+          settings = lib.mkIf (config.programs.zellij.enable or false) {
+            terminal.shell = {
+              program = "zellij";
+              args = [
+                "-l"
+                "welcome"
+              ];
+            };
+          };
         };
       };
   };
