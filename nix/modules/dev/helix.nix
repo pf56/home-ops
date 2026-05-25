@@ -13,8 +13,25 @@
           EDITOR = "hx";
         };
 
+        home.packages = with pkgs; [
+          nixd
+        ];
+
         programs.helix = {
           enable = true;
+
+          languages = {
+            language-server.nixd = {
+              command = "nixd";
+            };
+
+            language = [
+              {
+                name = "nix";
+                language-servers = [ "nixd" ];
+              }
+            ];
+          };
 
           settings = {
             editor.file-picker = {
