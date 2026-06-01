@@ -1,6 +1,7 @@
 { ... }:
 {
   custom-packages = final: prev: {
+    nft-dns = final.callPackage ../packages/nft-dns { };
     openscad-honeycomb = final.callPackage ../packages/openscad-honeycomb { };
     openscad-libs = final.callPackage ../packages/openscad-libs { };
     openscad-round-anything = final.callPackage ../packages/openscad-round-anything { };
