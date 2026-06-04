@@ -13,6 +13,8 @@
           wl-clipboard
           xclip
         ];
+
+        services.xembed-sni-proxy.enable = true;
       };
   };
 }
