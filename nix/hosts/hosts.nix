@@ -21,8 +21,8 @@ in
   };
 
   den.hosts.x86_64-linux.router = {
-    instantiate = nixosUnstable;
-    home-manager.module = homeManagerUnstable;
+    instantiate = nixosStable;
+    home-manager.module = homeManagerStable;
     role = "server";
     users.pfriedrich = { };
   };
@@ -35,15 +35,15 @@ in
   };
 
   den.hosts.x86_64-linux.infisical = {
-    instantiate = nixosUnstable;
-    home-manager.module = homeManagerUnstable;
+    instantiate = nixosStable;
+    home-manager.module = homeManagerStable;
     role = "server";
     users.pfriedrich = { };
   };
 
   den.hosts.x86_64-linux.pangolin = {
-    instantiate = nixosUnstable;
-    home-manager.module = homeManagerUnstable;
+    instantiate = nixosStable;
+    home-manager.module = homeManagerStable;
     role = "server";
     users.pfriedrich = { };
   };

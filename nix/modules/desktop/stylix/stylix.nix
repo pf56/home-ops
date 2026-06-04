@@ -2,7 +2,7 @@
 {
   flake-file.inputs = {
     stylix = {
-      url = "github:nix-community/stylix";
+      url = "github:nix-community/stylix/pull/2337/head";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
