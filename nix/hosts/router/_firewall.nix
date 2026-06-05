@@ -226,7 +226,7 @@ in
           }
 
           chain OFFICE-MGMT {
-            ip daddr 10.0.10.2 tcp dport { 80, 443 } accept comment "Allow TrueNAS"
+            ip daddr 10.0.10.2 tcp dport { 80, 443, 8006 } accept comment "Allow PVE"
             ip daddr 10.0.10.3 tcp dport { 80, 443 } accept comment "Allow MikroTik"
             counter drop
           }
@@ -240,6 +240,7 @@ in
 
           chain OFFICE-SERVER {
             tcp dport 22 accept comment "Allow SSH"
+            ip daddr 10.0.60.3 accept comment "Allow TrueNAS"
             ip daddr 10.0.60.8 accept comment "Allow Git"
             ip daddr $MONITORING accept comment "Allow Monitoring"
             ip daddr $INFISICAL accept comment "Allow Infisical"

@@ -25,7 +25,7 @@ ns02					IN	A		10.0.60.18
 
 
 ; MGMT
-storage					IN	A		10.0.10.2
+pve						IN	A		10.0.10.2
 
 
 ; OFFICE

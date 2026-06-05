@@ -15,7 +15,7 @@ keys:
   - &auth age1nkjs7c87566zwyafgjrtsg4z4efklm4zqz3ylruqys2hjluhweqqgwqeur
   - &argocd age18spf8ku8hn2yc6g7v3tlh8859chmxkv952lr52ppwknzwl7eh58sq9yu56
   - &router age1l0q0y5e7exct4esytcqwj24qthnspnd2zhk3m3gr4ffhr8nsh96qk7ut79
-  - &infisical age1f0rlnchzfzvaqwapqpkmf4auh305fgc5aupvwjlkuum9vnfcralscc50k2
+  - &infisical age1pp5aldst4qcc4s0tqwrz9t7gs3uuask97vj78ea4pzlewtjqry6qchs765
   - &pangolin age1jnzv3fydjejnktpz0epqr86ftu5w53t4dmjdmdwl696kqwpttses4rsmwx
 creation_rules:
   - path_regex: secrets/e595\.yaml$

@@ -103,7 +103,7 @@ in
 
             reservations = [
               {
-                # TrueNAS
+                # PVE
                 hw-address = "50:eb:f6:b6:7f:f8";
                 ip-address = "10.0.10.2";
               }
@@ -145,7 +145,7 @@ in
                 ip-address = "10.0.20.2";
               }
               {
-                # TrueNAS
+                # PVE
                 hw-address = "50:eb:f6:b6:7f:f7";
                 ip-address = "10.0.20.3";
               }
@@ -240,11 +240,12 @@ in
             reservations = [
               {
                 # TrueNAS
-                hw-address = "50:eb:f6:b6:7f:f8";
+                hw-address = "bc:24:11:84:21:b1";
                 ip-address = "10.0.60.3";
               }
               {
-                hw-address = "00:a0:98:52:8e:68";
+                # Infisical
+                hw-address = "bc:24:11:49:df:cf";
                 ip-address = "10.0.60.4";
               }
               {
