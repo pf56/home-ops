@@ -3,125 +3,139 @@ talosVersion: v1.11.5
 kubernetesVersion: v1.34.2
 endpoint: https://kube.internal.paulfriedrich.me:6443
 nodes:
-  - hostname: taloscontrolplane01
-    ipAddress: 10.0.60.7
+  - hostname: talos-control-eex0
+    ipAddress: 10.0.60.20
     installDisk: /dev/vda
     controlPlane: true
     nameservers:
       - 10.0.60.1
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: 00:a0:98:24:ce:69
+          hardwareAddr: bc:24:11:98:03:14
         dhcp: false
         addresses:
-          - 10.0.60.7/24
+          - 10.0.60.20/24
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.60.1
         vip:
           ip: 10.0.60.5
-  - hostname: taloscontrolplane02
-    ipAddress: 10.0.60.11
+    machineSpec:
+      secureboot: true
+      useUKI: true
+  - hostname: talos-control-vrcn
+    ipAddress: 10.0.60.21
     installDisk: /dev/vda
     controlPlane: true
     nameservers:
       - 10.0.60.1
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: 00:a0:98:4f:1c:57
+          hardwareAddr: bc:24:11:ad:12:af
         dhcp: false
         addresses:
-          - 10.0.60.11/24
+          - 10.0.60.21/24
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.60.1
         vip:
           ip: 10.0.60.5
-  - hostname: taloscontrolplane03
-    ipAddress: 10.0.60.12
+    machineSpec:
+      secureboot: true
+      useUKI: true
+  - hostname: talos-control-euvu
+    ipAddress: 10.0.60.22
     installDisk: /dev/vda
     controlPlane: true
     nameservers:
       - 10.0.60.1
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: 00:a0:98:5f:a6:e7
+          hardwareAddr: bc:24:11:6a:02:33
         dhcp: false
         addresses:
-          - 10.0.60.12/24
+          - 10.0.60.22/24
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.60.1
         vip:
           ip: 10.0.60.5
-  - hostname: talosworker01
-    ipAddress: 10.0.60.9
+    machineSpec:
+      secureboot: true
+      useUKI: true
+  - hostname: talos-worker-74s1
+    ipAddress: 10.0.60.23
     installDisk: /dev/vda
     controlPlane: false
     nameservers:
       - 10.0.60.1
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: 00:a0:98:31:e5:ea
+          hardwareAddr: bc:24:11:66:d6:87
         dhcp: false
         addresses:
-          - 10.0.60.9/24
+          - 10.0.60.23/24
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.60.1
+    machineSpec:
+      secureboot: true
+      useUKI: true
     patches:
-      - "@./patches/longhorn-worker01.yaml"
-
-  - hostname: talosworker02
-    ipAddress: 10.0.60.10
+      - "@./patches/longhorn-worker-74s1.yaml"
+  - hostname: talos-worker-8up6
+    ipAddress: 10.0.60.24
     installDisk: /dev/vda
     controlPlane: false
     nameservers:
       - 10.0.60.1
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: 00:a0:98:16:48:10
+          hardwareAddr: bc:24:11:1f:17:b6
         dhcp: false
         addresses:
-          - 10.0.60.10/24
+          - 10.0.60.24/24
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.60.1
+    machineSpec:
+      secureboot: true
+      useUKI: true
     patches:
-      - "@./patches/longhorn-worker02.yaml"
-
-  - hostname: talosworker03
-    ipAddress: 10.0.60.13
+      - "@./patches/longhorn-worker-8up6.yaml"
+  - hostname: talos-worker-lyfg
+    ipAddress: 10.0.60.25
     installDisk: /dev/vda
     controlPlane: false
     nameservers:
       - 10.0.60.1
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: 00:a0:98:31:dd:4a
+          hardwareAddr: bc:24:11:5a:01:4f
         dhcp: false
         addresses:
-          - 10.0.60.13/24
+          - 10.0.60.25/24
         routes:
           - network: 0.0.0.0/0
             gateway: 10.0.60.1
+    machineSpec:
+      secureboot: true
+      useUKI: true
     patches:
-      - "@./patches/longhorn-worker03.yaml"
-
+      - "@./patches/longhorn-worker-lyfg.yaml"
 controlPlane:
   patches:
     - "@./patches/install-cilium-controlplane.yaml"
     - "@./patches/scheduler-config.yaml"
     - "@./patches/controller-manager-config.yaml"
     - "@./patches/dns-config.yaml"
-
 worker:
   schematic:
     customization:
       systemExtensions:
-          officialExtensions:
-              - siderolabs/iscsi-tools
-              - siderolabs/util-linux-tools
+        officialExtensions:
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
   patches:
     - "@./patches/install-cilium-worker.yaml"
     - "@./patches/enable-peering.yaml"

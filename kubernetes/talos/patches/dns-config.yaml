@@ -2,4 +2,4 @@
   path: /machine/features/hostDNS
   value:
     enabled: true
-    forwardKubeDNSToHost: false  # https://github.com/siderolabs/talos/issues/8836
+    forwardKubeDNSToHost: false # https://github.com/siderolabs/talos/issues/8836

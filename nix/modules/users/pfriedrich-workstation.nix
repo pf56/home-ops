@@ -33,6 +33,7 @@
           }))
           discover-overlay
           firefox
+          opentofu
           sops
           terminator
           thunderbird

@@ -202,11 +202,6 @@ in
                 ip-address = "10.0.40.5";
               }
               {
-                # LR4
-                hw-address = "c8:f0:9e:76:9f:38";
-                ip-address = "10.0.40.6";
-              }
-              {
                 # Roomba
                 hw-address = "4c:b9:ea:07:3f:de";
                 ip-address = "10.0.40.7";
@@ -254,49 +249,39 @@ in
                 ip-address = "10.0.60.5";
               }
               {
-                # Talos control plane 01
-                hw-address = "00:a0:98:24:ce:69";
-                ip-address = "10.0.60.7";
-              }
-              {
-                # git
-                hw-address = "00:a0:98:72:7b:98";
-                ip-address = "10.0.60.8";
-              }
-              {
-                # Talos worker 01
-                hw-address = "00:a0:98:31:e5:ea";
-                ip-address = "10.0.60.9";
-              }
-              {
-                # Talos worker 02
-                hw-address = "00:a0:98:16:48:10";
-                ip-address = "10.0.60.10";
-              }
-              {
-                # Talos control plane 02
-                hw-address = "00:a0:98:4f:1c:57";
-                ip-address = "10.0.60.11";
-              }
-              {
-                # Talos control plane 03
-                hw-address = "00:a0:98:5f:a6:e7";
-                ip-address = "10.0.60.12";
-              }
-              {
-                # Talos worker 03
-                hw-address = "00:a0:98:31:dd:4a";
-                ip-address = "10.0.60.13";
-              }
-              {
-                # ns02
-                hw-address = "00:a0:98:11:85:19";
-                ip-address = "10.0.60.18";
-              }
-              {
                 # monitoring
                 hw-address = "00:a0:98:6b:82:02";
                 ip-address = "10.0.60.19";
+              }
+              {
+                # talos-control-eex0
+                hw-address = "BC:24:11:98:03:14";
+                ip-address = "10.0.60.20";
+              }
+              {
+                # talos-control-vrcn
+                hw-address = "BC:24:11:AD:12:AF";
+                ip-address = "10.0.60.21";
+              }
+              {
+                # talos-control-euvu
+                hw-address = "BC:24:11:6A:02:33";
+                ip-address = "10.0.60.22";
+              }
+              {
+                # talos-worker-74s1
+                hw-address = "BC:24:11:66:D6:87";
+                ip-address = "10.0.60.23";
+              }
+              {
+                # talos-worker-8up6
+                hw-address = "BC:24:11:1F:17:B6";
+                ip-address = "10.0.60.24";
+              }
+              {
+                # talos-worker-lyfg
+                hw-address = "BC:24:11:5A:01:4F";
+                ip-address = "10.0.60.25";
               }
             ];
           }

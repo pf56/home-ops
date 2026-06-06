@@ -9,6 +9,11 @@ terraform {
       source  = "bpg/proxmox"
       version = "0.108.0"
     }
+
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.6"
+    }
   }
 }
 
@@ -35,6 +40,16 @@ locals {
   credentials = {
     proxmox_token = ephemeral.infisical_secret.proxmox_token.value
   }
+
+  talos_control_plane_nodes = {
+    for i in range(3) :
+    format("%02d", i + 1) => "talos-control"
+  }
+
+  talos_worker_nodes = {
+    for i in range(3) :
+    format("%02d", i + 1) => "talos-worker"
+  }
 }
 
 resource "proxmox_virtual_environment_vm" "infisical" {
@@ -49,6 +64,7 @@ resource "proxmox_virtual_environment_vm" "infisical" {
 
   cpu {
     cores = 2
+    type  = "host"
   }
 
   memory {
@@ -75,6 +91,123 @@ resource "proxmox_virtual_environment_vm" "infisical" {
         address = "dhcp"
       }
     }
+  }
+
+  network_device {
+    bridge = "vmbr0"
+  }
+}
+
+resource "random_string" "talos_control_plane_suffix" {
+  for_each = local.talos_control_plane_nodes
+
+  length  = 4
+  upper   = false
+  special = false
+}
+
+resource "proxmox_virtual_environment_vm" "talos_control_plane" {
+  for_each = local.talos_control_plane_nodes
+
+  name = "${each.value}-${random_string.talos_control_plane_suffix[each.key].result}"
+  tags = ["tofu", "talos"]
+
+  node_name       = var.pve_node_name
+  machine         = "q35"
+  bios            = "ovmf"
+  started         = true
+  stop_on_destroy = true
+
+  cpu {
+    cores = 2
+    type  = "host"
+  }
+
+  memory {
+    dedicated = 4096
+    floating  = 4096
+  }
+
+  tpm_state {
+    datastore_id = var.pve_datastore_id
+    version      = "v2.0"
+  }
+
+  efi_disk {
+    datastore_id = var.pve_datastore_id
+    type         = "4m"
+  }
+
+  disk {
+    datastore_id = var.pve_datastore_id
+    interface    = "virtio0"
+    iothread     = true
+    discard      = "on"
+    size         = 20
+  }
+
+  network_device {
+    bridge = "vmbr0"
+  }
+}
+
+resource "random_string" "talos_worker_suffix" {
+  for_each = local.talos_worker_nodes
+
+  length  = 4
+  upper   = false
+  special = false
+}
+
+resource "proxmox_virtual_environment_vm" "talos_worker" {
+  for_each = local.talos_worker_nodes
+
+  name = "${each.value}-${random_string.talos_worker_suffix[each.key].result}"
+  tags = ["tofu", "talos"]
+
+  node_name       = var.pve_node_name
+  machine         = "q35"
+  bios            = "ovmf"
+  started         = true
+  stop_on_destroy = true
+
+  cpu {
+    cores = 8
+    type  = "host"
+  }
+
+  memory {
+    dedicated = 8192
+    floating  = 8192
+  }
+
+  tpm_state {
+    datastore_id = var.pve_datastore_id
+    version      = "v2.0"
+  }
+
+  efi_disk {
+    datastore_id = var.pve_datastore_id
+    type         = "4m"
+  }
+
+  # system
+  disk {
+    datastore_id = var.pve_datastore_id
+    interface    = "virtio0"
+    iothread     = true
+    discard      = "on"
+    size         = 20
+  }
+
+  # longhorn storage
+  disk {
+    datastore_id = var.pve_datastore_id
+    interface    = "virtio1"
+    serial       = "lh${random_string.talos_worker_suffix[each.key].result}"
+    iothread     = true
+    discard      = "on"
+    size         = 128
   }
 
   network_device {

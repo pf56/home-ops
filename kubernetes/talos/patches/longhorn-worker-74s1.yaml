@@ -3,5 +3,5 @@ kind: UserVolumeConfig
 name: longhorn
 provisioning:
   diskSelector:
-    match: disk.serial == "syxBbfvV"
+    match: disk.serial == "lh74s1"
   minSize: 10GB

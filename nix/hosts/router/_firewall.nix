@@ -23,15 +23,15 @@ in
       ruleset = ''
         table inet filter {
           define TALOS_WORKERS = {
-            10.0.60.9,
-            10.0.60.10,
-            10.0.60.13
+            10.0.60.23,
+            10.0.60.24,
+            10.0.60.25
           }
 
           define TALOS_CONTROLPLANE = {
-            10.0.60.7,
-            10.0.60.11,
-            10.0.60.12
+            10.0.60.20,
+            10.0.60.21,
+            10.0.60.22
           }
 
           define TALOS_NODES = {
@@ -40,7 +40,6 @@ in
           }
 
           define NAMESERVERS = {
-            10.0.60.18,
             ${wellKnowns.dns}
           }
 
@@ -196,7 +195,6 @@ in
             ip daddr $NAMESERVERS meta l4proto { tcp, udp } th dport 53 accept comment "Allow DNS"
             ip daddr 172.16.61.0/24 tcp dport { 80, 443 } accept comment "Allow Cilium LB"
             ip daddr 10.0.60.8 accept comment "Allow Git"
-            ip daddr 10.0.60.15 accept comment "Allow Auth"
             ip daddr $MONITORING tcp dport 3100 accept comment "Allow Alloy export"
             ip daddr $MONITORING tcp dport 9090 accept comment "Allow Prometheus export"
             counter drop
@@ -241,14 +239,12 @@ in
           chain OFFICE-SERVER {
             tcp dport 22 accept comment "Allow SSH"
             ip daddr 10.0.60.3 accept comment "Allow TrueNAS"
-            ip daddr 10.0.60.8 accept comment "Allow Git"
             ip daddr $MONITORING accept comment "Allow Monitoring"
             ip daddr $INFISICAL accept comment "Allow Infisical"
 
             ip daddr 10.0.60.5 tcp dport 6443 accept comment "Allow Kubernetes API"
             ip daddr $TALOS_NODES tcp dport 50000 accept comment "Allow Talos control plane"
             ip daddr 172.16.61.0/24 tcp dport { 80, 443 } accept comment "Allow Cilium LB"
-            ip daddr 172.16.61.4 tcp dport { 25565 } accept comment "Allow Minecraft"
           }
 
           chain OFFICE-IOT {
@@ -302,7 +298,6 @@ in
             ip saddr 10.0.40.3 accept comment "Allow Home Assistant"
             ip saddr 10.0.40.4 accept comment "Allow Bosch Smart Home Controller"
             ip saddr 10.0.40.5 accept comment "Allow Zenfone 8"
-            ip saddr 10.0.40.6 accept comment "Allow LR4"
             ip saddr 10.0.40.7 accept comment "Allow Roomba"
             drop comment "Drop everything else"
           }
