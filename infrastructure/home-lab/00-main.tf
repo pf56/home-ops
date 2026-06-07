@@ -98,6 +98,44 @@ resource "proxmox_virtual_environment_vm" "infisical" {
   }
 }
 
+resource "proxmox_virtual_environment_vm" "homeassistant" {
+  name = "homeassistant"
+  tags = ["tofu"]
+
+  node_name       = var.pve_node_name
+  machine         = "q35"
+  bios            = "ovmf"
+  started         = true
+  stop_on_destroy = true
+
+  cpu {
+    cores = 4
+    type  = "host"
+  }
+
+  memory {
+    dedicated = 4096
+    floating  = 4096
+  }
+
+  efi_disk {
+    datastore_id = var.pve_datastore_id
+    type         = "4m"
+  }
+
+  disk {
+    datastore_id = var.pve_datastore_id
+    interface    = "virtio0"
+    iothread     = true
+    discard      = "on"
+    size         = 32
+  }
+
+  network_device {
+    bridge = "vmbr040"
+  }
+}
+
 resource "random_string" "talos_control_plane_suffix" {
   for_each = local.talos_control_plane_nodes
 

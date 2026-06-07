@@ -188,7 +188,7 @@ in
               }
               {
                 # Home Assistant
-                hw-address = "00:a0:98:29:f9:b4";
+                hw-address = "BC:24:11:DC:F1:75";
                 ip-address = "10.0.40.3";
               }
               {
