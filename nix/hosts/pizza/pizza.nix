@@ -9,6 +9,7 @@
       den.aspects.gaming
       den.aspects.greetd
       den.aspects.niri
+      den.aspects.noctalia
       den.aspects.nvme-rs
       den.aspects.openrgb
       den.aspects.obs

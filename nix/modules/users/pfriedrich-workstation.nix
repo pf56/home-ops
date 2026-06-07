@@ -10,10 +10,8 @@
       den.aspects.desktop-base
       den.aspects.fuzzel
       den.aspects.librewolf
-      den.aspects.mako
       den.aspects.thunar
       den.aspects.utilities-desktop
-      den.aspects.waybar
       den.aspects.wpaperd
 
       den.aspects.kubernetes

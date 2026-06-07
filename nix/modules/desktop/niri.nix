@@ -13,7 +13,26 @@
     };
 
     homeManager =
-      { pkgs, ... }:
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
+      let
+        noctaliaEnabled =
+          lib.hasAttrByPath [ "programs" "noctalia-shell" "enable" ] config
+          && config.programs."noctalia-shell".enable;
+
+        noctalia =
+          cmd:
+          [
+            "noctalia-shell"
+            "ipc"
+            "call"
+          ]
+          ++ (pkgs.lib.splitString " " cmd);
+      in
       {
         home.packages = [ pkgs.htop ];
         programs.niri = {
@@ -21,6 +40,10 @@
             prefer-no-csd = true;
             screenshot-path = "~/Pictures/Screenshots/Screenshot-%Y-%m-%d-%H-%M-%S.png";
             xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite-unstable;
+
+            spawn-at-startup = lib.optionals noctaliaEnabled [
+              { command = [ "noctalia-shell" ]; }
+            ];
 
             input = {
               focus-follows-mouse = {
@@ -153,9 +176,9 @@
               "Mod+Shift+P".action.set-dynamic-cast-monitor = { };
               "Mod+Ctrl+P".action.clear-dynamic-cast-target = { };
 
-              "Super+L".action.spawn = "swaylock";
+              "Mod+L".action.spawn = if noctaliaEnabled then noctalia "lockScreen lock" else [ "swaylock" ];
               "Mod+Return".action.spawn = "alacritty";
-              "Mod+D".action.spawn = "fuzzel";
+              "Mod+D".action.spawn = if noctaliaEnabled then noctalia "launcher toggle" else "fuzzel";
 
               "Ctrl+F9".action.spawn-sh = "${pkgs.discover-overlay}/bin/discover-overlay --rpc --toggle-mute";
               "Ctrl+F10".action.spawn-sh = "${pkgs.discover-overlay}/bin/discover-overlay --rpc --toggle-deaf";
@@ -273,7 +296,6 @@
             ];
           };
         };
-
       };
   };
 }
