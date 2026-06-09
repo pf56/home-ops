@@ -59,7 +59,7 @@
                 url = "https://github.com/noctalia-dev/noctalia-plugins";
               }
             ];
-            
+
             states = {
               niri-workspaces = {
                 enabled = true;
@@ -71,6 +71,11 @@
           };
 
           settings = {
+            appLauncher = {
+              customLaunchPrefixEnabled = true;
+              customLaunchPrefix = "systemd-run --user --scope --collect --";
+            };
+
             bar = {
               enableExclusionZoneInset = false;
               fontScaling = 1.05;
