@@ -9,6 +9,7 @@
       den.aspects.bongocat
       den.aspects.desktop-base
       den.aspects.fuzzel
+      den.aspects.jellyfin-mpv-shim
       den.aspects.librewolf
       den.aspects.thunar
       den.aspects.utilities-desktop
