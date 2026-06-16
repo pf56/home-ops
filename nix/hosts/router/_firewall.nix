@@ -250,6 +250,7 @@ in
           chain OFFICE-IOT {
             ip daddr 10.0.40.3 tcp dport { 4357, 443 } accept comment "Allow Home Assistant"
             ip daddr 10.0.40.4 tcp dport { 8000, 8443, 8444, 8445, 8446 } accept comment "Allow Bosch SHC"
+            ip daddr 10.0.40.8 tcp dport { 80, 443 } accept comment "Allow SLZB-06p10"
           }
 
           chain OFFICE-TAILSCALE {
@@ -299,6 +300,7 @@ in
             ip saddr 10.0.40.4 accept comment "Allow Bosch Smart Home Controller"
             ip saddr 10.0.40.5 accept comment "Allow Zenfone 8"
             ip saddr 10.0.40.7 accept comment "Allow Roomba"
+            ip saddr 10.0.40.8 accept comment "Allow SLZB"
             drop comment "Drop everything else"
           }
 

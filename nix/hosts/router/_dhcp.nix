@@ -206,6 +206,11 @@ in
                 hw-address = "4c:b9:ea:07:3f:de";
                 ip-address = "10.0.40.7";
               }
+              {
+                # SLZB-06p10
+                hw-address = "fc:e8:c0:f8:42:6f";
+                ip-address = "10.0.40.8";
+              }
             ];
           }
           {
