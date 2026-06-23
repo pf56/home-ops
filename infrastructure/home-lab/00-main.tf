@@ -98,6 +98,52 @@ resource "proxmox_virtual_environment_vm" "infisical" {
   }
 }
 
+resource "proxmox_virtual_environment_vm" "monitoring" {
+  name = "monitoring"
+  tags = ["tofu", "nixos"]
+
+  node_name       = var.pve_node_name
+  machine         = "q35"
+  bios            = "ovmf"
+  started         = true
+  stop_on_destroy = true
+
+  cpu {
+    cores = 4
+    type  = "host"
+  }
+
+  memory {
+    dedicated = 4096
+    floating  = 4096
+  }
+
+  efi_disk {
+    datastore_id = var.pve_datastore_id
+    type         = "4m"
+  }
+
+  disk {
+    datastore_id = var.pve_datastore_id
+    interface    = "virtio0"
+    iothread     = true
+    discard      = "on"
+    size         = 20
+  }
+
+  initialization {
+    ip_config {
+      ipv4 {
+        address = "dhcp"
+      }
+    }
+  }
+
+  network_device {
+    bridge = "vmbr0"
+  }
+}
+
 resource "proxmox_virtual_environment_vm" "homeassistant" {
   name = "homeassistant"
   tags = ["tofu"]

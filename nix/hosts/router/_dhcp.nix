@@ -255,7 +255,7 @@ in
               }
               {
                 # monitoring
-                hw-address = "00:a0:98:6b:82:02";
+                hw-address = "BC:24:11:D9:CE:D0";
                 ip-address = "10.0.60.19";
               }
               {
