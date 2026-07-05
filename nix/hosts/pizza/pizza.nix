@@ -14,6 +14,7 @@
       den.aspects.openrgb
       den.aspects.obs
       den.aspects.pipewire
+      den.aspects.scx
       den.aspects.stylix
       den.aspects.vfio
       den.aspects.wireshark
