@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jellyfin
+  labels:
+    app: jellyfin
+spec:
+  selector:
+    matchLabels:
+      app: jellyfin
+  serviceName: jellyfin
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      containers:
+        - name: jellyfin
+          image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: 8096
+              name: web-ui
+              protocol: TCP
+          volumeMounts:
+            - name: data
+              mountPath: /config
+            - name: tv
+              mountPath: /media/tv
+            - name: movies
+              mountPath: /media/movies
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+      volumes:
+        - name: tv
+          persistentVolumeClaim:
+            claimName: pvc-jellyfin-tv
+        - name: movies
+          persistentVolumeClaim:
+            claimName: pvc-jellyfin-movies
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: data
+        namespace: jellyfin
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 16Gi

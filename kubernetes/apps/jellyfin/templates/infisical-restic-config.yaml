@@ -8,13 +8,12 @@ spec:
       secretsScope:
         projectSlug: jellyfin-rgm0
         envSlug: dev
-        secretsPath: "/restic"
+        secretsPath: /restic
       credentialsRef:
         secretName: infisical-credentials
         secretNamespace: jellyfin
-
   managedKubeSecretReferences:
     - secretName: restic-config
       secretNamespace: jellyfin
       secretType: Opaque
-      creationPolicy: "Owner"
+      creationPolicy: Owner

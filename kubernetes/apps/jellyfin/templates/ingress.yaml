@@ -6,8 +6,8 @@ metadata:
   labels:
     app: jellyfin
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: "web"
-    traefik.ingress.kubernetes.io/router.middlewares: "traefik-http-to-https@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-http-to-https@kubernetescrd
 spec:
   rules:
     - host: jellyfin.internal.paulfriedrich.me
@@ -28,7 +28,7 @@ metadata:
   labels:
     app: jellyfin
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
