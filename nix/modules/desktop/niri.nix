@@ -21,15 +21,13 @@
       }:
       let
         noctaliaEnabled =
-          lib.hasAttrByPath [ "programs" "noctalia-shell" "enable" ] config
-          && config.programs."noctalia-shell".enable;
+          lib.hasAttrByPath [ "programs" "noctalia" "enable" ] config && config.programs."noctalia".enable;
 
         noctalia =
           cmd:
           [
-            "noctalia-shell"
-            "ipc"
-            "call"
+            "noctalia"
+            "msg"
           ]
           ++ (pkgs.lib.splitString " " cmd);
       in
@@ -42,7 +40,7 @@
             xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite-unstable;
 
             spawn-at-startup = lib.optionals noctaliaEnabled [
-              { command = [ "noctalia-shell" ]; }
+              { command = [ "noctalia" ]; }
             ];
 
             input = {
@@ -176,9 +174,9 @@
               "Mod+Shift+P".action.set-dynamic-cast-monitor = { };
               "Mod+Ctrl+P".action.clear-dynamic-cast-target = { };
 
-              "Mod+L".action.spawn = if noctaliaEnabled then noctalia "lockScreen lock" else [ "swaylock" ];
+              "Mod+L".action.spawn = if noctaliaEnabled then noctalia "session lock" else [ "swaylock" ];
               "Mod+Return".action.spawn = "alacritty";
-              "Mod+D".action.spawn = if noctaliaEnabled then noctalia "launcher toggle" else "fuzzel";
+              "Mod+D".action.spawn = if noctaliaEnabled then noctalia "panel-toggle launcher" else "fuzzel";
 
               "Ctrl+F9".action.spawn-sh = "${pkgs.discover-overlay}/bin/discover-overlay --rpc --toggle-mute";
               "Ctrl+F10".action.spawn-sh = "${pkgs.discover-overlay}/bin/discover-overlay --rpc --toggle-deaf";
@@ -240,10 +238,6 @@
 
             layer-rules = [
               {
-                matches = [ { namespace = "^wpaperd-DP-1$"; } ];
-                place-within-backdrop = true;
-              }
-              {
                 matches = [ { namespace = "^notifications$"; } ];
                 block-out-from = "screencast";
               }
@@ -293,7 +287,24 @@
 
                 block-out-from = "screencast";
               }
+              {
+                matches = [ { app-id = "dev.noctalia.Noctalia"; } ];
+
+                open-floating = true;
+
+                default-column-width = {
+                  fixed = 1080;
+                };
+
+                default-window-height = {
+                  fixed = 920;
+                };
+              }
             ];
+
+            debug = {
+              honor-xdg-activation-with-invalid-serial = { };
+            };
           };
         };
       };

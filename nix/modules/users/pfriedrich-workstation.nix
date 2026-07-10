@@ -13,7 +13,6 @@
       den.aspects.librewolf
       den.aspects.thunar
       den.aspects.utilities-desktop
-      den.aspects.wpaperd
 
       den.aspects.kubernetes
       den.aspects.dotnet

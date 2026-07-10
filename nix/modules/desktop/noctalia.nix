@@ -1,7 +1,7 @@
 { inputs, lib, ... }:
 {
   flake-file.inputs.noctalia = {
-    url = "github:noctalia-dev/noctalia/legacy-v4";
+    url = "github:noctalia-dev/noctalia";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -42,120 +42,119 @@
       };
 
     homeManager =
-      { ... }:
+      { config, ... }:
       {
         imports = [
           inputs.noctalia.homeModules.default
         ];
 
-        programs.noctalia-shell = {
+        programs.noctalia = {
           enable = true;
 
-          plugins = {
-            sources = [
-              {
-                enabled = true;
-                name = "Official Noctalia Plugins";
-                url = "https://github.com/noctalia-dev/noctalia-plugins";
-              }
-            ];
-
-            states = {
-              niri-workspaces = {
-                enabled = true;
-                sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-              };
-            };
-
-            version = 2;
-          };
-
           settings = {
-            appLauncher = {
-              customLaunchPrefixEnabled = true;
-              customLaunchPrefix = "systemd-run --user --scope --collect --";
+            bar.default = {
+              start = [ "workspaces" ];
+              center = [ "active_window" ];
+              end = [
+                "tray"
+                "notifications"
+                "volume"
+                "cpu"
+                "ram"
+                "temp"
+                "sysmon"
+                "clock"
+                "session"
+              ];
+              margin_edge = 5;
+              margin_ends = 5;
+              radius = 0;
+              shadow = false;
             };
 
-            bar = {
-              enableExclusionZoneInset = false;
-              fontScaling = 1.05;
-              outerCorners = false;
-              showCapsule = false;
-              widgetSpacing = 0;
-
-              widgets = {
-                center = [
-                  {
-                    id = "ActiveWindow";
-                    maxWidth = 1000;
-                  }
-                ];
-                left = [
-                  {
-                    id = "Workspace";
-                    labelMode = "index+name";
-                    pillSize = 0.65;
-                  }
-                ];
-                right = [
-                  {
-                    id = "Tray";
-                    colorizeIcons = false;
-                    pinned = [
-                      "Discord"
-                    ];
-                  }
-                  {
-                    id = "NotificationHistory";
-                  }
-                  {
-                    id = "Volume";
-                    middleClickCommand = "pwvucontrol || pavucontrol";
-                  }
-                  {
-                    id = "SystemMonitor";
-                    showCpuTemp = true;
-                    showCpuUsage = true;
-                    showDiskUsage = true;
-                    showGpuTemp = true;
-                    showMemoryUsage = true;
-                  }
-                  {
-                    id = "Clock";
-                    formatHorizontal = "yyyy-MM-dd HH:mm:ss";
-                  }
-                  {
-                    id = "ControlCenter";
-                  }
-                ];
-              };
+            control_center = {
+              sidebar = "full";
+              sidebar_section = "full";
+              shortcuts = [
+                { type = "caffeine"; }
+                { type = "notification"; }
+                { type = "clipboard"; }
+              ];
             };
 
-            general = {
-              enableShadows = true;
-              shadowDirection = "center";
-              shadowOffsetX = 0;
-              shadowOffsetY = 0;
+            desktop_widgets.enabled = false;
+
+            dock = {
+              auto_hide = true;
+              enabled = true;
+              icon_size = 32;
+              launcher_position = "start";
+              margin_edge = 12;
+              reserve_space = false;
+              show_dots = true;
             };
 
             idle = {
-              enable = true;
+              behavior_order = [
+                "lock"
+                "screen-off"
+                "lock-and-suspend"
+              ];
+              behavior = {
+                lock = {
+                  action = "lock";
+                  enabled = true;
+                  timeout = 600.0;
+                };
+                "lock-and-suspend" = {
+                  action = "lock_and_suspend";
+                  enabled = false;
+                  timeout = 900.0;
+                };
+                "screen-off" = {
+                  action = "screen_off";
+                  enabled = false;
+                  timeout = 660.0;
+                };
+              };
             };
 
-            location = {
-              autoLocate = true;
-              firstDayOfWeek = 1;
-              hideWeatherCityName = true;
-              showWeekNumberInCalendar = true;
-              weatherEnabled = true;
+            shell = {
+              clipboard_enabled = false;
+              telemetry_enabled = false;
+              panel = {
+                control_center_placement = "floating";
+                open_near_click_control_center = true;
+              };
+              screenshot.confirm_region = true;
             };
 
-            systemMonitor = {
-              enableDgpuMonitoring = true;
+            theme = {
+              builtin = "Nord";
+              templates = {
+                enable_builtin_templates = false;
+                enable_community_templates = false;
+              };
             };
 
             wallpaper = {
-              enable = true;
+              enabled = true;
+              default.path = config.stylix.image;
+            };
+
+            widget = {
+              active_window = {
+                enabled = true;
+                max_length = 800;
+              };
+              clock.format = "{:%Y-%m-%d %H:%M:%S}";
+              cpu.show_label = false;
+              ram.show_label = false;
+              sysmon = {
+                show_label = false;
+                stat = "disk_pct";
+              };
+              temp.show_label = false;
             };
           };
         };
