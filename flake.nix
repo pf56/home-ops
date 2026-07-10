@@ -40,7 +40,7 @@
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
     sops-nix.url = "github:Mic92/sops-nix";
     stylix = {
-      url = "github:nix-community/stylix/pull/2337/head";
+      url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     treefmt-nix.url = "github:numtide/treefmt-nix";
