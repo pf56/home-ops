@@ -183,6 +183,16 @@
               "Ctrl+F11".action.spawn-sh = "${pkgs.discover-overlay}/bin/discover-overlay --rpc --show";
               "Ctrl+Shift+F11".action.spawn-sh = "${pkgs.discover-overlay}/bin/discover-overlay --rpc --hide";
 
+              # match on `[r]` to prevent pkill from killing its own parent shell process
+              "Mod+Ctrl+F11".action.spawn-sh = ''
+                if ${pkgs.procps}/bin/pkill -SIGUSR1 -f "/gpu-screen-recorde[r] "; then
+                  ${pkgs.libnotify}/bin/notify-send --app-name=gpu-screen-recorder --expire-time=3000 "Replay saved" "Replay buffer written to disk"
+                  ${pkgs.pipewire}/bin/pw-play --media-category Notification --media-role Notification ${pkgs.sound-theme-freedesktop}/share/sounds/freedesktop/stereo/message-new-instant.oga
+                else
+                  ${pkgs.libnotify}/bin/notify-send --urgency=critical "Replay not saved" "gpu-screen-recorder is not running"
+                fi
+              '';
+
               "Mod+O" = {
                 action.toggle-overview = { };
                 repeat = false;

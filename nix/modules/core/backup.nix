@@ -27,6 +27,7 @@
             ]
             ++ lib.optionals (user != null) [
               "/home/${user.userName}/Games"
+              "/home/${user.userName}/Videos/Replays"
               "!/home/${user.userName}/Games/Heroic/Prefixes/default/Battle.net/drive_c/Program Files (x86)/World of Warcraft/_retail_/Interface"
               "!/home/${user.userName}/Games/Heroic/Prefixes/default/Battle.net/drive_c/Program Files (x86)/World of Warcraft/_retail_/WTF"
             ];
