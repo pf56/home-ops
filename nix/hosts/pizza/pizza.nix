@@ -8,6 +8,7 @@
       den.aspects.amd-gpu
       den.aspects.appimage
       den.aspects.gaming
+      den.aspects.gpu-screen-recorder
       den.aspects.greetd
       den.aspects.niri
       den.aspects.noctalia
