@@ -6,6 +6,7 @@
       den.aspects.backup
       den.aspects.common
       den.aspects.amd-gpu
+      den.aspects.appimage
       den.aspects.gaming
       den.aspects.greetd
       den.aspects.niri
