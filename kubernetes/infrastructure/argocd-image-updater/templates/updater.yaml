@@ -24,3 +24,7 @@ spec:
       images:
         - alias: "continuwuity"
           imageName: "forgejo.ellis.link/continuwuation/continuwuity:v0.5.x"
+    - namePattern: "jellyfin"
+      images:
+        - alias: "jellyfin"
+          imageName: "jellyfin/jellyfin:10.11.x"
