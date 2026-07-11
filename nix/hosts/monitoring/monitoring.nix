@@ -68,16 +68,6 @@
                     }
                   ];
                 }).options.path
-                # (pkgs.fetchurl {
-                #   name = "node-exporter-full.json";
-                #   url = "https://grafana.com/api/dashboards/1860/revisions/45/download";
-                #   hash = "sha256-GExrdAnzBtp1Ul13cvcZRbEM6iOtFrXXjEaY6g6lGYY=";
-                # })
-                # (pkgs.fetchurl {
-                #   name = "kea-dhcp.json";
-                #   url = "https://grafana.com/api/dashboards/12688/revisions/4/download";
-                #   hash = "sha256-/Uj5iqv1rAMYts+i2ELNsZeCc6J6cGqcnUWLFLryCOc=";
-                # })
               ];
             };
 
