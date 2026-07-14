@@ -1,6 +1,14 @@
 { ... }:
 {
   custom-packages = final: prev: {
+    discover-overlay = prev.discover-overlay.overrideAttrs (old: {
+      src = prev.fetchFromGitHub {
+        owner = "trigg";
+        repo = "Discover";
+        rev = "ccbee7ae965a83f10b4fa8baf111f3cca73d9fc2";
+        hash = "sha256-etLG/KInEPqt04ut+OYKthigj4WMOtwa52vliz3ZOcg=";
+      };
+    });
     nft-dns = final.callPackage ../packages/nft-dns { };
     openscad-honeycomb = final.callPackage ../packages/openscad-honeycomb { };
     openscad-libs = final.callPackage ../packages/openscad-libs { };
