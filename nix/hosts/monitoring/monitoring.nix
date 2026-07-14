@@ -22,6 +22,8 @@
           443
           1514
           3100
+          6050
+          6051
           9090
         ];
         networking.firewall.allowedUDPPorts = [ 443 ];
@@ -103,6 +105,94 @@
           recommendedOptimisation = true;
           recommendedGzipSettings = true;
           recommendedBrotliSettings = true;
+        };
+
+        services.vector = {
+          enable = true;
+
+          settings = {
+            sources.talos_service_logs = {
+              type = "socket";
+              mode = "tcp";
+              address = "0.0.0.0:6051";
+              host_key = "__host";
+              permit_origin = [
+                "10.0.60.20/32"
+                "10.0.60.21/32"
+                "10.0.60.22/32"
+                "10.0.60.23/32"
+                "10.0.60.24/32"
+                "10.0.60.25/32"
+              ];
+              framing.method = "newline_delimited";
+              decoding.codec = "json";
+            };
+
+            sources.talos_kernel_logs = {
+              type = "socket";
+              mode = "tcp";
+              address = "0.0.0.0:6050";
+              host_key = "__host";
+              permit_origin = [
+                "10.0.60.20/32"
+                "10.0.60.21/32"
+                "10.0.60.22/32"
+                "10.0.60.23/32"
+                "10.0.60.24/32"
+                "10.0.60.25/32"
+              ];
+              framing.method = "newline_delimited";
+              decoding.codec = "json";
+            };
+
+            transforms.talos_service_enrich = {
+              type = "remap";
+              inputs = [ "talos_service_logs" ];
+              source = ''
+                .service = ."talos-service"
+                .level = ."talos-level"
+                .timestamp = parse_timestamp!(."talos-time", format: "%+")
+                .message = .msg
+              '';
+            };
+
+            transforms.talos_kernel_enrich = {
+              type = "remap";
+              inputs = [ "talos_kernel_logs" ];
+              source = ''
+                .cluster = "internal-paulfriedrich-me-prod"
+                .level = ."talos-level"
+                .timestamp = parse_timestamp!(."talos-time", format: "%+")
+                .message = .msg
+              '';
+            };
+
+            sinks.talos_service = {
+              type = "loki";
+              inputs = [ "talos_service_enrich" ];
+              endpoint = "http://127.0.0.1:3100";
+              encoding.codec = "json";
+              labels = {
+                cluster = "{{ cluster }}";
+                node = "{{ node }}";
+                service = "{{ service }}";
+                level = "{{ level }}";
+              };
+            };
+
+            sinks.talos_kernel = {
+              type = "loki";
+              inputs = [ "talos_kernel_enrich" ];
+              endpoint = "http://127.0.0.1:3100";
+              encoding.codec = "json";
+              labels = {
+                cluster = "{{ cluster }}";
+                node = "{{ node }}";
+                facility = "{{ facility }}";
+                level = "{{ level }}";
+              };
+            };
+          };
         };
 
         security.acme = {

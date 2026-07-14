@@ -23,6 +23,8 @@ nodes:
     machineSpec:
       secureboot: true
       useUKI: true
+    patches:
+      - "@./patches/logging-control-eex0.yaml"
   - hostname: talos-control-vrcn
     ipAddress: 10.0.60.21
     installDisk: /dev/vda
@@ -43,6 +45,8 @@ nodes:
     machineSpec:
       secureboot: true
       useUKI: true
+    patches:
+      - "@./patches/logging-control-vrcn.yaml"
   - hostname: talos-control-euvu
     ipAddress: 10.0.60.22
     installDisk: /dev/vda
@@ -63,6 +67,8 @@ nodes:
     machineSpec:
       secureboot: true
       useUKI: true
+    patches:
+      - "@./patches/logging-control-euvu.yaml"
   - hostname: talos-worker-74s1
     ipAddress: 10.0.60.23
     installDisk: /dev/vda
@@ -83,6 +89,7 @@ nodes:
       useUKI: true
     patches:
       - "@./patches/longhorn-worker-74s1.yaml"
+      - "@./patches/logging-worker-74s1.yaml"
   - hostname: talos-worker-8up6
     ipAddress: 10.0.60.24
     installDisk: /dev/vda
@@ -103,6 +110,7 @@ nodes:
       useUKI: true
     patches:
       - "@./patches/longhorn-worker-8up6.yaml"
+      - "@./patches/logging-worker-8up6.yaml"
   - hostname: talos-worker-lyfg
     ipAddress: 10.0.60.25
     installDisk: /dev/vda
@@ -123,6 +131,7 @@ nodes:
       useUKI: true
     patches:
       - "@./patches/longhorn-worker-lyfg.yaml"
+      - "@./patches/logging-worker-lyfg.yaml"
 controlPlane:
   patches:
     - "@./patches/install-cilium-controlplane.yaml"

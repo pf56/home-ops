@@ -1,0 +1,11 @@
+machine:
+  install:
+    extraKernelArgs:
+      - talos.logging.kernel=tcp://10.0.60.19:6050/
+  logging:
+    destinations:
+      - endpoint: tcp://10.0.60.19:6051/
+        format: json_lines
+        extraTags:
+          cluster: internal-paulfriedrich-me-prod
+          node: talos-worker-lyfg
