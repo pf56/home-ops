@@ -4,5 +4,5 @@ helm:
     value: mbentley/omada-controller
     forcestring: true
   - name: image.tag
-    value: "6.0"
+    value: "6.2"
     forcestring: true
