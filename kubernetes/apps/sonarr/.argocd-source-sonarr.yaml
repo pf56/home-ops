@@ -1,3 +1,8 @@
-kustomize:
-  images:
-  - lscr.io/linuxserver/sonarr:4.0.19
+helm:
+  parameters:
+  - name: image.name
+    value: lscr.io/linuxserver/sonarr
+    forcestring: true
+  - name: image.tag
+    value: 4.0.19
+    forcestring: true

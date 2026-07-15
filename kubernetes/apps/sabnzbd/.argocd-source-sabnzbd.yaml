@@ -1,3 +1,8 @@
-kustomize:
-  images:
-  - lscr.io/linuxserver/sabnzbd:4.5.5
+helm:
+  parameters:
+  - name: image.name
+    value: lscr.io/linuxserver/sabnzbd
+    forcestring: true
+  - name: image.tag
+    value: 4.5.5
+    forcestring: true

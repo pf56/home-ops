@@ -1,0 +1,22 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: sabnzbd-backup
+spec:
+  sourcePVC: data-sabnzbd-0
+  trigger:
+    schedule: "0 2 * * *"
+  restic:
+    pruneIntervalDays: 14
+    repository: restic-config
+    retain:
+      daily: 7
+      weekly: 4
+      monthly: 12
+      yearly: 1
+    copyMethod: Snapshot
+    volumeSnapshotClassName: longhorn
+    moverSecurityContext:
+      fsGroup: 1001
+      fsGroupChangePolicy: "OnRootMismatch"
