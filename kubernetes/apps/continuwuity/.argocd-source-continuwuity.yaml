@@ -4,5 +4,5 @@ helm:
     value: forgejo.ellis.link/continuwuation/continuwuity
     forcestring: true
   - name: image.tag
-    value: v0.5.10
+    value: v26.6.2
     forcestring: true
