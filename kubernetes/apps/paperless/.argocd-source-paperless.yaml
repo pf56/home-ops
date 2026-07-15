@@ -1,0 +1,14 @@
+helm:
+  parameters:
+  - name: image.name
+    value: ghcr.io/paperless-ngx/paperless-ngx
+    forcestring: true
+  - name: image.tag
+    value: 2.20.15
+    forcestring: true
+  - name: redis.image.name
+    value: docker.io/redis
+    forcestring: true
+  - name: redis.image.tag
+    value: 8.8.0
+    forcestring: true
