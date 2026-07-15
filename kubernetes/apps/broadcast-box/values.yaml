@@ -1,3 +1,15 @@
 image:
   name: seaduboi/broadcast-box
-  tag: ""
+  tag: v2.0.2
+redis:
+  image:
+    name: redis
+    tag: "8.8.0"
+livekit:
+  image:
+    name: livekit/livekit-server
+    tag: v1.8.0
+lkReact:
+  image:
+    name: davidkornel/lk-react
+    tag: latest

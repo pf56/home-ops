@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: docker.io/library/redis:8
+        image: {{ .Values.redis.image.name }}:{{ .Values.redis.image.tag }}
         ports:
           - containerPort: 6379
             name: redis

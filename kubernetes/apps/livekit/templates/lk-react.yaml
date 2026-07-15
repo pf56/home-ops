@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: lk-react
-        image: davidkornel/lk-react:latest
+        image: {{ .Values.lkReact.image.name }}:{{ .Values.lkReact.image.tag }}
         imagePullPolicy: IfNotPresent
         command: ["yarn"]
         args: ["start"]

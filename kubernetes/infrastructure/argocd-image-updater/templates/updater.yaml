@@ -28,3 +28,58 @@ spec:
       images:
         - alias: "jellyfin"
           imageName: "jellyfin/jellyfin:10.11.x"
+    - namePattern: "omada-controller"
+      images:
+        - alias: "omadacontroller"
+          imageName: "mbentley/omada-controller:6.0.x"
+    - namePattern: "paperless"
+      images:
+        - alias: "paperless"
+          imageName: "ghcr.io/paperless-ngx/paperless-ngx:2.20.x"
+        - alias: "redis"
+          imageName: "docker.io/library/redis:8.x"
+          manifestTargets:
+            helm:
+              name: "redis.image.name"
+              tag: "redis.image.tag"
+    - namePattern: "vaultwarden"
+      images:
+        - alias: "vaultwarden"
+          imageName: "ghcr.io/dani-garcia/vaultwarden:1.35.x"
+    - namePattern: "broadcast-box"
+      images:
+        - alias: "broadcastbox"
+          imageName: "seaduboi/broadcast-box:v2.0.x"
+        - alias: "redis"
+          imageName: "redis:8.8.x"
+          manifestTargets:
+            helm:
+              name: "redis.image.name"
+              tag: "redis.image.tag"
+        - alias: "livekit"
+          imageName: "livekit/livekit-server:v1.8.x"
+          manifestTargets:
+            helm:
+              name: "livekit.image.name"
+              tag: "livekit.image.tag"
+    - namePattern: "copyparty"
+      images:
+        - alias: "copyparty"
+          imageName: "ghcr.io/9001/copyparty-ac:1.20.x"
+    - namePattern: "livekit"
+      images:
+        - alias: "livekit"
+          imageName: "livekit/livekit-server:v1.9.x"
+        - alias: "jwtservice"
+          imageName: "ghcr.io/element-hq/lk-jwt-service:0.4.x"
+          manifestTargets:
+            helm:
+              name: "jwtService.image.name"
+              tag: "jwtService.image.tag"
+    - namePattern: "netbox"
+      images:
+        - alias: "netbox"
+          imageName: "ghcr.io/netbox-community/netbox:v4.0.x"
+          manifestTargets:
+            helm:
+              tag: "netbox.image.tag"

@@ -1,3 +1,15 @@
+image:
+  name: livekit/livekit-server
+  tag: v1.9.12
+jwtService:
+  image:
+    name: ghcr.io/element-hq/lk-jwt-service
+    tag: "0.4.1"
+lkReact:
+  image:
+    name: davidkornel/lk-react
+    tag: latest
+
 redis:
   auth:
     enabled: true
