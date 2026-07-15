@@ -4,5 +4,5 @@ helm:
     value: lscr.io/linuxserver/radarr
     forcestring: true
   - name: image.tag
-    value: 6.1.1
+    value: 6.3.0
     forcestring: true
