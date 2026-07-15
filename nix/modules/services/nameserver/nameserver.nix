@@ -91,6 +91,11 @@
                   protocol = "udp";
                 };
 
+                resolvers.tailscale-udp = {
+                  address = "100.100.100.100:53";
+                  protocol = "udp";
+                };
+
                 groups.upstream = {
                   resolvers = [
                     "cloudflare-dot"
@@ -104,6 +109,11 @@
                     {
                       name = "(^|\.)internal\.paulfriedrich\.me\.$";
                       resolver = "internal-udp";
+                    }
+                    {
+                      # MagicDNS records are only available from Tailscale's resolver.
+                      name = "(^|\.)tailnet-5ece\.ts\.net\.$";
+                      resolver = "tailscale-udp";
                     }
                     {
                       name = "\.10\.in-addr\.arpa\.$";
