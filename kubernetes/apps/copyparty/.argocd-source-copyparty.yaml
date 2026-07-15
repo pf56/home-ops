@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: image.name
+    value: ghcr.io/9001/copyparty-ac
+    forcestring: true
+  - name: image.tag
+    value: 1.20.18
+    forcestring: true
