@@ -1,5 +1,5 @@
 clusterName: internal-paulfriedrich-me-prod
-talosVersion: v1.11.5
+talosVersion: v1.12.9
 kubernetesVersion: v1.34.2
 endpoint: https://kube.internal.paulfriedrich.me:6443
 nodes:
@@ -133,6 +133,14 @@ nodes:
       - "@./patches/longhorn-worker-lyfg.yaml"
       - "@./patches/logging-worker-lyfg.yaml"
 controlPlane:
+  schematic:
+    customization:
+      extraKernelArgs:
+        - talos.logging.kernel=tcp://10.0.60.19:6050/
+  imageSchematic:
+    customization:
+      extraKernelArgs:
+        - talos.logging.kernel=tcp://10.0.60.19:6050/
   patches:
     - "@./patches/install-cilium-controlplane.yaml"
     - "@./patches/scheduler-config.yaml"
@@ -141,10 +149,16 @@ controlPlane:
 worker:
   schematic:
     customization:
+      extraKernelArgs:
+        - talos.logging.kernel=tcp://10.0.60.19:6050/
       systemExtensions:
         officialExtensions:
           - siderolabs/iscsi-tools
           - siderolabs/util-linux-tools
+  imageSchematic:
+    customization:
+      extraKernelArgs:
+        - talos.logging.kernel=tcp://10.0.60.19:6050/
   patches:
     - "@./patches/install-cilium-worker.yaml"
     - "@./patches/enable-peering.yaml"
