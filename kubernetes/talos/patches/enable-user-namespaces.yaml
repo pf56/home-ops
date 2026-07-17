@@ -1,7 +1,7 @@
 cluster:
   apiServer:
     extraArgs:
-      feature-gates: UserNamespacesSupport=true,UserNamespacesPodSecurityStandards=true
+      feature-gates: UserNamespacesSupport=true
 machine:
   sysctls:
     user.max_user_namespaces: "11255"
@@ -9,4 +9,3 @@ machine:
     extraConfig:
       featureGates:
         UserNamespacesSupport: true
-        UserNamespacesPodSecurityStandards: true

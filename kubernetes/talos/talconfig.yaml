@@ -1,6 +1,6 @@
 clusterName: internal-paulfriedrich-me-prod
 talosVersion: v1.13.6
-kubernetesVersion: v1.34.2
+kubernetesVersion: v1.36.2
 endpoint: https://kube.internal.paulfriedrich.me:6443
 nodes:
   - hostname: talos-control-eex0
