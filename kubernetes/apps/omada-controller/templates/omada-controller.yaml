@@ -18,6 +18,10 @@ spec:
       port: 443
       protocol: TCP
       targetPort: manage-https
+    - name: upgrade-https
+      port: 8043
+      protocol: TCP
+      targetPort: upgrade-https
     - name: portal-https
       port: 8843
       protocol: TCP
@@ -76,6 +80,8 @@ spec:
             value: "80"
           - name: MANAGE_HTTPS_PORT
             value: "443"
+          - name: UPGRADE_HTTPS_PORT
+            value: "8043"
           - name: PORTAL_HTTP_PORT
             value: "8088"
           - name: PORTAL_HTTPS_PORT
@@ -98,6 +104,9 @@ spec:
             protocol: TCP
           - containerPort: 443
             name: manage-https
+            protocol: TCP
+          - containerPort: 8043
+            name: upgrade-https
             protocol: TCP
           - containerPort: 8843
             name: portal-https
