@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-lidarr-downloads
+spec:
+  capacity:
+    storage: 100Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - nfsvers=3
+    - nolock
+    - noatime
+  csi:
+    driver: org.democratic-csi.node-manual
+    readOnly: false
+    fsType: nfs
+    volumeHandle: 6aceb2fd-a2bd-433d-9f77-0bf0b162bd6f
+    volumeAttributes:
+      server: 10.0.60.3
+      share: /mnt/tank/downloads
+      node_attach_driver: nfs
+      provisioner_driver: node-manual

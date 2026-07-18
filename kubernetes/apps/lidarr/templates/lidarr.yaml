@@ -1,0 +1,80 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lidarr
+  labels:
+    app: lidarr
+spec:
+  selector:
+    app: lidarr
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: web-ui
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: lidarr
+  labels:
+    app: lidarr
+spec:
+  selector:
+    matchLabels:
+      app: lidarr
+  serviceName: lidarr
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: lidarr
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - name: lidarr
+        image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
+        ports:
+          - containerPort: 8686
+            name: web-ui
+            protocol: TCP
+        volumeMounts:
+          - name: data
+            mountPath: /config
+          - name: downloads
+            mountPath: /downloads
+          - name: music
+            mountPath: /music
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: pvc-lidarr-downloads
+        - name: music
+          persistentVolumeClaim:
+            claimName: pvc-lidarr-music
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data
+      namespace: lidarr
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 8Gi
