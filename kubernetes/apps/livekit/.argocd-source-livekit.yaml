@@ -1,0 +1,14 @@
+helm:
+  parameters:
+  - name: image.name
+    value: livekit/livekit-server
+    forcestring: true
+  - name: image.tag
+    value: v1.9.12
+    forcestring: true
+  - name: jwtService.image.name
+    value: ghcr.io/element-hq/lk-jwt-service
+    forcestring: true
+  - name: jwtService.image.tag
+    value: 0.4.4
+    forcestring: true
