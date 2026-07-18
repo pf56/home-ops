@@ -52,6 +52,8 @@ spec:
             mountPath: /downloads
           - name: music
             mountPath: /music
+          - name: tmp
+            mountPath: /tmp
       securityContext:
         runAsUser: 1001
         runAsGroup: 1001
@@ -66,6 +68,10 @@ spec:
         - name: music
           persistentVolumeClaim:
             claimName: pvc-lidarr-music
+        - name: tmp
+          emptyDir:
+            medium: Memory
+            sizeLimit: 64Mi
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim
