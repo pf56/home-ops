@@ -227,7 +227,7 @@ resource "proxmox_virtual_environment_vm" "talos_control_plane" {
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
-    size         = 20
+    size         = 60
   }
 
   network_device {
@@ -281,7 +281,7 @@ resource "proxmox_virtual_environment_vm" "talos_worker" {
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
-    size         = 20
+    size         = 60
   }
 
   # longhorn storage
