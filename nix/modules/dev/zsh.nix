@@ -26,6 +26,7 @@
 
           shellAliases = {
             l = "ls -l";
+            argocd-local-diff = "argocd app diff --local \"$(git rev-parse --show-toplevel)\" --server-side-generate";
           };
 
           initContent = ''
