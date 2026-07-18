@@ -123,3 +123,11 @@ spec:
             helm:
               name: "cert-manager.startupapicheck.image.repository"
               tag: "cert-manager.startupapicheck.image.tag"
+    - namePattern: "infisical"
+      images:
+        - alias: "infisicaloperator"
+          imageName: "infisical/kubernetes-operator:v0.11.x"
+          manifestTargets:
+            helm:
+              name: "secrets-operator.controllerManager.manager.image.repository"
+              tag: "secrets-operator.controllerManager.manager.image.tag"
