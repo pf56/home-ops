@@ -32,4 +32,8 @@ spec:
     - projectSlug: copyparty-tm-ep
       environmentSlug: dev
       secretPath: /copyparty
-  targets: []
+  targets:
+    - name: copyparty-config
+      namespace: copyparty
+      kind: Secret
+      creationPolicy: Owner
