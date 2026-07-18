@@ -83,3 +83,30 @@ spec:
           manifestTargets:
             helm:
               tag: "netbox.image.tag"
+    - namePattern: "cert-manager"
+      images:
+        - alias: "certmanager-controller"
+          imageName: "quay.io/jetstack/cert-manager-controller:v1.21.x"
+          manifestTargets:
+            helm:
+              tag: "cert-manager.image.tag"
+        - alias: "certmanager-webhook"
+          imageName: "quay.io/jetstack/cert-manager-webhook:v1.21.x"
+          manifestTargets:
+            helm:
+              tag: "cert-manager.webhook.image.tag"
+        - alias: "certmanager-cainjector"
+          imageName: "quay.io/jetstack/cert-manager-cainjector:v1.21.x"
+          manifestTargets:
+            helm:
+              tag: "cert-manager.cainjector.image.tag"
+        - alias: "certmanager-acmesolver"
+          imageName: "quay.io/jetstack/cert-manager-acmesolver:v1.21.x"
+          manifestTargets:
+            helm:
+              tag: "cert-manager.acmesolver.image.tag"
+        - alias: "certmanager-startupapicheck"
+          imageName: "quay.io/jetstack/cert-manager-startupapicheck:v1.21.x"
+          manifestTargets:
+            helm:
+              tag: "cert-manager.startupapicheck.image.tag"
