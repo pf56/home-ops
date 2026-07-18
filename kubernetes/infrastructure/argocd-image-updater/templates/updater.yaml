@@ -8,6 +8,14 @@ spec:
   writeBackConfig:
     method: "git"
   applicationRefs:
+    - namePattern: "argocd-image-updater"
+      images:
+        - alias: "argocdimageupdater"
+          imageName: "quay.io/argoprojlabs/argocd-image-updater:v1.2.x"
+          manifestTargets:
+            helm:
+              name: "argocd-image-updater.image.name"
+              tag: "argocd-image-updater.image.tag"
     - namePattern: "sonarr"
       images:
         - alias: "sonarr"
