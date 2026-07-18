@@ -23,10 +23,6 @@ spec:
       images:
         - alias: "radarr"
           imageName: "lscr.io/linuxserver/radarr:6.3.x"
-    - namePattern: "lidarr"
-      images:
-        - alias: "lidarr"
-          imageName: "lscr.io/linuxserver/lidarr:3.1.x"
     - namePattern: "sabnzbd"
       images:
         - alias: "sabnzbd"
@@ -135,7 +131,3 @@ spec:
             helm:
               name: "secrets-operator.controllerManager.manager.image.repository"
               tag: "secrets-operator.controllerManager.manager.image.tag"
-    - namePattern: "navidrome"
-      images:
-        - alias: "navidrome"
-          imageName: "deluan/navidrome:0.63.x"
