@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: secrets-operator.controllerManager.manager.image.repository
+    value: infisical/kubernetes-operator
+    forcestring: true
+  - name: secrets-operator.controllerManager.manager.image.tag
+    value: v0.11.3
+    forcestring: true
