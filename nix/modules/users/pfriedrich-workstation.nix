@@ -38,9 +38,6 @@
           trash-cli
           yubikey-manager
           yubikey-touch-detector
-
-          # language servers
-          yaml-language-server
         ];
       };
   };
