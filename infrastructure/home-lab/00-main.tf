@@ -261,8 +261,8 @@ resource "proxmox_virtual_environment_vm" "talos_worker" {
   }
 
   memory {
-    dedicated = 8192
-    floating  = 8192
+    dedicated = 16384
+    floating  = 16384
   }
 
   tpm_state {
