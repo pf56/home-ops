@@ -1,0 +1,1 @@
+helm template cilium/cilium --version 1.18.12 --namespace cilium --set preflight.enabled=true --set agent=false --set operator.enabled=false --set k8sServiceHost=10.0.60.5 --set k8sServicePort=6443 > cilium-preflight.yaml

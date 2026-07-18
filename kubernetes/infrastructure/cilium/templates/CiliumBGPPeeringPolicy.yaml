@@ -1,16 +1,48 @@
-apiVersion: cilium.io/v2alpha1
-kind: CiliumBGPPeeringPolicy
+apiVersion: cilium.io/v2
+kind: CiliumBGPClusterConfig
 metadata:
-  name: vyos01
+  name: cilium-bgp
 spec:
   nodeSelector:
     matchLabels:
       paulfriedrich.me/peering: "yes"
-  virtualRouters:
-    - localASN: 4200060005
-      neighbors:
-        - peerASN: 4200060001
-          peerAddress: 10.0.60.1/32
-      serviceSelector:
+  bgpInstances:
+  - name: "instance-4200060005"
+    localASN: 4200060005
+    peers:
+    - name: "peer-4200060006-4200060001"
+      peerASN: 4200060001
+      peerAddress: 10.0.60.1
+      peerConfigRef:
+        name: "cilium-peer-router"
+---
+apiVersion: cilium.io/v2
+kind: CiliumBGPPeerConfig
+metadata:
+  name: cilium-peer-router
+spec:
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 15
+  families:
+    - afi: ipv4
+      safi: unicast
+      advertisements:
+        matchLabels:
+          advertise: "bgp"
+---
+apiVersion: cilium.io/v2
+kind: CiliumBGPAdvertisement
+metadata:
+  name: bgp-advertisements
+  labels:
+    advertise: bgp
+spec:
+  advertisements:
+    - advertisementType: "Service"
+      service:
+        addresses:
+          - LoadBalancerIP
+      selector:
         matchExpressions:
-          - { key: somekey, operator: NotIn, values: [ 'never-used-value' ] }
+         - {key: somekey, operator: NotIn, values: ['never-used-value']}
