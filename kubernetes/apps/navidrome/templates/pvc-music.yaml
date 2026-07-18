@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-navidrome-music
+spec:
+  storageClassName: ""
+  volumeName: pv-navidrome-music
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Ti

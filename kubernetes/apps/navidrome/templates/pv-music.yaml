@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-navidrome-music
+spec:
+  capacity:
+    storage: 100Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - nfsvers=3
+    - nolock
+    - noatime
+  csi:
+    driver: org.democratic-csi.node-manual
+    readOnly: false
+    fsType: nfs
+    volumeHandle: 0c7af470-9973-430e-9e20-1bf005486265
+    volumeAttributes:
+      server: 10.0.60.3
+      share: /mnt/tank/music
+      node_attach_driver: nfs
+      provisioner_driver: node-manual

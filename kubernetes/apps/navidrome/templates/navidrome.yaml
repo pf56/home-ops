@@ -1,0 +1,95 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: navidrome
+  labels:
+    app: navidrome
+spec:
+  selector:
+    app: navidrome
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: web-ui
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: navidrome
+  labels:
+    app: navidrome
+spec:
+  selector:
+    matchLabels:
+      app: navidrome
+  serviceName: navidrome
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: navidrome
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: navidrome
+        image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+        ports:
+          - containerPort: 4533
+            name: web-ui
+            protocol: TCP
+        env:
+          - name: ND_LOGLEVEL
+            value: "info"
+          - name: SQLITE_TMPDIR
+            value: "/data"
+        volumeMounts:
+          - name: data
+            mountPath: /data
+          - name: music
+            mountPath: /music
+            readOnly: true
+        resources:
+          requests:
+            cpu: 200m
+            memory: 200Mi
+          limits:
+            memory: 200Mi
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: 4533
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 4533
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
+      volumes:
+        - name: music
+          persistentVolumeClaim:
+            claimName: pvc-navidrome-music
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data
+      namespace: navidrome
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 8Gi
