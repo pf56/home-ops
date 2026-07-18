@@ -1,19 +1,38 @@
-apiVersion: secrets.infisical.com/v1alpha1
-kind: InfisicalSecret
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalAuth
+metadata:
+  name: infisical-auth
+spec:
+  infisicalConnectionRef:
+    name: infisical-connection
+    namespace: infisical-operator-system
+  method: universal
+  universal:
+    clientIdRef:
+      name: infisical-credentials
+      namespace: jellyfin
+      key: clientId
+    clientSecretRef:
+      name: infisical-credentials
+      namespace: jellyfin
+      key: clientSecret
+---
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalStaticSecret
 metadata:
   name: infisical-restic-config
 spec:
-  authentication:
-    universalAuth:
-      secretsScope:
-        projectSlug: jellyfin-rgm0
-        envSlug: dev
-        secretsPath: /restic
-      credentialsRef:
-        secretName: infisical-credentials
-        secretNamespace: jellyfin
-  managedKubeSecretReferences:
-    - secretName: restic-config
-      secretNamespace: jellyfin
-      secretType: Opaque
+  infisicalAuthRef:
+    name: infisical-auth
+    namespace: jellyfin
+  syncOptions:
+    refreshInterval: 60s
+  sources:
+    - projectSlug: jellyfin-rgm0
+      environmentSlug: dev
+      secretPath: /restic
+  targets:
+    - name: restic-config
+      namespace: jellyfin
+      kind: Secret
       creationPolicy: Owner

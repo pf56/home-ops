@@ -1,44 +1,62 @@
-apiVersion: secrets.infisical.com/v1alpha1
-kind: InfisicalSecret
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalAuth
+metadata:
+  name: infisical-auth
+spec:
+  infisicalConnectionRef:
+    name: infisical-connection
+    namespace: infisical-operator-system
+  method: universal
+  universal:
+    clientIdRef:
+      name: infisical-credentials
+      namespace: livekit
+      key: clientId
+    clientSecretRef:
+      name: infisical-credentials
+      namespace: livekit
+      key: clientSecret
+---
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalStaticSecret
 metadata:
   name: infisical-livekit-config
 spec:
-  authentication:
-    universalAuth:
-      secretsScope:
-        projectSlug: livekit-poi3
-        envSlug: dev
-        secretsPath: "/"
-        recursive: true
-      credentialsRef:
-        secretName: infisical-credentials
-        secretNamespace: livekit
-
-  managedKubeSecretReferences:
-    - secretName: livekit-secrets
-      secretNamespace: livekit
-      creationPolicy: "Owner"
+  infisicalAuthRef:
+    name: infisical-auth
+    namespace: livekit
+  syncOptions:
+    refreshInterval: 60s
+  sources:
+    - projectSlug: livekit-poi3
+      environmentSlug: dev
+      secretPath: /
+      recursive: true
+  targets:
+    - name: livekit-secrets
+      namespace: livekit
+      kind: Secret
+      creationPolicy: Owner
       template:
-        includeAllSecrets: false
+        engineVersion: v1
         data:
           LIVEKIT_URL: "{{ `{{ .LIVEKIT_URL.Value }}` }}"
           LIVEKIT_MATRIX_KEY: "{{ `{{ .LIVEKIT_MATRIX_KEY.Value }}` }}"
           LIVEKIT_MATRIX_TOKEN: "{{ `{{ .LIVEKIT_MATRIX_TOKEN.Value }}` }}"
-          LIVEKIT_FULL_ACCESS_HOMESERVERS: "{{ `{{ .LIVEKIT_FULL_ACCESS_HOMESERVERS }}` }}"
-
-  managedKubeConfigMapReferences:
-    - configMapName: livekit-config
-      configMapNamespace: livekit
-      creationPolicy: "Owner"
+          LIVEKIT_FULL_ACCESS_HOMESERVERS: "{{ `{{ .LIVEKIT_FULL_ACCESS_HOMESERVERS.Value }}` }}"
+    - name: livekit-config
+      namespace: livekit
+      kind: ConfigMap
+      creationPolicy: Owner
       template:
-        includeAllSecrets: false
+        engineVersion: v1
         data:
           CONFIG: |
             log_level: info
             port: 7880
 
             keys:
-              access_token: {{ `{{ .LIVEKIT_ACCESS_TOKEN.Value  }}`  }}
+              access_token: {{ `{{ .LIVEKIT_ACCESS_TOKEN.Value }}` }}
               {{ `{{ .LIVEKIT_MATRIX_KEY.Value }}` }}: {{ `{{ .LIVEKIT_MATRIX_TOKEN.Value }}` }}
 
             redis:
@@ -63,4 +81,3 @@ spec:
             turn:
               enabled: false
               loadBalancerAnnotations: {}
-

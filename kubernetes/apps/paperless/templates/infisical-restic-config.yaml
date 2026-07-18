@@ -1,21 +1,39 @@
 ---
-apiVersion: secrets.infisical.com/v1alpha1
-kind: InfisicalSecret
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalAuth
+metadata:
+  name: infisical-auth
+spec:
+  infisicalConnectionRef:
+    name: infisical-connection
+    namespace: infisical-operator-system
+  method: universal
+  universal:
+    clientIdRef:
+      name: infisical-credentials
+      namespace: paperless
+      key: clientId
+    clientSecretRef:
+      name: infisical-credentials
+      namespace: paperless
+      key: clientSecret
+---
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalStaticSecret
 metadata:
   name: infisical-restic-config
 spec:
-  authentication:
-    universalAuth:
-      secretsScope:
-        projectSlug: paperless-l3ca
-        envSlug: dev
-        secretsPath: "/restic"
-      credentialsRef:
-        secretName: infisical-credentials
-        secretNamespace: paperless
-
-  managedKubeSecretReferences:
-    - secretName: restic-config
-      secretNamespace: paperless
-      secretType: Opaque
-      creationPolicy: "Owner"
+  infisicalAuthRef:
+    name: infisical-auth
+    namespace: paperless
+  syncOptions:
+    refreshInterval: 60s
+  sources:
+    - projectSlug: paperless-l3ca
+      environmentSlug: dev
+      secretPath: /restic
+  targets:
+    - name: restic-config
+      namespace: paperless
+      kind: Secret
+      creationPolicy: Owner

@@ -1,21 +1,39 @@
 ---
-apiVersion: secrets.infisical.com/v1alpha1
-kind: InfisicalSecret
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalAuth
+metadata:
+  name: infisical-auth
+spec:
+  infisicalConnectionRef:
+    name: infisical-connection
+    namespace: infisical-operator-system
+  method: universal
+  universal:
+    clientIdRef:
+      name: infisical-credentials
+      namespace: vaultwarden
+      key: clientId
+    clientSecretRef:
+      name: infisical-credentials
+      namespace: vaultwarden
+      key: clientSecret
+---
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalStaticSecret
 metadata:
   name: infisical-restic-config
 spec:
-  authentication:
-    universalAuth:
-      secretsScope:
-        projectSlug: vaultwarden-miae
-        envSlug: dev
-        secretsPath: "/restic"
-      credentialsRef:
-        secretName: infisical-credentials
-        secretNamespace: vaultwarden
-
-  managedKubeSecretReferences:
-    - secretName: restic-config
-      secretNamespace: vaultwarden
-      secretType: Opaque
-      creationPolicy: "Owner"
+  infisicalAuthRef:
+    name: infisical-auth
+    namespace: vaultwarden
+  syncOptions:
+    refreshInterval: 60s
+  sources:
+    - projectSlug: vaultwarden-miae
+      environmentSlug: dev
+      secretPath: /restic
+  targets:
+    - name: restic-config
+      namespace: vaultwarden
+      kind: Secret
+      creationPolicy: Owner

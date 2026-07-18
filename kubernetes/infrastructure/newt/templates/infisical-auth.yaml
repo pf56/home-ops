@@ -1,20 +1,38 @@
-apiVersion: secrets.infisical.com/v1alpha1
-kind: InfisicalSecret
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalAuth
+metadata:
+  name: infisical-auth
+spec:
+  infisicalConnectionRef:
+    name: infisical-connection
+    namespace: infisical-operator-system
+  method: universal
+  universal:
+    clientIdRef:
+      name: infisical-credentials
+      namespace: newt
+      key: clientId
+    clientSecretRef:
+      name: infisical-credentials
+      namespace: newt
+      key: clientSecret
+---
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalStaticSecret
 metadata:
   name: infisical-main-tunnel
 spec:
-  authentication:
-    universalAuth:
-      secretsScope:
-        projectSlug: remote-lab-vd-9-i
-        envSlug: dev
-        secretsPath: "/homelab/main-tunnel"
-      credentialsRef:
-        secretName: infisical-credentials
-        secretNamespace: newt
-
-  managedKubeSecretReferences:
-    - secretName: main-tunnel-auth
-      secretNamespace: newt
-      secretType: Opaque
-      creationPolicy: "Owner"
+  infisicalAuthRef:
+    name: infisical-auth
+    namespace: newt
+  syncOptions:
+    refreshInterval: 60s
+  sources:
+    - projectSlug: remote-lab-vd-9-i
+      environmentSlug: dev
+      secretPath: /homelab/main-tunnel
+  targets:
+    - name: main-tunnel-auth
+      namespace: newt
+      kind: Secret
+      creationPolicy: Owner

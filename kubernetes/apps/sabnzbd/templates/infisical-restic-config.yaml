@@ -1,21 +1,39 @@
 ---
-apiVersion: secrets.infisical.com/v1alpha1
-kind: InfisicalSecret
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalAuth
+metadata:
+  name: infisical-auth
+spec:
+  infisicalConnectionRef:
+    name: infisical-connection
+    namespace: infisical-operator-system
+  method: universal
+  universal:
+    clientIdRef:
+      name: infisical-credentials
+      namespace: sabnzbd
+      key: clientId
+    clientSecretRef:
+      name: infisical-credentials
+      namespace: sabnzbd
+      key: clientSecret
+---
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalStaticSecret
 metadata:
   name: infisical-restic-config
 spec:
-  authentication:
-    universalAuth:
-      secretsScope:
-        projectSlug: sabnzbd-n-m21
-        envSlug: dev
-        secretsPath: "/restic"
-      credentialsRef:
-        secretName: infisical-credentials
-        secretNamespace: sabnzbd
-
-  managedKubeSecretReferences:
-    - secretName: restic-config
-      secretNamespace: sabnzbd
-      secretType: Opaque
-      creationPolicy: "Owner"
+  infisicalAuthRef:
+    name: infisical-auth
+    namespace: sabnzbd
+  syncOptions:
+    refreshInterval: 60s
+  sources:
+    - projectSlug: sabnzbd-n-m21
+      environmentSlug: dev
+      secretPath: /restic
+  targets:
+    - name: restic-config
+      namespace: sabnzbd
+      kind: Secret
+      creationPolicy: Owner

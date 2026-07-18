@@ -1,21 +1,39 @@
 ---
-apiVersion: secrets.infisical.com/v1alpha1
-kind: InfisicalSecret
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalAuth
+metadata:
+  name: infisical-auth
+spec:
+  infisicalConnectionRef:
+    name: infisical-connection
+    namespace: infisical-operator-system
+  method: universal
+  universal:
+    clientIdRef:
+      name: infisical-credentials
+      namespace: omada-controller
+      key: clientId
+    clientSecretRef:
+      name: infisical-credentials
+      namespace: omada-controller
+      key: clientSecret
+---
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalStaticSecret
 metadata:
   name: infisical-restic-config
 spec:
-  authentication:
-    universalAuth:
-      secretsScope:
-        projectSlug: omada-controller-lep-a
-        envSlug: dev
-        secretsPath: "/restic"
-      credentialsRef:
-        secretName: infisical-credentials
-        secretNamespace: omada-controller
-
-  managedKubeSecretReferences:
-    - secretName: restic-config
-      secretNamespace: omada-controller
-      secretType: Opaque
-      creationPolicy: "Owner"
+  infisicalAuthRef:
+    name: infisical-auth
+    namespace: omada-controller
+  syncOptions:
+    refreshInterval: 60s
+  sources:
+    - projectSlug: omada-controller-lep-a
+      environmentSlug: dev
+      secretPath: /restic
+  targets:
+    - name: restic-config
+      namespace: omada-controller
+      kind: Secret
+      creationPolicy: Owner

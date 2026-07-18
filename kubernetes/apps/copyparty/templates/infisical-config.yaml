@@ -1,15 +1,35 @@
 ---
-apiVersion: secrets.infisical.com/v1alpha1
-kind: InfisicalSecret
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalAuth
+metadata:
+  name: infisical-auth
+spec:
+  infisicalConnectionRef:
+    name: infisical-connection
+    namespace: infisical-operator-system
+  method: universal
+  universal:
+    clientIdRef:
+      name: infisical-credentials
+      namespace: copyparty
+      key: clientId
+    clientSecretRef:
+      name: infisical-credentials
+      namespace: copyparty
+      key: clientSecret
+---
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalStaticSecret
 metadata:
   name: infisical-copyparty-config
 spec:
-  authentication:
-    universalAuth:
-      secretsScope:
-        projectSlug: copyparty-tm-ep
-        envSlug: dev
-        secretsPath: "/copyparty"
-      credentialsRef:
-        secretName: infisical-credentials
-        secretNamespace: copyparty
+  infisicalAuthRef:
+    name: infisical-auth
+    namespace: copyparty
+  syncOptions:
+    refreshInterval: 60s
+  sources:
+    - projectSlug: copyparty-tm-ep
+      environmentSlug: dev
+      secretPath: /copyparty
+  targets: []

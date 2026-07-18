@@ -1,27 +1,46 @@
 ---
-apiVersion: secrets.infisical.com/v1alpha1
-kind: InfisicalSecret
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalAuth
+metadata:
+  name: infisical-auth
+spec:
+  infisicalConnectionRef:
+    name: infisical-connection
+    namespace: infisical-operator-system
+  method: universal
+  universal:
+    clientIdRef:
+      name: infisical-credentials
+      namespace: continuwuity
+      key: clientId
+    clientSecretRef:
+      name: infisical-credentials
+      namespace: continuwuity
+      key: clientSecret
+---
+apiVersion: secrets.infisical.com/v1beta1
+kind: InfisicalStaticSecret
 metadata:
   name: infisical-continuwuity-config
 spec:
-  authentication:
-    universalAuth:
-      secretsScope:
-        projectSlug: continuwuity-rca-b
-        envSlug: dev
-        secretsPath: "/continuwuity"
-      credentialsRef:
-        secretName: infisical-credentials
-        secretNamespace: continuwuity
-
-  managedKubeSecretReferences:
-    - secretName: continuwuity-secrets
-      secretNamespace: continuwuity
-      secretType: Opaque
-      creationPolicy: "Owner"
+  infisicalAuthRef:
+    name: infisical-auth
+    namespace: continuwuity
+  syncOptions:
+    refreshInterval: 60s
+  sources:
+    - projectSlug: continuwuity-rca-b
+      environmentSlug: dev
+      secretPath: /continuwuity
+  targets:
+    - name: continuwuity-secrets
+      namespace: continuwuity
+      kind: Secret
+      creationPolicy: Owner
       template:
+        engineVersion: v1
         data:
-          type: "static"
+          type: static
           SERVER_NAME: "{{ `{{ .CONTINUWUITY_SERVER_NAME.Value }}` }}"
           WELL_KNOWN_SERVER: "{{ `{{ .CONTINUWUITY_WELL_KNOWN_SERVER.Value }}` }}"
           WELL_KNOWN_CLIENT: "{{ `{{ .CONTINUWUITY_WELL_KNOWN_CLIENT.Value }}` }}"
@@ -29,4 +48,3 @@ spec:
             [
               { type = "livekit", livekit_service_url = "{{ `{{ .CONTINUWUITY_WELL_KNOWN_LIVEKIT_URL.Value }}` }}" }
             ]
-
