@@ -4,7 +4,6 @@ metadata:
   name: updater
   namespace: argocd
 spec:
-  namespace: argocd
   writeBackConfig:
     method: "git"
   applicationRefs:
