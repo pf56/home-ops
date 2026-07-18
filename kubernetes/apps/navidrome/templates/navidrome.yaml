@@ -57,6 +57,8 @@ spec:
           - name: music
             mountPath: /music
             readOnly: true
+          - name: tmp
+            mountPath: /tmp
         resources:
           requests:
             cpu: 200m
@@ -81,6 +83,10 @@ spec:
         - name: music
           persistentVolumeClaim:
             claimName: pvc-navidrome-music
+        - name: tmp
+          emptyDir:
+            medium: Memory
+            sizeLimit: 64Mi
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim
