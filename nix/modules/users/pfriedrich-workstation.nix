@@ -11,6 +11,7 @@
       den.aspects.fuzzel
       den.aspects.jellyfin-mpv-shim
       den.aspects.librewolf
+      den.aspects.music
       den.aspects.thunar
       den.aspects.utilities-desktop
 

@@ -37,10 +37,7 @@
       url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    qbz = {
-      url = "github:vicrodh/qbz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    qbz.url = "github:vicrodh/qbz";
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
     sops-nix.url = "github:Mic92/sops-nix";
     stylix = {

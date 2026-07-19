@@ -10,6 +10,8 @@
   };
 
   den.default = {
+    includes = [ den.batteries.inputs' ];
+
     nixos =
       {
         config,
