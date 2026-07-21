@@ -4,5 +4,5 @@ helm:
     value: infisical/kubernetes-operator
     forcestring: true
   - name: secrets-operator.controllerManager.manager.image.tag
-    value: v0.11.4
+    value: v0.11.5
     forcestring: true
