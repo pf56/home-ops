@@ -41,6 +41,45 @@ k8s-monitoring:
   podLogsViaLoki:
     enabled: true
     collector: alloy-logs
+    extraLogProcessingStages: |
+      // cert-manager uses klog's one-letter severity prefix rather than a level field.
+      stage.match {
+        selector = "{service_name=\"cert-manager\"} |~ \"^[IWEF][0-9]{4}[[:space:]]+\""
+
+        stage.regex {
+          expression = "^(?P<level>[IWEF])"
+        }
+
+        stage.replace {
+          source     = "level"
+          expression = "^(I)$"
+          replace    = "info"
+        }
+
+        stage.replace {
+          source     = "level"
+          expression = "^(W)$"
+          replace    = "warn"
+        }
+
+        stage.replace {
+          source     = "level"
+          expression = "^(E)$"
+          replace    = "error"
+        }
+
+        stage.replace {
+          source     = "level"
+          expression = "^(F)$"
+          replace    = "fatal"
+        }
+
+        stage.labels {
+          values = {
+            level = "",
+          }
+        }
+      }
 
   annotationAutodiscovery:
     enabled: true
