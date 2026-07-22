@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ den, lib, ... }:
 {
-  den.aspects.ssh = {
+  den.ful.homeOps.ssh = {
     homeManager =
       { options, ... }:
       let

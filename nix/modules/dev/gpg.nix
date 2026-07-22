@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ den, ... }:
 {
-  den.aspects.gpg = {
+  den.ful.homeOps.gpg = {
     nixos =
       { pkgs, ... }:
       {

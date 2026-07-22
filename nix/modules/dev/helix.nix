@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ den, lib, ... }:
 {
-  den.aspects.helix = {
+  den.ful.homeOps.helix = {
     nixos =
       { pkgs, ... }:
       {

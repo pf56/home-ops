@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ den, ... }:
 {
-  den.aspects.utilities = {
+  den.ful.homeOps.utilities = {
     homeManager =
       { pkgs, ... }:
       {

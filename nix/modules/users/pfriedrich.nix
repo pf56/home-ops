@@ -1,26 +1,11 @@
 { den, lib, ... }:
 {
-  den.aspects.pfriedrich = {
+  den.ful.homeOps.pfriedrich = {
     includes = [
       den.batteries.define-user
       den.batteries.primary-user
       (den.batteries.user-shell "zsh")
-      den.aspects.pfriedrich.policies.auto-host-profile
     ];
-
-    policies.auto-host-profile =
-      { host, ... }:
-      let
-        inherit (den.lib.policy) include;
-        role = host.role or null;
-      in
-      lib.optionals (role == "server") [
-        (include den.aspects.pfriedrich-cli)
-      ]
-      ++ lib.optionals (role == "desktop") [
-        (include den.aspects.pfriedrich-cli)
-        (include den.aspects.pfriedrich-workstation)
-      ];
 
     homeManager =
       { pkgs, ... }:
@@ -51,5 +36,28 @@
           users.users.pfriedrich.password = "foo";
         };
       };
+  };
+
+  # Keep the fleet-specific profile selection local; work-ops consumes the
+  # portable homeOps.pfriedrich and homeOps.pfriedrich-cli aspects directly.
+  den.aspects.pfriedrich = {
+    includes = [
+      den.ful.homeOps.pfriedrich
+      den.aspects.pfriedrich.policies.auto-host-profile
+    ];
+
+    policies.auto-host-profile =
+      { host, ... }:
+      let
+        inherit (den.lib.policy) include;
+        role = host.role or null;
+      in
+      lib.optionals (role == "server") [
+        (include den.ful.homeOps.pfriedrich-cli)
+      ]
+      ++ lib.optionals (role == "desktop") [
+        (include den.ful.homeOps.pfriedrich-cli)
+        (include den.aspects.pfriedrich-workstation)
+      ];
   };
 }

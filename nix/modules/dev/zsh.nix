@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ den, ... }:
 {
-  den.aspects.zsh = {
+  den.ful.homeOps.zsh = {
     nixos =
       { pkgs, ... }:
       {

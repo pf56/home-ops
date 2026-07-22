@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ den, ... }:
 {
-  den.aspects.git = {
+  den.ful.homeOps.git = {
     nixos =
       { pkgs, ... }:
       {

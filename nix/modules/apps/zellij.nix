@@ -1,6 +1,6 @@
-{ ... }:
+{ den, ... }:
 {
-  den.aspects.zellij = {
+  den.ful.homeOps.zellij = {
     homeManager =
       { ... }:
       {

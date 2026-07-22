@@ -1,14 +1,14 @@
 { den, ... }:
 {
-  den.aspects.pfriedrich-cli = {
+  den.ful.homeOps.pfriedrich-cli = {
     includes = [
-      den.aspects.git
-      den.aspects.gpg
-      den.aspects.helix
-      den.aspects.ssh
-      den.aspects.utilities
-      den.aspects.zellij
-      den.aspects.zsh
+      den.ful.homeOps.git
+      den.ful.homeOps.gpg
+      den.ful.homeOps.helix
+      den.ful.homeOps.ssh
+      den.ful.homeOps.utilities
+      den.ful.homeOps.zellij
+      den.ful.homeOps.zsh
     ];
   };
 }
