@@ -1,0 +1,58 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ntfy
+  labels:
+    name: ntfy
+spec:
+  selector:
+    matchLabels:
+      app: ntfy
+  serviceName: ntfy
+  template:
+    metadata:
+      labels:
+        app: ntfy
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - name: ntfy
+        image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+        args: ["serve"]
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
+        ports:
+        - containerPort: 8080
+          name: http
+        volumeMounts:
+        - name: config
+          mountPath: /etc/ntfy
+          readOnly: true
+        - name: cache
+          mountPath: /var/cache/ntfy
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - name: config
+          configMap:
+            name: ntfy
+  volumeClaimTemplates:
+  - metadata:
+      name: cache
+      namespace: ntfy
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 1Gi
