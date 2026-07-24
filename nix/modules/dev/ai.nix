@@ -19,7 +19,7 @@
     homeManager =
       { osConfig, pkgs, ... }:
       {
-        home.packages = with pkgs; [ ];
+        home.packages = with pkgs; [ openspec ];
 
         programs.opencode = {
           enable = true;
