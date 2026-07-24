@@ -83,14 +83,6 @@ spec:
             helm:
               name: "jwtService.image.name"
               tag: "jwtService.image.tag"
-    - namePattern: "netbox"
-      images:
-        - alias: "netbox"
-          imageName: "ghcr.io/netbox-community/netbox:v4.0.x"
-          manifestTargets:
-            helm:
-              name: "netbox.image.repository"
-              tag: "netbox.image.tag"
     - namePattern: "cert-manager"
       images:
         - alias: "certmanager-controller"

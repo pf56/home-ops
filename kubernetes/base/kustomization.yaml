@@ -4,6 +4,3 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-
-configurations:
-  - nameReference.yaml
