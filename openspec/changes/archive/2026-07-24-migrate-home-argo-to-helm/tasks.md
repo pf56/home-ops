@@ -16,5 +16,5 @@
 
 - [x] 3.1 Run Helm dependency, lint, and template validation; verify the output contains the Argo CD CRDs, `argocd` Namespace, `argocd-server` Service, and both routes targeting that service.
 - [x] 3.2 Compare rendered resource identities with the current installation and confirm no `argo-cd-server` resource is introduced.
-- [ ] 3.3 Explicitly synchronize the chart-conversion revision and verify the live `argo-cd` Application reports Helm source type, Synced, and Healthy.
-- [ ] 3.4 Verify the Argo CD server routes remain reachable and document the Kustomize rollback path with the release name retained.
+- [x] 3.3 Explicitly synchronize the chart-conversion revision and verify the live `argo-cd` Application reports Helm source type, Synced, and Healthy.
+- [x] 3.4 Verify the Argo CD server routes remain reachable and document the Kustomize rollback path with the release name retained.
