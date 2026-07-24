@@ -8,6 +8,7 @@ spec:
     method: "git"
   applicationRefs:
     - namePattern: "argocd-image-updater"
+      useAnnotations: false
       images:
         - alias: "argocdimageupdater"
           imageName: "quay.io/argoprojlabs/argocd-image-updater:v1.2.x"
@@ -16,30 +17,37 @@ spec:
               name: "argocd-image-updater.image.repository"
               tag: "argocd-image-updater.image.tag"
     - namePattern: "sonarr"
+      useAnnotations: false
       images:
         - alias: "sonarr"
           imageName: "lscr.io/linuxserver/sonarr:4.0.x"
     - namePattern: "radarr"
+      useAnnotations: false
       images:
         - alias: "radarr"
           imageName: "lscr.io/linuxserver/radarr:6.3.x"
     - namePattern: "sabnzbd"
+      useAnnotations: false
       images:
         - alias: "sabnzbd"
           imageName: "lscr.io/linuxserver/sabnzbd:5.0.x"
     - namePattern: "continuwuity"
+      useAnnotations: false
       images:
         - alias: "continuwuity"
           imageName: "forgejo.ellis.link/continuwuation/continuwuity:v26.6.x"
     - namePattern: "jellyfin"
+      useAnnotations: false
       images:
         - alias: "jellyfin"
           imageName: "jellyfin/jellyfin:10.11.x"
     - namePattern: "omada-controller"
+      useAnnotations: false
       images:
         - alias: "omadacontroller"
           imageName: "mbentley/omada-controller:6.2.x"
     - namePattern: "paperless"
+      useAnnotations: false
       images:
         - alias: "paperless"
           imageName: "ghcr.io/paperless-ngx/paperless-ngx:2.20.x"
@@ -50,10 +58,12 @@ spec:
               name: "redis.image.name"
               tag: "redis.image.tag"
     - namePattern: "vaultwarden"
+      useAnnotations: false
       images:
         - alias: "vaultwarden"
-          imageName: "ghcr.io/dani-garcia/vaultwarden:1.36.x"
+          imageName: "ghcr.io/dani-garcia/vaultwarden:1.37.x"
     - namePattern: "broadcast-box"
+      useAnnotations: false
       images:
         - alias: "broadcastbox"
           imageName: "seaduboi/broadcast-box:v2.0.x"
@@ -70,10 +80,12 @@ spec:
               name: "livekit.image.name"
               tag: "livekit.image.tag"
     - namePattern: "copyparty"
+      useAnnotations: false
       images:
         - alias: "copyparty"
           imageName: "ghcr.io/9001/copyparty-ac:1.20.x"
     - namePattern: "livekit"
+      useAnnotations: false
       images:
         - alias: "livekit"
           imageName: "livekit/livekit-server:v1.9.x"
@@ -84,6 +96,7 @@ spec:
               name: "jwtService.image.name"
               tag: "jwtService.image.tag"
     - namePattern: "cert-manager"
+      useAnnotations: false
       images:
         - alias: "certmanager-controller"
           imageName: "quay.io/jetstack/cert-manager-controller:v1.21.x"
@@ -116,6 +129,7 @@ spec:
               name: "cert-manager.startupapicheck.image.repository"
               tag: "cert-manager.startupapicheck.image.tag"
     - namePattern: "infisical"
+      useAnnotations: false
       images:
         - alias: "infisicaloperator"
           imageName: "infisical/kubernetes-operator:v0.11.x"
