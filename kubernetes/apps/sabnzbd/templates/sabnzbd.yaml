@@ -75,7 +75,7 @@ spec:
       namespace: sabnzbd
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "freenas-api-iscsi-csi"
+      storageClassName: "longhorn"
       resources:
         requests:
           storage: 128Gi
