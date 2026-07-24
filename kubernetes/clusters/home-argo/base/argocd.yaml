@@ -9,6 +9,8 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
+    helm:
+      releaseName: argocd
     path: kubernetes/clusters/home-argo
     repoURL: git@git.sr.ht:~pfriedrich/home-ops
     targetRevision: main
