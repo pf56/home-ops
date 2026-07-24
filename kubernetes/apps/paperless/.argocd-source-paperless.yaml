@@ -10,5 +10,5 @@ helm:
     value: docker.io/redis
     forcestring: true
   - name: redis.image.tag
-    value: 8.8.0
+    value: 8.8.1
     forcestring: true
