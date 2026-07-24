@@ -1,72 +1,73 @@
-configs:
-  params:
-    server.insecure: true
+argo-cd:
+  configs:
+    params:
+      server.insecure: true
 
-  cm:
-    create: false
+    cm:
+      create: false
 
-  ssh:
-    knownHosts: |
-      git.sr.ht ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZ+l/lvYmaeOAPeijHL8d4794Am0MOvmXPyvHTtrqvgmvCJB8pen/qkQX2S1fgl9VkMGSNxbp7NF7HmKgs5ajTGV9mB5A5zq+161lcp5+f1qmn3Dp1MWKp/AzejWXKW+dwPBd3kkudDBA1fa3uK6g1gK5nLw3qcuv/V4emX9zv3P2ZNlq9XRvBxGY2KzaCyCXVkL48RVTTJJnYbVdRuq8/jQkDRA8lHvGvKI+jqnljmZi2aIrK9OGT2gkCtfyTw2GvNDV6aZ0bEza7nDLU/I+xmByAOO79R1Uk4EYCvSc1WXDZqhiuO2sZRmVxa0pQSBDn1DB3rpvqPYW+UvKB3SOz
-      git.sr.ht ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCj6y+cJlqK3BHZRLZuM+KP2zGPrh4H66DacfliU1E2DHAd1GGwF4g1jwu3L8gOZUTIvUptqWTkmglpYhFp4Iy4=
-      git.sr.ht ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZvRd4EtM7R+IHVMWmDkVU3VLQTSwQDSAvW0t2Tkj60
+    ssh:
+      knownHosts: |
+        git.sr.ht ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZ+l/lvYmaeOAPeijHL8d4794Am0MOvmXPyvHTtrqvgmvCJB8pen/qkQX2S1fgl9VkMGSNxbp7NF7HmKgs5ajTGV9mB5A5zq+161lcp5+f1qmn3Dp1MWKp/AzejWXKW+dwPBd3kkudDBA1fa3uK6g1gK5nLw3qcuv/V4emX9zv3P2ZNlq9XRvBxGY2KzaCyCXVkL48RVTTJJnYbVdRuq8/jQkDRA8lHvGvKI+jqnljmZi2aIrK9OGT2gkCtfyTw2GvNDV6aZ0bEza7nDLU/I+xmByAOO79R1Uk4EYCvSc1WXDZqhiuO2sZRmVxa0pQSBDn1DB3rpvqPYW+UvKB3SOz
+        git.sr.ht ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCj6y+cJlqK3BHZRLZuM+KP2zGPrh4H66DacfliU1E2DHAd1GGwF4g1jwu3L8gOZUTIvUptqWTkmglpYhFp4Iy4=
+        git.sr.ht ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZvRd4EtM7R+IHVMWmDkVU3VLQTSwQDSAvW0t2Tkj60
 
-notifications:
-  argocdUrl: https://argocd.internal.paulfriedrich.me
-  notifiers:
-    service.webhook.ntfy: |
-      url: https://ntfy.internal.paulfriedrich.me
-      headers:
-        - name: Content-Type
-          value: application/json
-  subscriptions:
-    - recipients:
-        - ntfy
-      triggers:
-        - on-deployed
-        - on-health-degraded
-        - on-sync-failed
-        - on-sync-status-unknown
-  templates:
-    template.app-deployed: |
-      webhook:
-        ntfy:
-          method: POST
-          body: |
-            {"topic":"argocd","title":"Application deployed","message":"{{.app.metadata.name}} is synced and healthy.","tags":["heavy_check_mark"],"priority":3,"click":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"}
-    template.app-health-degraded: |
-      webhook:
-        ntfy:
-          method: POST
-          body: |
-            {"topic":"argocd","title":"Application health degraded","message":"{{.app.metadata.name}} is degraded.","tags":["warning"],"priority":4,"click":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"}
-    template.app-sync-failed: |
-      webhook:
-        ntfy:
-          method: POST
-          body: |
-            {"topic":"argocd","title":"Application sync failed","message":"{{.app.metadata.name}} failed to sync.","tags":["warning"],"priority":4,"click":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"}
-    template.app-sync-status-unknown: |
-      webhook:
-        ntfy:
-          method: POST
-          body: |
-            {"topic":"argocd","title":"Application sync status unknown","message":"{{.app.metadata.name}} has an unknown sync status.","tags":["warning"],"priority":4,"click":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"}
-  triggers:
-    trigger.on-deployed: |
-      - description: Application is synced and healthy
-        oncePer: app.status.operationState?.syncResult.revision
-        send: [app-deployed]
-        when: app.status.operationState?.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
-    trigger.on-health-degraded: |
-      - description: Application health is degraded
-        send: [app-health-degraded]
-        when: app.status.health.status == 'Degraded'
-    trigger.on-sync-failed: |
-      - description: Application sync has failed
-        send: [app-sync-failed]
-        when: app.status.operationState?.phase in ['Error', 'Failed']
-    trigger.on-sync-status-unknown: |
-      - description: Application sync status is unknown
-        send: [app-sync-status-unknown]
-        when: app.status.sync.status == 'Unknown'
+  notifications:
+    argocdUrl: https://argocd.internal.paulfriedrich.me
+    notifiers:
+      service.webhook.ntfy: |
+        url: https://ntfy.internal.paulfriedrich.me
+        headers:
+          - name: Content-Type
+            value: application/json
+    subscriptions:
+      - recipients:
+          - ntfy
+        triggers:
+          - on-deployed
+          - on-health-degraded
+          - on-sync-failed
+          - on-sync-status-unknown
+    templates:
+      template.app-deployed: |
+        webhook:
+          ntfy:
+            method: POST
+            body: |
+              {"topic":"argocd","title":"Application deployed","message":"{{.app.metadata.name}} is synced and healthy.","tags":["heavy_check_mark"],"priority":3,"click":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"}
+      template.app-health-degraded: |
+        webhook:
+          ntfy:
+            method: POST
+            body: |
+              {"topic":"argocd","title":"Application health degraded","message":"{{.app.metadata.name}} is degraded.","tags":["warning"],"priority":4,"click":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"}
+      template.app-sync-failed: |
+        webhook:
+          ntfy:
+            method: POST
+            body: |
+              {"topic":"argocd","title":"Application sync failed","message":"{{.app.metadata.name}} failed to sync.","tags":["warning"],"priority":4,"click":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"}
+      template.app-sync-status-unknown: |
+        webhook:
+          ntfy:
+            method: POST
+            body: |
+              {"topic":"argocd","title":"Application sync status unknown","message":"{{.app.metadata.name}} has an unknown sync status.","tags":["warning"],"priority":4,"click":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"}
+    triggers:
+      trigger.on-deployed: |
+        - description: Application is synced and healthy
+          oncePer: app.status.operationState?.syncResult.revision
+          send: [app-deployed]
+          when: app.status.operationState?.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
+      trigger.on-health-degraded: |
+        - description: Application health is degraded
+          send: [app-health-degraded]
+          when: app.status.health.status == 'Degraded'
+      trigger.on-sync-failed: |
+        - description: Application sync has failed
+          send: [app-sync-failed]
+          when: app.status.operationState?.phase in ['Error', 'Failed']
+      trigger.on-sync-status-unknown: |
+        - description: Application sync status is unknown
+          send: [app-sync-status-unknown]
+          when: app.status.sync.status == 'Unknown'

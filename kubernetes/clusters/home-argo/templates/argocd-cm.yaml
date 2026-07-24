@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: argocd-cm
+  namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: argocd-cm
     app.kubernetes.io/part-of: argocd
@@ -12,8 +13,6 @@ data:
   application.instanceLabelKey: argocd.argoproj.io/instance
 
   exec.enabled: "false"
-
-  kustomize.buildOptions: --enable-helm
 
   server.rbac.log.enforce.enable: "false"
 

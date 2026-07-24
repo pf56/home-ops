@@ -2,7 +2,7 @@
 
 `kubernetes/clusters/home-argo/` currently combines a Kustomization with Kustomize's `helmCharts` generator. It renders `argo-cd` chart version `9.1.4` using release name `argocd`, then applies six local manifests: the namespace, the default AppProject, the self-managing Application, the root Application, a custom Argo CD ConfigMap, and Traefik IngressRoutes.
 
-The live self-managing Application is named `argo-cd`, but its generated upstream resources are named with the distinct Helm release name `argocd`. Argo CD detects a chart source from the repository contents and otherwise defaults a Helm release name to the Application name. A direct source conversion would therefore render `argo-cd-*` resources before the desired Application manifest could update its own source configuration.
+The live self-managing Application is named `argo-cd`, but its generated upstream resources are named with the distinct Helm release name `argocd`. Argo CD selects Helm rendering when `spec.source.helm` is present. This means the release-name seed is required to avoid the default `argo-cd` release name, but it also requires the chart conversion to follow immediately: a Helm source without `Chart.yaml` produces a comparison error.
 
 The repository's established pattern is a local Helm wrapper chart with an upstream dependency, committed `Chart.lock`, values nested under the dependency name, and optional local templates. The generated `charts/` directory is not committed. The current Argo CD resources are reconciled by Argo CD, not by a Helm release.
 
@@ -48,9 +48,9 @@ Alternative considered: configure ingress entirely through upstream values. This
 
 ### Use a two-phase GitOps transition
 
-First, while the directory remains a Kustomization, add `spec.source.helm.releaseName: argocd` to the self-managing Application and explicitly sync it. Kustomize ignores this Helm-specific field, so the rendered resource set is unchanged while the live Application has the release name needed for its next reconciliation.
+First, add `spec.source.helm.releaseName: argocd` to the self-managing Application and synchronize it. This seeds the live release name, but Argo CD immediately treats the source as Helm and reports a comparison error until `Chart.yaml` is available. Existing synchronized resources continue running.
 
-Second, convert the directory to the wrapper chart and explicitly sync again. Argo CD then detects the Helm source and renders the wrapper with release name `argocd`, producing the existing resource identities.
+Second, promptly convert the directory to the wrapper chart and synchronize it. Argo CD can then render the wrapper with release name `argocd`, producing the existing resource identities and clearing the comparison error.
 
 Alternative considered: perform the conversion in one sync. Argo CD would render the new chart using its live Application name, `argo-cd`, before applying the new self-Application manifest, causing an unintended parallel resource set.
 
@@ -63,7 +63,7 @@ Alternative considered: `helm upgrade --install`. Existing resources lack Helm o
 ## Risks / Trade-offs
 
 - [Dependency values placed at the wrong level render defaults] -> Nest all existing upstream values under `argo-cd:` and compare rendered resource identities before synchronization.
-- [Argo CD uses its Application name as the release name during first chart rendering] -> Complete and verify the dedicated release-name sync before committing or syncing the chart conversion.
+- [A Helm source is missing `Chart.yaml` during the release-name seed] -> Expect a temporary comparison error, keep the conversion follow-up ready, and verify existing workloads remain healthy until the wrapper chart is synchronized.
 - [Fresh bootstrap omits CRDs] -> Render with `--include-crds` and validate that the output contains the three Argo CD CRDs.
 - [Custom templates apply to the wrong namespace during bootstrap] -> Render namespaced local resources with `.Release.Namespace` and template using `--namespace argocd`.
 - [Changing source type causes drift] -> Keep the chart version, values, resource names, and custom manifests unchanged; inspect the rendered manifest identity set before phase-two sync.
@@ -73,7 +73,7 @@ Alternative considered: `helm upgrade --install`. Existing resources lack Helm o
 
 1. Prepare and validate the wrapper chart locally without changing the live Argo CD Application.
 2. Commit the release-name-only change to the existing Kustomize-managed self-Application and explicitly sync it.
-3. Confirm the live Application contains `spec.source.helm.releaseName: argocd`, remains Healthy, and all existing resource identities remain synchronized.
+3. Confirm the live Application contains `spec.source.helm.releaseName: argocd` and its existing workloads remain healthy; a temporary Helm comparison error is expected until the chart conversion.
 4. Commit the chart conversion, including the dependency lockfile and revised bootstrap script, then explicitly sync the self-managing Application.
 5. Confirm Argo CD reports source type Helm, `Synced`, and `Healthy`; confirm the existing services and both Traefik routes still reference `argocd-server`.
 6. If phase two fails, revert the chart-conversion commit and sync the still-release-name-seeded Kustomization.

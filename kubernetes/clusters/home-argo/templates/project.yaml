@@ -3,6 +3,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: default
+  namespace: {{ .Release.Namespace }}
 spec:
   orphanedResources:
     warn: false

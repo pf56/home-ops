@@ -7,7 +7,7 @@
 - Replace the `home-argo` Kustomization and generated-chart cache with a local Helm wrapper chart pinned to the existing upstream Argo CD chart version.
 - Render the Argo CD chart, namespace, Argo resources, and Traefik routes through the wrapper chart without changing their deployed identities.
 - Preserve `argocd` as the Helm release name even though the self-managing Argo Application is named `argo-cd`.
-- Transition in two GitOps phases so the live Application receives its Helm release name before Argo renders the new chart.
+- Seed the live Application with the `argocd` Helm release name, then immediately follow with the chart conversion because Argo CD selects Helm rendering as soon as Helm source settings exist.
 - Update the bootstrap script to render the local chart and apply manifests, leaving Argo CD as the long-term resource owner.
 - Remove the now-unused `kustomize.buildOptions: --enable-helm` configuration.
 

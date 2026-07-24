@@ -21,12 +21,12 @@ The wrapper chart SHALL render the existing Argo CD configuration, namespace, Ap
 - **THEN** the ConfigMap does not configure Kustomize Helm build options
 
 ### Requirement: Safe self-managed source transition
-The self-managing Argo CD Application SHALL specify `spec.source.helm.releaseName: argocd`. The migration MUST seed this field while the source remains Kustomize and synchronize it before changing the source directory into a Helm chart.
+The self-managing Argo CD Application SHALL specify `spec.source.helm.releaseName: argocd`. The migration MUST seed this field before changing the source directory into a Helm chart and MUST promptly follow it with the chart conversion because Argo CD selects Helm rendering when Helm source settings are present.
 
 #### Scenario: Release name is seeded before chart conversion
 - **WHEN** the release-name-only migration phase is synchronized
 - **THEN** the live self-managing Application contains Helm release name `argocd`
-- **THEN** the Application continues to render as Kustomize with unchanged resource identities
+- **THEN** existing Argo CD workloads retain their resource identities while the Application reports a Helm comparison error until `Chart.yaml` is available
 
 #### Scenario: Chart conversion is synchronized
 - **WHEN** the wrapper-chart migration phase is synchronized after release-name seeding

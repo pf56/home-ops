@@ -1,2 +1,5 @@
 #!/usr/bin/env bash
-kubectl kustomize . --enable-helm | kubectl apply -f -
+set -euo pipefail
+
+helm dependency build
+helm template argocd . --namespace argocd --include-crds | kubectl apply -f -
