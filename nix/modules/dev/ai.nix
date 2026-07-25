@@ -19,11 +19,22 @@
     homeManager =
       { osConfig, pkgs, ... }:
       {
-        home.packages = with pkgs; [ openspec ];
+        home.packages = with pkgs; [
+          openspec
+          nono
+        ];
 
         programs.opencode = {
           enable = true;
           enableMcpIntegration = true;
+        };
+
+        xdg.configFile."nono/profiles/opencode-homelab.json".text = builtins.toJSON {
+          extends = "opencode";
+          meta = {
+            name = "opencode-homelab";
+          };
+          filesystem.read = [ "/run/secrets/ai/grafana-mcp-token" ];
         };
 
         programs.mcp = {
