@@ -129,6 +129,14 @@
                   };
                 };
 
+                compactor = {
+                  working_directory = "/var/lib/loki/compactor";
+                  compaction_interval = "10m";
+                  retention_enabled = true;
+                  retention_delete_delay = "2h";
+                  delete_request_store = "filesystem";
+                };
+
                 ingester = {
                   chunk_idle_period = "1h";
                   max_chunk_age = "1h";
@@ -157,6 +165,27 @@
                     cache_location = "/var/lib/loki/tsdb-cache";
                     cache_ttl = "24h";
                   };
+                };
+
+                limits_config = {
+                  retention_period = "30d";
+                  retention_stream = [
+                    {
+                      selector = "{service_name=\"restic\"}";
+                      priority = 1;
+                      period = "7d";
+                    }
+                    {
+                      selector = "{namespace=\"democratic-csi\"}";
+                      priority = 1;
+                      period = "3d";
+                    }
+                    {
+                      selector = "{job=\"systemd-journal\",unit=\"loki.service\"}";
+                      priority = 1;
+                      period = "3d";
+                    }
+                  ];
                 };
               };
             };

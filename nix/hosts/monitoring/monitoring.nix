@@ -28,6 +28,14 @@
         ];
         networking.firewall.allowedUDPPorts = [ 443 ];
 
+        services.journald = {
+          storage = "persistent";
+          extraConfig = ''
+            MaxRetentionSec=7day
+            MaxFileSec=1day
+          '';
+        };
+
         roles.monitoring = {
           dashboard =
             let
