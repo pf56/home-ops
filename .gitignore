@@ -506,3 +506,6 @@ FodyWeavers.xsd
 # nix
 result
 result-*
+
+# AI
+.opencode/
