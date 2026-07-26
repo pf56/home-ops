@@ -55,6 +55,10 @@
 
               dashboards = [
                 (grafanaDashboardsLib.dashboardEntry {
+                  name = "iot-dns-audit";
+                  path = ./iot-dns-audit.json;
+                }).options.path
+                (grafanaDashboardsLib.dashboardEntry {
                   name = "node-exporter-full";
                   path = grafanaDashboardsLib.fetchDashboard {
                     name = "node-exporter-full";

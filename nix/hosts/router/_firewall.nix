@@ -296,6 +296,11 @@ in
           }
 
           chain IOT-WAN {
+            tcp dport 853 meter iot_dns_tcp_log { ip saddr timeout 1m limit rate 5/minute burst 10 packets } log prefix "nftables-iot encrypted-dns drop: "
+            tcp dport 853 counter drop comment "Deny DNS-over-TLS"
+            udp dport { 784, 853, 8853 } meter iot_dns_udp_log { ip saddr timeout 1m limit rate 5/minute burst 10 packets } log prefix "nftables-iot encrypted-dns drop: "
+            udp dport { 784, 853, 8853 } counter drop comment "Deny encrypted DNS over UDP"
+
             ip saddr 10.0.40.3 accept comment "Allow Home Assistant"
             ip saddr 10.0.40.4 accept comment "Allow Bosch Smart Home Controller"
             ip saddr 10.0.40.5 accept comment "Allow Zenfone 8"
@@ -310,6 +315,12 @@ in
         }
 
         table ip nat {
+          chain PREROUTING {
+            type nat hook prerouting priority dstnat; policy accept;
+            iifname ${vlans.iot.name} ip saddr 10.0.40.0/24 udp dport 53 counter redirect to 53 comment "Redirect IoT UDP DNS"
+            iifname ${vlans.iot.name} ip saddr 10.0.40.0/24 tcp dport 53 counter redirect to 53 comment "Redirect IoT TCP DNS"
+          }
+
           chain POSTROUTING {
             type nat hook postrouting priority 100; policy accept;
             oifname ${interfaces.wan.name} masquerade

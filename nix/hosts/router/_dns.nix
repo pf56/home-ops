@@ -13,6 +13,7 @@ in
   roles.nameserver = {
     enable = true;
     enableBgpPeering = false;
+    queryLogSourceCidrs = [ "10.0.40.0/24" ];
   };
 
   networking.nameservers = [

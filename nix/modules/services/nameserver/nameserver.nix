@@ -33,6 +33,14 @@
               '';
             };
 
+            queryLogSourceCidrs = mkOption {
+              type = types.listOf types.str;
+              default = [ ];
+              description = mdDoc ''
+                Source CIDRs whose DNS requests are emitted as JSON query logs.
+              '';
+            };
+
             enableBgpPeering = mkOption {
               type = types.bool;
               default = true;
@@ -96,50 +104,75 @@
                   protocol = "udp";
                 };
 
-                groups.upstream = {
-                  resolvers = [
-                    "cloudflare-dot"
-                    "google-udp"
-                  ];
-                  type = "fail-rotate";
+                groups = {
+                  upstream = {
+                    resolvers = [
+                      "cloudflare-dot"
+                      "google-udp"
+                    ];
+                    type = "fail-rotate";
+                  };
+
+                  main-cached = {
+                    type = "cache";
+                    resolvers = [ "router1" ];
+                  };
+                }
+                // optionalAttrs (cfg.queryLogSourceCidrs != [ ]) {
+                  query-log = {
+                    type = "query-log";
+                    output-format = "json";
+                    resolvers = [ "main-cached" ];
+                  };
                 };
 
-                routers.router1 = {
-                  routes = [
-                    {
-                      name = "(^|\.)internal\.paulfriedrich\.me\.$";
-                      resolver = "internal-udp";
-                    }
-                    {
-                      # MagicDNS records are only available from Tailscale's resolver.
-                      name = "(^|\.)tailnet-5ece\.ts\.net\.$";
-                      resolver = "tailscale-udp";
-                    }
-                    {
-                      name = "\.10\.in-addr\.arpa\.$";
-                      resolver = "internal-udp";
-                    }
-                    {
-                      resolver = "upstream";
-                    }
-                  ];
-                };
-
-                groups.main-cached = {
-                  type = "cache";
-                  resolvers = [ "router1" ];
+                routers = {
+                  router1 = {
+                    routes = [
+                      {
+                        name = "(^|\.)internal\.paulfriedrich\.me\.$";
+                        resolver = "internal-udp";
+                      }
+                      {
+                        # MagicDNS records are only available from Tailscale's resolver.
+                        name = "(^|\.)tailnet-5ece\.ts\.net\.$";
+                        resolver = "tailscale-udp";
+                      }
+                      {
+                        name = "\.10\.in-addr\.arpa\.$";
+                        resolver = "internal-udp";
+                      }
+                      {
+                        resolver = "upstream";
+                      }
+                    ];
+                  };
+                }
+                // optionalAttrs (cfg.queryLogSourceCidrs != [ ]) {
+                  query-log-router = {
+                    routes =
+                      map (source: {
+                        inherit source;
+                        resolver = "query-log";
+                      }) cfg.queryLogSourceCidrs
+                      ++ [
+                        {
+                          resolver = "main-cached";
+                        }
+                      ];
+                  };
                 };
 
                 listeners.local-udp = {
                   address = ":${toString cfg.port}";
                   protocol = "udp";
-                  resolver = "main-cached";
+                  resolver = if cfg.queryLogSourceCidrs != [ ] then "query-log-router" else "main-cached";
                 };
 
                 listeners.local-tcp = {
                   address = ":${toString cfg.port}";
                   protocol = "tcp";
-                  resolver = "main-cached";
+                  resolver = if cfg.queryLogSourceCidrs != [ ] then "query-log-router" else "main-cached";
                 };
               };
             };
