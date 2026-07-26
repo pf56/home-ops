@@ -1,0 +1,10 @@
+{
+  "name": "opencode-kubernetes-access",
+  "namespace": "opencode-access",
+  "syncPolicy": {
+    "syncOptions": [
+      "CreateNamespace=true",
+      "ServerSideApply=true"
+    ]
+  }
+}
