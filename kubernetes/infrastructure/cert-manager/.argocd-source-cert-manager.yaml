@@ -16,5 +16,5 @@ helm:
     value: quay.io/jetstack/cert-manager-webhook
     forcestring: true
   - name: cert-manager.webhook.image.tag
-    value: v1.21.0
+    value: v1.21.1
     forcestring: true
