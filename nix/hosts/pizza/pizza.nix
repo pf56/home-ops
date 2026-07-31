@@ -16,6 +16,7 @@
       den.aspects.openrgb
       den.aspects.obs
       den.aspects.pipewire
+      den.aspects.podman
       den.aspects.scx
       den.aspects.stylix
       den.aspects.vfio
