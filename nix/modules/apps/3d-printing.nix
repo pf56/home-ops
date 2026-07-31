@@ -7,11 +7,10 @@
       };
 
     homeManager =
-      { pkgs, ... }:
+      { pkgs, inputs', ... }:
       {
         home.packages = with pkgs; [
-          freecad
-          openscad-unstable
+          inputs'.nixpkgs-stable.legacyPackages.freecad
           prusa-slicer
         ];
 
