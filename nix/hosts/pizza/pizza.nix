@@ -44,6 +44,13 @@
           wooting.enable = true;
         };
 
+        programs.nix-ld = {
+          enable = true;
+          libraries = with pkgs; [
+            icu
+          ];
+        };
+
         sops = {
           age = {
             keyFile = "/var/lib/sops-nix/key.txt";

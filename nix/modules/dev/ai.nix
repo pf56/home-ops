@@ -88,9 +88,14 @@
             meta = {
               name = "opencode-homelab";
             };
+            groups = {
+              include = [ "nix_runtime" ];
+            };
             filesystem = {
-              read = [ "/run/secrets/ai/grafana-mcp-token" ];
-              read_file = [ "$HOME/.config/kubernetes/opencode-kubeconfig" ];
+              read_file = [
+                "/run/secrets/ai/grafana-mcp-token"
+                "$HOME/.config/kubernetes/opencode-kubeconfig"
+              ];
             };
             network = {
               credentials = [ "kubernetes" ];
@@ -111,6 +116,28 @@
               };
             };
             environment.set_vars.KUBECONFIG = "$HOME/.config/kubernetes/opencode-kubeconfig";
+          };
+
+          "nono/profiles/opencode-dev.json".text = builtins.toJSON {
+            extends = "opencode";
+            meta = {
+              name = "opencode";
+            };
+            groups = {
+              include = [ "nix_runtime" ];
+            };
+            filesystem = {
+              allow = [
+                "$HOME/.aspire"
+                "$HOME/.aspnet"
+                "$HOME/.dotnet"
+                "$HOME/.local/share/NuGet"
+                "$HOME/.nuget"
+              ];
+              read_file = [
+                "/run/secrets/ai/grafana-mcp-token"
+              ];
+            };
           };
         };
 
