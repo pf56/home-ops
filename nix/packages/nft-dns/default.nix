@@ -23,7 +23,7 @@ python3.pkgs.buildPythonApplication (finalAttrs: {
 
   propagatedBuildInputs = with python3.pkgs; [
     dnspython
-    pydantic_1
+    pydantic
   ];
 
   dontBuild = true;
