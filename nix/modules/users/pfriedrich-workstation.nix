@@ -25,6 +25,9 @@
     homeManager =
       { pkgs, ... }:
       {
+        # force electron to wayland
+        home.sessionVariables.NIXOS_OZONE_WL = "1";
+
         home.packages = with pkgs; [
           bcompare
           (discord.override (old: rec {
