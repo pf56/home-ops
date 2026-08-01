@@ -66,10 +66,15 @@
                 "clock"
                 "session"
               ];
-              margin_edge = 5;
-              margin_ends = 5;
+              margin_edge = 0;
+              margin_ends = 0;
               radius = 0;
               shadow = false;
+
+              monitor."MP165" = {
+                center = [];
+                end = [ "notifications" "cpu" "ram" "temp" "sysmon" "clock" ];
+              };
             };
 
             control_center = {

@@ -1,6 +1,10 @@
 { lib, inputs, ... }:
 {
-  flake-file.inputs.niri.url = "github:sodiboo/niri-flake";
+  flake-file.inputs.niri = {
+    url = "github:epireyn/niri-flake";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+  };
 
   den.aspects.niri = {
     nixos = {
@@ -61,13 +65,37 @@
               };
             };
 
-            outputs."DP-1" = {
+            outputs."Microstep MPG341CX OLED Unknown" = {
               scale = 1;
               variable-refresh-rate = "on-demand";
+              focus-at-startup = true;
 
               mode = {
                 height = 1440;
                 width = 3440;
+              };
+            };
+
+            outputs."Microstep MSI MP165 E6 PE5M015902696" = {
+              scale = 4.0 / 3.0;
+              variable-refresh-rate = "on-demand";
+
+              mode = {
+                height = 1920;
+                width = 1080;
+              };
+
+              transform.rotation = 90;
+
+              position = {
+                x = -1080;
+                y = 0;
+              };
+
+              layout = {
+                default-column-width = {
+                  proportion = 1.0;
+                };
               };
             };
 

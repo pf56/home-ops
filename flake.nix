@@ -28,7 +28,13 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     import-tree.url = "github:vic/import-tree";
-    niri.url = "github:sodiboo/niri-flake";
+    niri = {
+      url = "github:epireyn/niri-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixpkgs-stable";
+      };
+    };
     nix-gaming.url = "github:fufexan/nix-gaming";
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
